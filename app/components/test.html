@@ -1,0 +1,593 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Digital Craftsman &amp; Interface Architect Portfolio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#f3f3f5",
+              "on-secondary": "#ffffff",
+              "primary-fixed": "#e4e2e4",
+              "tertiary-fixed": "#d7e2ff",
+              "tertiary-container": "#001c42",
+              "surface-container-highest": "#e2e2e4",
+              "on-tertiary-fixed": "#001b3f",
+              "secondary-fixed": "#e3e2e7",
+              "surface-container-high": "#e8e8ea",
+              "on-background": "#1a1c1d",
+              "surface-bright": "#f9f9fb",
+              tertiary: "#00030c",
+              primary: "#030304",
+              "on-surface": "#1a1c1d",
+              "on-tertiary-fixed-variant": "#00458f",
+              "on-secondary-fixed-variant": "#46464b",
+              "surface-dim": "#d9dadc",
+              "surface-variant": "#e2e2e4",
+              "surface-container-lowest": "#ffffff",
+              "primary-container": "#1d1d1f",
+              "on-secondary-fixed": "#1a1b1f",
+              "tertiary-fixed-dim": "#abc7ff",
+              background: "#f9f9fb",
+              "surface-container": "#eeeef0",
+              secondary: "#5e5e63",
+              "inverse-on-surface": "#f0f0f2",
+              "surface-tint": "#5f5e60",
+              surface: "#f9f9fb",
+              "primary-fixed-dim": "#c8c6c8",
+              error: "#ba1a1a",
+              "secondary-fixed-dim": "#c7c6cb",
+              "on-primary-fixed": "#1b1b1d",
+              outline: "#77767b",
+              "error-container": "#ffdad6",
+              "on-primary-fixed-variant": "#474649",
+              "on-surface-variant": "#46464a",
+              "inverse-surface": "#2f3132",
+              "on-tertiary-container": "#2d83f6",
+              "on-error-container": "#93000a",
+              "on-secondary-container": "#626267",
+              "on-error": "#ffffff",
+              "inverse-primary": "#c8c6c8",
+              "on-tertiary": "#ffffff",
+              "on-primary": "#ffffff",
+              "outline-variant": "#c7c6ca",
+              "secondary-container": "#e0dfe4",
+              "on-primary-container": "#868587",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              base: "8px",
+              xs: "4px",
+              md: "24px",
+              sm: "12px",
+              "container-max": "1280px",
+              lg: "48px",
+              gutter: "24px",
+              xl: "80px",
+            },
+            fontFamily: {
+              "display-lg": ["Inter"],
+              "label-md": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+              "headline-sm": ["Inter"],
+              "headline-md": ["Inter"],
+              "body-md": ["Inter"],
+              "body-lg": ["Inter"],
+              "label-sm": ["Inter"],
+            },
+            fontSize: {
+              "display-lg": [
+                "64px",
+                {
+                  lineHeight: "1.1",
+                  letterSpacing: "-0.04em",
+                  fontWeight: "800",
+                },
+              ],
+              "label-md": [
+                "14px",
+                { lineHeight: "1", letterSpacing: "0.02em", fontWeight: "600" },
+              ],
+              "display-lg-mobile": [
+                "40px",
+                {
+                  lineHeight: "1.2",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "headline-sm": [
+                "24px",
+                {
+                  lineHeight: "1.4",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-md": [
+                "32px",
+                {
+                  lineHeight: "1.3",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-md": [
+                "16px",
+                { lineHeight: "1.6", letterSpacing: "0", fontWeight: "400" },
+              ],
+              "body-lg": [
+                "18px",
+                { lineHeight: "1.6", letterSpacing: "0", fontWeight: "400" },
+              ],
+              "label-sm": [
+                "12px",
+                { lineHeight: "1", letterSpacing: "0.01em", fontWeight: "500" },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f9f9fb;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+      }
+      .soft-shadow {
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+      }
+      .hover-lift {
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
+      }
+
+      /* Ambient gradient backgrounds for visual interest */
+      .ambient-gradient-1 {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 1) 0%,
+          rgba(249, 249, 251, 1) 100%
+        );
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-surface h-screen w-screen flex relative selection:bg-surface-dim selection:text-primary"
+  >
+    <!-- SideNavBar Component -->
+    <nav
+      class="bg-surface-container-lowest/80 dark:bg-surface-container-low/80 rounded-full h-[calc(100vh-48px)] my-6 ml-6 w-64 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col py-8 px-6 fixed left-0 top-0 z-50"
+    >
+      <!-- Header / Identity -->
+      <div class="mb-12 flex flex-col items-center">
+        <div
+          class="w-20 h-20 rounded-full bg-surface-container overflow-hidden mb-4 shadow-sm border border-surface-variant"
+        >
+          <img
+            alt="Professional portrait of Digital Craftsman"
+            class="w-full h-full object-cover"
+            data-alt="Professional portrait of Digital Craftsman, high quality, studio lighting, modern minimalist background. The style is sharp, clean, and embodies a premium tech-focused aesthetic. Soft off-white surroundings emphasize the crisp details of the portrait."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzSdmEuoNr0p1S9TAjolYwwyipcjqUQOmJ0pEFQCCHaRZaT5kTkfb55OzCGcpIKlLaxAm-9_aTKA2NCv6q4TYf3JthF_6pFtP7Ueb9_uGAcUoGI0mvAR3so1iof3gcBZO5x52QdU2ftD3IqBDmYwX-dlgpF1FR2h-ezplmvYibJtBNEixD6p9XHykEZZWQx3Dc4HbsWcGYtEaTiDpnXLGEf4TxNdL3dKAO2M9z6lVGekkberki9CrbSw"
+          />
+        </div>
+        <h1
+          class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed text-center"
+        >
+          Interface Architect
+        </h1>
+        <p class="font-label-sm text-label-sm text-secondary mt-2">
+          Crafting Digital Excellence
+        </p>
+      </div>
+      <!-- Navigation Links -->
+      <div class="flex-1 overflow-y-auto w-full no-scrollbar">
+        <ul class="flex flex-col gap-2 w-full">
+          <!-- Active Item: Profile (since this is the main portfolio view) -->
+          <li>
+            <a
+              class="flex items-center gap-4 py-3 px-4 rounded-lg bg-surface text-primary dark:text-primary-fixed font-bold border-r-2 border-primary dark:border-primary-fixed group transition-all duration-200"
+              href="#"
+            >
+              <span
+                class="material-symbols-outlined text-xl"
+                data-icon="person"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >person</span
+              >
+              <span class="font-label-md text-label-md">Profile</span>
+            </a>
+          </li>
+          <!-- Inactive Items -->
+          <li>
+            <a
+              class="flex items-center gap-4 py-3 px-4 rounded-lg text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300 hover:bg-surface/50 group"
+              href="#"
+            >
+              <span
+                class="material-symbols-outlined text-xl group-hover:text-primary transition-colors"
+                data-icon="work"
+                >work</span
+              >
+              <span
+                class="font-label-md text-label-md group-hover:text-primary transition-colors"
+                >Experience</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex items-center gap-4 py-3 px-4 rounded-lg text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300 hover:bg-surface/50 group"
+              href="#"
+            >
+              <span
+                class="material-symbols-outlined text-xl group-hover:text-primary transition-colors"
+                data-icon="dashboard"
+                >dashboard</span
+              >
+              <span
+                class="font-label-md text-label-md group-hover:text-primary transition-colors"
+                >Projects</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex items-center gap-4 py-3 px-4 rounded-lg text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300 hover:bg-surface/50 group"
+              href="#"
+            >
+              <span
+                class="material-symbols-outlined text-xl group-hover:text-primary transition-colors"
+                data-icon="school"
+                >school</span
+              >
+              <span
+                class="font-label-md text-label-md group-hover:text-primary transition-colors"
+                >Education</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex items-center gap-4 py-3 px-4 rounded-lg text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300 hover:bg-surface/50 group"
+              href="#"
+            >
+              <span
+                class="material-symbols-outlined text-xl group-hover:text-primary transition-colors"
+                data-icon="verified"
+                >verified</span
+              >
+              <span
+                class="font-label-md text-label-md group-hover:text-primary transition-colors"
+                >Certificates</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex items-center gap-4 py-3 px-4 rounded-lg text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300 hover:bg-surface/50 group"
+              href="#"
+            >
+              <span
+                class="material-symbols-outlined text-xl group-hover:text-primary transition-colors"
+                data-icon="psychology"
+                >psychology</span
+              >
+              <span
+                class="font-label-md text-label-md group-hover:text-primary transition-colors"
+                >Skills</span
+              >
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex items-center gap-4 py-3 px-4 rounded-lg text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300 hover:bg-surface/50 group"
+              href="#"
+            >
+              <span
+                class="material-symbols-outlined text-xl group-hover:text-primary transition-colors"
+                data-icon="mail"
+                >mail</span
+              >
+              <span
+                class="font-label-md text-label-md group-hover:text-primary transition-colors"
+                >Contact</span
+              >
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- CTA -->
+      <div class="mt-auto pt-6 w-full border-t border-surface-variant">
+        <button
+          class="w-full bg-primary-container text-on-primary py-3 px-4 rounded-full font-label-md text-label-md hover:translate-y-[2px] transition-transform duration-200 shadow-sm flex items-center justify-center gap-2 group"
+        >
+          Initiate Dialogue
+          <span
+            class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform"
+            data-icon="arrow_forward"
+            >arrow_forward</span
+          >
+        </button>
+      </div>
+    </nav>
+    <!-- Main Workspace Area -->
+    <main
+      class="ml-[320px] h-full flex-1 relative flex flex-col p-8 overflow-hidden"
+    >
+      <!-- Asymmetrical Grid Container -->
+      <div class="flex-1 grid grid-cols-12 gap-6 h-full relative z-10">
+        <!-- Hero Section (Left/Center Column span) -->
+        <section
+          class="col-span-12 lg:col-span-5 xl:col-span-4 flex flex-col justify-center h-full pr-8"
+        >
+          <div class="relative">
+            <h2
+              class="font-display-lg text-display-lg text-primary mb-6 leading-tight"
+            >
+              DIGITAL CRAFTSMAN<br />&amp; INTERFACE ARCHITECT
+            </h2>
+            <div class="w-16 h-1 bg-surface-variant mb-6 rounded-full"></div>
+            <p class="font-body-lg text-body-lg text-secondary mb-10 max-w-md">
+              Designing meticulous digital environments. I specialize in turning
+              complex architectural systems into intuitive, tactile interfaces
+              that prioritize clarity and premium execution.
+            </p>
+            <div class="flex items-center gap-6">
+              <button
+                class="bg-primary-container text-on-primary py-3 px-6 rounded-full font-label-md text-label-md hover:translate-y-[-2px] transition-transform duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.15)] flex items-center gap-2"
+              >
+                Explore Portfolio
+              </button>
+              <a
+                class="text-secondary font-label-md text-label-md hover:text-primary transition-colors flex items-center gap-1 group"
+                href="#"
+              >
+                Download CV
+                <span
+                  class="material-symbols-outlined text-sm group-hover:translate-y-1 transition-transform"
+                  data-icon="download"
+                  >download</span
+                >
+              </a>
+            </div>
+          </div>
+        </section>
+        <!-- Layered Content Sections (Right Column span) -->
+        <section
+          class="col-span-12 lg:col-span-7 xl:col-span-8 relative h-full flex items-center justify-center"
+        >
+          <!-- Bento Box Style Grid for right side -->
+          <div
+            class="grid grid-cols-2 grid-rows-3 gap-6 w-full h-[80%] max-w-4xl absolute right-0"
+          >
+            <!-- EXPERIENCE Card (Top Right, spans 2 columns) -->
+            <div
+              class="col-span-2 row-span-1 bg-surface-container-lowest rounded-2xl soft-shadow p-6 flex flex-col justify-between hover-lift ambient-gradient-1 border border-surface-variant/50 relative overflow-hidden group"
+            >
+              <!-- Subtle decorative background element -->
+              <div
+                class="absolute -right-12 -top-12 w-48 h-48 bg-surface-variant/20 rounded-full blur-3xl group-hover:bg-surface-variant/30 transition-colors"
+              ></div>
+              <div class="flex justify-between items-start z-10">
+                <div>
+                  <h3
+                    class="font-label-sm text-label-sm text-secondary tracking-widest uppercase mb-1"
+                  >
+                    Current Role
+                  </h3>
+                  <h4
+                    class="font-headline-sm text-headline-sm text-primary mb-1"
+                  >
+                    Senior Product Designer
+                  </h4>
+                  <p class="font-body-md text-body-md text-secondary">
+                    Design Studio Alpha
+                  </p>
+                </div>
+                <div
+                  class="bg-surface rounded-full p-2 border border-surface-variant"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary"
+                    data-icon="work"
+                    >work</span
+                  >
+                </div>
+              </div>
+              <div
+                class="mt-4 flex items-center justify-between z-10 border-t border-surface-variant/50 pt-4"
+              >
+                <span
+                  class="font-label-sm text-label-sm text-secondary bg-surface px-3 py-1 rounded-full border border-surface-variant"
+                  >2021 — Present</span
+                >
+                <a
+                  class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-1"
+                  href="#"
+                >
+                  View details
+                  <span
+                    class="material-symbols-outlined text-xs"
+                    data-icon="arrow_forward"
+                    >arrow_forward</span
+                  >
+                </a>
+              </div>
+            </div>
+            <!-- SELECTED PROJECTS Card (Bottom Left) -->
+            <div
+              class="col-span-1 row-span-2 bg-surface-container-lowest rounded-2xl soft-shadow p-6 flex flex-col hover-lift border border-surface-variant/50 group overflow-hidden relative"
+            >
+              <div class="flex justify-between items-center mb-6 z-10">
+                <h3
+                  class="font-label-sm text-label-sm text-secondary tracking-widest uppercase"
+                >
+                  Featured Work
+                </h3>
+                <span
+                  class="material-symbols-outlined text-secondary"
+                  data-icon="dashboard"
+                  >dashboard</span
+                >
+              </div>
+              <!-- Project Image Preview -->
+              <div
+                class="flex-1 w-full rounded-xl overflow-hidden bg-surface-variant relative mb-4"
+              >
+                <img
+                  alt="Fintech Platform Project Preview"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  data-alt="A clean, modern interface design for a Fintech platform. The image shows a dashboard with subtle data visualizations, sleek typography, and a light-mode aesthetic using soft greys and white, embodying architectural clarity."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6-1SK0jEtpJJdZoQNOBlpzT-K_xxvhJIGycLgbf1DIIYp6oUBNXC636yu39Vcb4jUKj8FdfWNzfn_WPa72JRQtga5p2mP1kiM-k9EKfyYwi-xyL13fKLMiYYj-V2GLIu9H9mKHOkh5kpcmjQB1PBxcXDTq81qs1xj41mqDEXu6I2Cv_S7_97uZkNaWmhJrtzRFBrHWmzJIx8I5y84GVaP9y285d40-XDYX9-kfjtSe56UyvY4SPJ8tQ"
+                />
+              </div>
+              <div class="z-10 mt-auto">
+                <h4 class="font-headline-sm text-headline-sm text-primary mb-2">
+                  Fintech Platform
+                </h4>
+                <p
+                  class="font-body-md text-body-md text-secondary line-clamp-2"
+                >
+                  A comprehensive dashboard for high-frequency trading
+                  analytics, emphasizing data density and cognitive ease.
+                </p>
+              </div>
+            </div>
+            <!-- SKILLS & TECH Card (Bottom Right) -->
+            <div class="col-span-1 row-span-2 flex flex-col gap-6">
+              <!-- Top Half: Skills Cloud -->
+              <div
+                class="flex-1 bg-surface-container-lowest rounded-2xl soft-shadow p-6 hover-lift border border-surface-variant/50 flex flex-col"
+              >
+                <div class="flex justify-between items-center mb-4">
+                  <h3
+                    class="font-label-sm text-label-sm text-secondary tracking-widest uppercase"
+                  >
+                    Core Stack
+                  </h3>
+                  <span
+                    class="material-symbols-outlined text-secondary"
+                    data-icon="psychology"
+                    >psychology</span
+                  >
+                </div>
+                <div class="flex flex-wrap gap-2 mt-auto">
+                  <span
+                    class="bg-surface text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full border border-surface-variant"
+                    >Figma</span
+                  >
+                  <span
+                    class="bg-surface text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full border border-surface-variant"
+                    >Design Systems</span
+                  >
+                  <span
+                    class="bg-surface text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full border border-surface-variant"
+                    >React</span
+                  >
+                  <span
+                    class="bg-surface text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full border border-surface-variant"
+                    >Tailwind CSS</span
+                  >
+                  <span
+                    class="bg-surface text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full border border-surface-variant"
+                    >Prototyping</span
+                  >
+                  <span
+                    class="bg-surface text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full border border-surface-variant"
+                    >UX Architecture</span
+                  >
+                </div>
+              </div>
+              <!-- Bottom Half: Mini Stat / Decorative -->
+              <div
+                class="h-32 bg-primary-container rounded-2xl shadow-[0_12px_48px_rgba(0,0,0,0.15)] p-6 hover-lift flex flex-col justify-center relative overflow-hidden group"
+              >
+                <!-- Subtle abstract geometry -->
+                <div
+                  class="absolute -right-8 -top-8 w-32 h-32 border border-surface-variant/20 rounded-full opacity-20 group-hover:scale-110 transition-transform duration-500"
+                ></div>
+                <h4
+                  class="font-display-lg-mobile text-display-lg-mobile text-on-primary mb-1"
+                >
+                  8+
+                </h4>
+                <p class="font-label-md text-label-md text-primary-fixed-dim">
+                  Years of Refinement
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <!-- Footer Component -->
+    <footer
+      class="fixed bottom-0 right-0 w-[calc(100%-320px)] px-8 py-6 flex justify-end items-center gap-6 bg-transparent z-40"
+    >
+      <!-- Links -->
+      <div class="flex gap-6 items-center">
+        <a
+          class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed hover:text-primary dark:hover:text-primary-fixed transition-colors duration-300"
+          href="#"
+          >LinkedIn</a
+        >
+        <a
+          class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed hover:text-primary dark:hover:text-primary-fixed transition-colors duration-300"
+          href="#"
+          >GitHub</a
+        >
+        <a
+          class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed hover:text-primary dark:hover:text-primary-fixed transition-colors duration-300"
+          href="#"
+          >Layers</a
+        >
+      </div>
+      <div class="w-1 h-1 bg-surface-variant rounded-full"></div>
+      <!-- Copyright -->
+      <div
+        class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed"
+      >
+        © 2024 Digital Craftsman. Built with Precision.
+      </div>
+    </footer>
+    <script>
+      // Optional vanilla JS for micro-interactions could go here
+      // e.g., subtle parallax on mouse move across the bento grid
+    </script>
+  </body>
+</html>

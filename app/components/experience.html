@@ -1,0 +1,517 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Professional Experience - Digital Craftsman</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-container": "#626267",
+              "on-tertiary-container": "#2d83f6",
+              secondary: "#5e5e63",
+              "on-surface": "#1a1c1d",
+              "surface-container-high": "#e8e8ea",
+              "surface-container": "#eeeef0",
+              "on-tertiary-fixed-variant": "#00458f",
+              "surface-dim": "#d9dadc",
+              "on-error-container": "#93000a",
+              "surface-container-highest": "#e2e2e4",
+              "secondary-fixed": "#e3e2e7",
+              "on-primary-fixed": "#1b1b1d",
+              outline: "#77767b",
+              background: "#f9f9fb",
+              "on-primary": "#ffffff",
+              "surface-bright": "#f9f9fb",
+              "on-secondary": "#ffffff",
+              "surface-container-low": "#f3f3f5",
+              "on-secondary-fixed-variant": "#46464b",
+              "primary-container": "#1d1d1f",
+              "on-primary-container": "#868587",
+              "on-secondary-fixed": "#1a1b1f",
+              error: "#ba1a1a",
+              "surface-tint": "#5f5e60",
+              "on-primary-fixed-variant": "#474649",
+              "tertiary-fixed-dim": "#abc7ff",
+              "tertiary-container": "#001c42",
+              "secondary-fixed-dim": "#c7c6cb",
+              "on-error": "#ffffff",
+              "inverse-surface": "#2f3132",
+              "inverse-primary": "#c8c6c8",
+              surface: "#f9f9fb",
+              "primary-fixed": "#e4e2e4",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary-fixed": "#001b3f",
+              "on-background": "#1a1c1d",
+              "secondary-container": "#e0dfe4",
+              "on-tertiary": "#ffffff",
+              tertiary: "#00030c",
+              "tertiary-fixed": "#d7e2ff",
+              "inverse-on-surface": "#f0f0f2",
+              "primary-fixed-dim": "#c8c6c8",
+              "outline-variant": "#c7c6ca",
+              "surface-variant": "#e2e2e4",
+              primary: "#030304",
+              "on-surface-variant": "#46464a",
+              "error-container": "#ffdad6",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              gutter: "24px",
+              md: "24px",
+              base: "8px",
+              lg: "48px",
+              xs: "4px",
+              xl: "80px",
+              sm: "12px",
+              "container-max": "1280px",
+            },
+            fontFamily: {
+              "label-md": ["Inter"],
+              "headline-md": ["Inter"],
+              "body-lg": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+              "display-lg": ["Inter"],
+              "body-md": ["Inter"],
+              "label-sm": ["Inter"],
+              "headline-sm": ["Inter"],
+            },
+            fontSize: {
+              "label-md": [
+                "14px",
+                { lineHeight: "1", letterSpacing: "0.02em", fontWeight: "600" },
+              ],
+              "headline-md": [
+                "32px",
+                {
+                  lineHeight: "1.3",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": [
+                "18px",
+                { lineHeight: "1.6", letterSpacing: "0", fontWeight: "400" },
+              ],
+              "display-lg-mobile": [
+                "40px",
+                {
+                  lineHeight: "1.2",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "display-lg": [
+                "64px",
+                {
+                  lineHeight: "1.1",
+                  letterSpacing: "-0.04em",
+                  fontWeight: "800",
+                },
+              ],
+              "body-md": [
+                "16px",
+                { lineHeight: "1.6", letterSpacing: "0", fontWeight: "400" },
+              ],
+              "label-sm": [
+                "12px",
+                { lineHeight: "1", letterSpacing: "0.01em", fontWeight: "500" },
+              ],
+              "headline-sm": [
+                "24px",
+                {
+                  lineHeight: "1.4",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "600",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #f5f5f7;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+      }
+      .lift-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
+      }
+      /* Gradient text utility */
+      .text-gradient {
+        background: linear-gradient(135deg, #1d1d1f 0%, #5e5e63 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-surface antialiased selection:bg-primary-container selection:text-on-primary min-h-screen flex"
+  >
+    <!-- Desktop Side Navigation -->
+    <nav
+      class="hidden md:flex flex-col py-8 px-6 fixed left-0 top-0 h-[calc(100vh-48px)] z-50 rounded-full my-6 ml-6 w-64 bg-surface-container-lowest/80 dark:bg-surface-container-low/80 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.04)]"
+    >
+      <div class="flex items-center gap-sm mb-lg px-xs">
+        <div
+          class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant flex-shrink-0"
+        >
+          <img
+            alt="Professional portrait of Digital Craftsman"
+            class="w-full h-full object-cover"
+            data-alt="Professional headshot of a software developer with a clean, modern aesthetic. Soft, even studio lighting. Neutral grey background."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7Pc9vPQ7Y3p2DO1Af9Ms9lurukqtNsdSdV1K9LoXWVhhm0Cf4ibA_K0ECyuDQZBfJNvebcHmYmP2ahIUuh8j7mB7j8AglGm5QfnCadAhTwY1r5vEwFx57s_B5NWlFdw-JkN77CTlTchamyCbkiSLOOS3-wUeYTef9AOJJJ6ldayHlxNTNs94pQkafuCRQrZhMTmEXNqMFTylObSrDB0kYT61t7fD1OezI2XFuy0RQrOlPSq10hupivw"
+          />
+        </div>
+        <div class="flex flex-col">
+          <span
+            class="font-headline-md text-[18px] leading-tight font-bold text-primary dark:text-primary-fixed"
+            >Interface Architect</span
+          >
+          <span class="font-label-sm text-secondary"
+            >Crafting Digital Excellence</span
+          >
+        </div>
+      </div>
+      <ul class="flex flex-col gap-sm flex-grow font-label-md text-label-md">
+        <li class="">
+          <a
+            class="flex items-center gap-sm px-md py-sm rounded-full text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300"
+            href="#"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 0"
+              >person</span
+            >
+            Profile
+          </a>
+        </li>
+        <li class="">
+          <a
+            class="flex items-center gap-sm px-md py-sm rounded-full text-primary dark:text-primary-fixed font-bold border-r-2 border-primary dark:border-primary-fixed hover:translate-y-[-2px] transition-transform duration-300 bg-surface-variant/30"
+            href="#"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+              >work</span
+            >
+            Experience
+          </a>
+        </li>
+        <li class="">
+          <a
+            class="flex items-center gap-sm px-md py-sm rounded-full text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300"
+            href="#"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 0"
+              >dashboard</span
+            >
+            Projects
+          </a>
+        </li>
+        <li class="">
+          <a
+            class="flex items-center gap-sm px-md py-sm rounded-full text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300"
+            href="#"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 0"
+              >school</span
+            >
+            Education
+          </a>
+        </li>
+        <li class="">
+          <a
+            class="flex items-center gap-sm px-md py-sm rounded-full text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300"
+            href="#"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 0"
+              >verified</span
+            >
+            Certificates
+          </a>
+        </li>
+        <li class="">
+          <a
+            class="flex items-center gap-sm px-md py-sm rounded-full text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300"
+            href="#"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 0"
+              >psychology</span
+            >
+            Skills
+          </a>
+        </li>
+        <li class="">
+          <a
+            class="flex items-center gap-sm px-md py-sm rounded-full text-secondary dark:text-secondary-fixed opacity-70 hover:opacity-100 hover:translate-y-[-2px] transition-transform duration-300"
+            href="#"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 0"
+              >mail</span
+            >
+            Contact
+          </a>
+        </li>
+      </ul>
+      <div class="mt-auto pt-lg">
+        <button
+          class="w-full bg-primary-container text-on-primary rounded-full py-sm font-label-md hover:translate-y-[-2px] transition-transform duration-300 shadow-[0_4px_12px_rgba(29,29,31,0.2)]"
+        >
+          Initiate Dialogue
+        </button>
+      </div>
+    </nav>
+    <!-- Mobile Top Navigation (Simplified for focus) -->
+    <nav
+      class="md:hidden fixed top-0 w-full z-50 glass-panel px-md py-sm flex justify-between items-center border-b border-surface-variant"
+    >
+      <span class="font-headline-md text-[20px] font-bold text-primary"
+        >Interface Architect</span
+      >
+      <button class="text-primary p-xs">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </nav>
+    <!-- Main Canvas -->
+    <main
+      class="flex-grow md:ml-[320px] pt-xl pb-xl px-md md:px-xl max-w-container-max mx-auto w-full relative min-h-screen flex flex-col mt-16 md:mt-0"
+    >
+      <!-- Ambient background elements for depth -->
+      <div
+        class="absolute top-0 right-0 w-[600px] h-[600px] bg-surface-container-high rounded-full blur-[120px] opacity-40 -z-10 translate-x-1/3 -translate-y-1/3 pointer-events-none"
+      ></div>
+      <!-- Header Section -->
+      <header class="mb-xl max-w-3xl">
+        <h1
+          class="font-display-lg-mobile md:font-display-lg text-primary mb-sm tracking-tight"
+        >
+          Professional <br /><span class="text-secondary">Experience.</span>
+        </h1>
+        <p class="font-body-lg text-secondary">
+          A record of high-impact engineering and architectural clarity.
+        </p>
+      </header>
+      <!-- Experience Timeline / Card -->
+      <section class="flex flex-col gap-lg flex-grow">
+        <!-- Top Section: Role Details -->
+        <div
+          class="glass-panel p-md lg:p-lg rounded-xl relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-md"
+        >
+          <div
+            class="absolute top-0 left-0 w-1 h-full bg-primary-container"
+          ></div>
+          <div>
+            <h2 class="font-headline-md text-primary mb-xs">
+              Front-end Developer
+            </h2>
+            <h3 class="font-headline-sm text-secondary">
+              Beijing Guoke Tiefu
+              <span class="text-sm font-normal text-on-surface-variant"
+                >(北京国科铁服)</span
+              >
+            </h3>
+            <span
+              class="text-label-sm uppercase tracking-wider mt-sm inline-block opacity-70"
+              >Onsite: China Academy of Railway Sciences</span
+            >
+          </div>
+          <div class="flex flex-col items-start md:items-end gap-sm">
+            <div
+              class="flex items-center gap-sm text-secondary bg-surface-variant/50 px-sm py-xs rounded-full"
+            >
+              <span class="material-symbols-outlined text-[20px]"
+                >calendar_today</span
+              >
+              <span class="font-label-md uppercase tracking-wider"
+                >Aug 2022 — Aug 2025</span
+              >
+            </div>
+            <div class="flex flex-wrap gap-xs">
+              <span
+                class="bg-surface-variant text-on-surface-variant px-sm py-xs rounded-full font-label-sm"
+                >Enterprise UI</span
+              >
+              <span
+                class="bg-surface-variant text-on-surface-variant px-sm py-xs rounded-full font-label-sm"
+                >System Architecture</span
+              >
+              <span
+                class="bg-surface-variant text-on-surface-variant px-sm py-xs rounded-full font-label-sm"
+                >Vue.js</span
+              >
+            </div>
+          </div>
+        </div>
+        <!-- Bottom Section: Projects -->
+        <div class="flex flex-col gap-md">
+          <!-- Project 1 -->
+          <article
+            class="bg-surface-container-lowest p-md lg:p-lg rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] transition-all duration-300 lift-hover border border-transparent hover:border-surface-variant group relative overflow-hidden"
+          >
+            <div
+              class="absolute top-0 right-0 p-md opacity-10 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            >
+              <span
+                class="material-symbols-outlined text-6xl"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >shopping_cart</span
+              >
+            </div>
+            <div class="mb-sm">
+              <span
+                class="inline-block bg-primary-container text-on-primary px-sm py-xs rounded-full font-label-sm mb-md shadow-sm"
+                >Vue 2</span
+              >
+            </div>
+            <h4 class="font-headline-sm text-primary mb-xs">
+              Railway Freight E-commerce System (95306) - EC Platform
+            </h4>
+            <p
+              class="font-body-md text-on-surface-variant mb-md max-w-3xl relative z-10"
+            >
+              Architected and implemented critical frontend infrastructure for a
+              high-scale national logistics platform. Streamlined commerce
+              interfaces to improve user experience and transactional
+              efficiency.
+            </p>
+            <a
+              class="inline-flex items-center gap-xs font-label-md text-primary hover:text-secondary transition-colors relative z-10"
+              href="#"
+              >Explore Architecture
+              <span class="material-symbols-outlined text-[18px]"
+                >arrow_forward</span
+              ></a
+            >
+          </article>
+          <!-- Project 2 -->
+          <article
+            class="bg-surface-container-lowest p-md lg:p-lg rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] transition-all duration-300 lift-hover border border-transparent hover:border-surface-variant group relative overflow-hidden"
+          >
+            <div
+              class="absolute top-0 right-0 p-md opacity-10 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            >
+              <span
+                class="material-symbols-outlined text-6xl"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >dashboard</span
+              >
+            </div>
+            <div class="mb-sm">
+              <span
+                class="inline-block bg-primary-container text-on-primary px-sm py-xs rounded-full font-label-sm mb-md shadow-sm"
+                >Vue 2</span
+              >
+            </div>
+            <h4 class="font-headline-sm text-primary mb-xs">
+              Railway Freight E-commerce System (95306) - Backend Management
+              System
+            </h4>
+            <p
+              class="font-body-md text-on-surface-variant mb-md max-w-3xl relative z-10"
+            >
+              Designed and developed administrative dashboards focusing on high
+              data density and operational efficiency across complex
+              transactional workflows for internal management.
+            </p>
+          </article>
+          <!-- Project 3 -->
+          <article
+            class="bg-surface-container-lowest p-md lg:p-lg rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] transition-all duration-300 lift-hover border border-transparent hover:border-surface-variant group relative overflow-hidden flex flex-col sm:flex-row gap-md items-start sm:items-center justify-between"
+          >
+            <div class="max-w-3xl">
+              <div class="mb-xs">
+                <span
+                  class="inline-block bg-primary-container text-on-primary px-sm py-xs rounded-full font-label-sm mb-md shadow-sm"
+                  >Vue 3</span
+                >
+              </div>
+              <h4 class="font-headline-sm text-primary mb-xs">
+                Shanghai Railway Bureau Backend System
+              </h4>
+              <p class="font-body-md text-secondary">
+                Regional management portal (上海铁路局后台管理系统) facilitating
+                localized logistics operations, built with modern Vue 3
+                architecture for improved performance.
+              </p>
+            </div>
+            <span
+              class="material-symbols-outlined text-secondary opacity-50 text-4xl sm:text-6xl p-md pointer-events-none"
+              >corporate_fare</span
+            >
+          </article>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer
+      class="fixed bottom-0 right-0 w-full px-8 py-6 flex flex-col md:flex-row justify-between md:justify-end items-center gap-6 bg-transparent pointer-events-none md:pointer-events-auto z-40 md:pl-[344px]"
+    >
+      <div
+        class="hidden md:block mr-auto text-secondary font-label-sm pointer-events-auto"
+      >
+        © 2024 Digital Craftsman. Built with Precision.
+      </div>
+      <div
+        class="flex items-center gap-6 pointer-events-auto bg-surface-container-lowest/80 backdrop-blur-md px-md py-sm rounded-full shadow-sm md:bg-transparent md:backdrop-blur-none md:shadow-none"
+      >
+        <a
+          class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed hover:text-primary dark:hover:text-primary-fixed transition-colors Transition-all duration-300"
+          href="#"
+          >LinkedIn</a
+        >
+        <a
+          class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed hover:text-primary dark:hover:text-primary-fixed transition-colors Transition-all duration-300"
+          href="#"
+          >GitHub</a
+        >
+        <a
+          class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed hover:text-primary dark:hover:text-primary-fixed transition-colors Transition-all duration-300"
+          href="#"
+          >Layers</a
+        >
+      </div>
+    </footer>
+  </body>
+</html>
