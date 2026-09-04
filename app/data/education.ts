@@ -29,6 +29,8 @@ export const educationHeader = {
       "情報技術・GISを学ぶ中で、学部ではWeChatミニプログラムのフロントエンドを開発し、大学院ではWebGIS・データ基盤の技術支援を経験しました。多様なデータをWeb上に集約し、利用者が検索・活用できる形で届ける面白さに惹かれたことが、フロントエンドを志す原点となりました。",
     expand: "詳細を見る",
     collapse: "閉じる",
+    closeDialog: "閉じる",
+    projectDetails: "プロジェクト詳細",
   },
   en: {
     title: "Academic & Technical Background",
@@ -36,6 +38,8 @@ export const educationHeader = {
       "With a background in information technology and GIS, I developed the frontend of a WeChat Mini Program and later supported WebGIS and data-platform operations during my master’s program. Seeing diverse data transformed into a searchable web platform showed me the value of turning complex data into useful user experiences and led me toward frontend engineering.",
     expand: "View details",
     collapse: "Close",
+    closeDialog: "Close",
+    projectDetails: "Project Details",
   },
 };
 export const education = {
@@ -99,6 +103,8 @@ export const education = {
           url: "https://upc-study-room-finder.vercel.app/",
           label: "現在の再現Webデモを見る",
           note: "大学時代のWeChatミニプログラムをHTML・CSS・JavaScriptで再構成したもので、当時の原版ではありません。",
+          githubUrl: "https://github.com/RedJone888/upc-study-room-finder",
+          githubLabel: "GitHub で再現コードを見る",
         },
       },
     },
@@ -220,6 +226,8 @@ export const education = {
           url: "https://upc-study-room-finder.vercel.app/",
           label: "View the current web recreation",
           note: "A later HTML, CSS, and JavaScript recreation—not the original WeChat Mini Program.",
+          githubUrl: "https://github.com/RedJone888/upc-study-room-finder",
+          githubLabel: "View the recreation code on GitHub",
         },
       },
     },

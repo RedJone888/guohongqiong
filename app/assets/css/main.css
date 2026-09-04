@@ -3,7 +3,7 @@
   /* --bg: #f8f6f1; */
   /* --papper: #efddff; */
   --bg: #efddff;
-  --bg-heavy: #ba94f0;
+  --bg-heavy: #6d4a9e;
   --surface: #ffffff;
   --surface-soft: #efebe2;
   --text: #20231f;
@@ -16,9 +16,9 @@
   --radius-lg: 28px;
   --radius-md: 18px;
   --radius-sm: 14px;
-  --shadow: 4px 4px 0 #26201a;
-  --shadow-sm: 3px 3px 0 #26201a;
-  --card: #fcf7ff;
+  --shadow: 4px 4px 1px #6b6560;
+  --shadow-sm: 3px 3px 1px #6b6560;
+  --card: #fffdf7;
   --max: 1120px;
   --border: 2px solid #26201a;
   --font-body: system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -67,7 +67,7 @@ body,
   font-family: "Material Symbols Outlined";
   font-weight: normal;
   font-style: normal;
-  font-size: 20px;
+  font-size: 1.25rem;
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
@@ -101,9 +101,11 @@ body,
 }
 .download {
   background: var(--bg-heavy);
+  color: #fffdf7;
+  border: 2px solid #5a3d8a;
 }
 .download:hover {
-  background: #c6a6f3;
+  background: #5f3f8c;
 }
 .download:hover .download-icon {
   animation: bounce 1s infinite cubic-bezier(0.36, 0, 0.66, -0.56);
@@ -144,6 +146,68 @@ h2 {
   display: none;
 }
 
+/* Hidden scrollbars keep the layout clean; scroll areas use a reserved footer cue. */
+.scroll-affordance {
+  --scroll-affordance-surface: var(--card, #fffdf7);
+  --scroll-affordance-color: #6d4a9e;
+  isolation: isolate;
+}
+
+.scroll-affordance-frame {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow: visible;
+}
+
+.scroll-affordance-frame > .scroll-affordance {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Small cards reserve a real footer cue instead of covering their content. */
+.scroll-cue {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  height: 0;
+  flex: 0 0 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-top: 0 solid transparent;
+  background: var(--scroll-affordance-surface, var(--card, #fffdf7));
+  color: var(--scroll-affordance-color, #6d4a9e);
+  opacity: 0;
+  pointer-events: none;
+  transition: height 150ms ease, flex-basis 150ms ease, opacity 150ms ease;
+}
+
+.scroll-affordance.scroll-affordance-active:not(.scroll-affordance-at-end) + .scroll-cue {
+  height: 2rem;
+  flex-basis: 2rem;
+  border-top-width: 1px;
+  border-top-color: color-mix(in srgb, var(--scroll-affordance-color, #6d4a9e) 20%, transparent);
+  box-shadow: 0 -10px 16px -16px color-mix(in srgb, var(--scroll-affordance-color, #6d4a9e) 65%, transparent);
+  opacity: 1;
+}
+
+.scroll-cue .material-symbols-outlined {
+  font-size: 1.125rem;
+  font-weight: 650;
+}
+
+.scroll-affordance-page {
+  --scroll-affordance-surface: var(--bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue {
+    transition-duration: 1ms;
+  }
+}
+
 .card {
   background: linear-gradient(180deg, #ffffff 0%, #f9f9fb 100%);
 }
@@ -151,13 +215,13 @@ h2 {
 /* Keep the complete desktop shell centered on ultra-wide displays. */
 @media (min-width: 1024px) {
   .portfolio-main-column {
-    width: min(72rem, calc(100vw - 18.5rem));
-    max-width: 72rem;
+    width: min(88rem, calc(100vw - 18.5rem));
+    max-width: 88rem;
     flex: 0 0 auto;
   }
 
   .desktop-language-switch {
-    right: max(1.5rem, calc((100vw - 90.5rem) / 2 + 1.5rem));
+    right: max(1.5rem, calc((100vw - 106.5rem) / 2 + 1.5rem));
   }
 }
 
@@ -169,7 +233,7 @@ h2 {
   position: relative;
   border: 2px solid var(--ink);
   background: transparent;
-  box-shadow: 3px 3px 0 var(--ink);
+  box-shadow: 3px 3px 1px #6b6560;
   transform: translate(-1px, -1px);
   overflow: hidden;
 }

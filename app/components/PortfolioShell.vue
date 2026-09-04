@@ -32,7 +32,7 @@
                 </span>
                 <span class="min-w-0">
                     <span class="block truncate text-sm font-bold text-stone-950">{{ profile.nameKanji }}</span>
-                    <span class="block truncate text-[11px] font-semibold text-stone-600">{{ profile.role }}</span>
+                    <span class="block truncate text-[0.6875rem] font-semibold text-stone-600">{{ profile.role }}</span>
                 </span>
             </button>
 
@@ -78,29 +78,34 @@
                     </p>
                 </div>
 
-                <div class="min-h-0 flex-1 overflow-y-auto no-scrollbar p-2">
-                    <ul class="flex flex-col gap-2">
-                        <li v-for="section in localizedSections" :key="section.key">
-                            <button type="button"
-                                class="group flex w-full items-center gap-4 rounded-xl px-4 py-3 text-left text-sm font-semibold transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950"
-                                :class="activeSection === section.key
-                                    ? 'nav-depth-active font-bold text-stone-950'
-                                    : 'text-stone-500 opacity-75 hover:bg-[#ebe3f6]/40 hover:text-stone-950 hover:opacity-100'
-                                    " :aria-label="section.label"
-                                :aria-current="activeSection === section.key ? 'page' : undefined"
-                                @click="setActiveSection(section.key)">
-                                <span aria-hidden="true"
-                                    class="nav-depth-icon relative material-symbols-outlined text-xl transition-colors"
-                                    :class="activeSection === section.key ? 'material-symbol-filled' : ''">
-                                    {{ section.icon }}
-                                </span>
-                                <span class="nav-depth-label relative tracking-[0.05em]">
-                                    {{ section.label }}
-                                </span>
-                            </button>
+                <div class="scroll-affordance-frame min-h-0 flex-1">
+                    <div v-scroll-affordance class="min-h-0 flex-1 overflow-y-auto no-scrollbar p-2">
+                        <ul class="flex flex-col gap-2">
+                            <li v-for="section in localizedSections" :key="section.key">
+                                <button type="button"
+                                    class="group flex w-full items-center gap-4 rounded-xl px-4 py-3 text-left text-sm font-semibold transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950"
+                                    :class="activeSection === section.key
+                                        ? 'nav-depth-active font-bold text-stone-950'
+                                        : 'text-stone-500 opacity-75 hover:bg-[#ebe3f6]/40 hover:text-stone-950 hover:opacity-100'
+                                        " :aria-label="section.label"
+                                    :aria-current="activeSection === section.key ? 'page' : undefined"
+                                    @click="setActiveSection(section.key)">
+                                    <span aria-hidden="true"
+                                        class="nav-depth-icon relative material-symbols-outlined text-xl transition-colors"
+                                        :class="activeSection === section.key ? 'material-symbol-filled' : ''">
+                                        {{ section.icon }}
+                                    </span>
+                                    <span class="nav-depth-label relative tracking-[0.05em]">
+                                        {{ section.label }}
+                                    </span>
+                                </button>
 
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="scroll-cue" aria-hidden="true">
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </div>
                 </div>
 
                 <div class="mt-auto border-t border-stone-200 pt-5 px-2">
@@ -113,27 +118,33 @@
             </nav>
         </div>
 
-        <div class="portfolio-main-column relative flex min-h-0 w-full flex-1 flex-col px-3 lg:block lg:px-0 lg:py-6">
-            <main
-                class="min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden py-3 no-scrollbar lg:h-[calc(100dvh-48px)] lg:max-w-6xl lg:overflow-visible lg:pb-0">
-                <section :id="activeSection" class="min-h-full w-full lg:h-full">
-                    <div class="min-h-full w-full lg:h-full">
-                        <ProfilePanel v-if="activeSection === 'profile'" @navigate="setActiveSection" />
-                        <component :is="activeComponent" v-else />
-                    </div>
-                </section>
-            </main>
+        <div
+            class="portfolio-main-column relative flex min-h-0 w-full flex-1 flex-col px-3 lg:h-full lg:min-h-0 lg:px-0 lg:py-6">
+            <div class="scroll-affordance-frame min-h-0 w-full flex-1">
+                <main v-scroll-affordance
+                    class="scroll-affordance-page min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden py-3 no-scrollbar lg:h-auto lg:min-h-0 lg:max-w-[88rem] lg:overflow-visible lg:pb-0">
+                    <section :id="activeSection" class="min-h-full w-full lg:h-full lg:min-h-0">
+                        <div class="min-h-full w-full lg:h-full lg:min-h-0">
+                            <ProfilePanel v-if="activeSection === 'profile'" @navigate="setActiveSection" />
+                            <component :is="activeComponent" v-else />
+                        </div>
+                    </section>
+                </main>
+                <div class="scroll-cue" aria-hidden="true">
+                    <span class="material-symbols-outlined">expand_more</span>
+                </div>
+            </div>
         </div>
 
         <!-- 移动端合并菜单的子菜单 -->
         <nav v-if="isCredentialSection" aria-label="Portfolio and credentials sections"
             class="credential-mobile-nav relative z-50 grid h-14 shrink-0 grid-cols-3 gap-1 px-3 py-2 lg:hidden">
             <button v-for="item in credentialNavItems" :key="item.key" type="button"
-                class="credential-mobile-tab relative flex min-w-0 items-center justify-center gap-1 rounded-xl px-1 text-[11px] font-bold transition"
+                class="credential-mobile-tab relative flex min-w-0 items-center justify-center gap-1 rounded-xl px-1 text-[0.6875rem] font-bold transition"
                 :class="activeSection === item.key ? 'credential-mobile-tab-active text-stone-950' : 'text-stone-500'"
                 :data-accent="item.accent"
                 :aria-current="activeSection === item.key ? 'page' : undefined" @click="setActiveSection(item.key)">
-                <span class="credential-mobile-tab-icon material-symbols-outlined text-[17px]!"
+                <span class="credential-mobile-tab-icon material-symbols-outlined text-[1.0625rem]!"
                     :class="activeSection === item.key ? 'material-symbol-filled' : ''">{{ item.icon }}</span>
                 <span class="truncate">{{ item.label }}</span>
             </button>
@@ -143,10 +154,10 @@
         <nav aria-label="Primary navigation"
             class="mobile-bottom-nav relative z-40 grid h-[calc(4.25rem+env(safe-area-inset-bottom))] shrink-0 grid-cols-5 px-1 pb-[env(safe-area-inset-bottom)] lg:hidden">
             <button v-for="item in mobileNavItems" :key="item.key" type="button"
-                class="mobile-nav-item flex min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1 text-[10px] font-semibold transition"
+                class="mobile-nav-item flex min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1 text-[0.625rem] font-semibold transition"
                 :class="isMobileNavActive(item.key) ? 'font-extrabold text-stone-950' : 'text-stone-500'"
                 :aria-current="isMobileNavActive(item.key) ? 'page' : undefined" @click="setMobileSection(item.key)">
-                <span class="mobile-nav-icon material-symbols-outlined text-[19px]!"
+                <span class="mobile-nav-icon material-symbols-outlined text-[1.1875rem]!"
                     :class="isMobileNavActive(item.key) ? 'mobile-nav-icon-active material-symbol-filled' : ''">
                     {{ item.icon }}
                 </span>
@@ -303,7 +314,7 @@ onMounted(() => {
 
 .mobile-avatar {
     border: 1.5px solid var(--mobile-ink);
-    box-shadow: 2px 2px 0 var(--mobile-ink);
+    box-shadow: 2px 2px 1px #6b6560;
 }
 
 .mobile-language-switch {
@@ -318,7 +329,7 @@ onMounted(() => {
 .mobile-language-active {
     border: 1.5px solid var(--mobile-ink);
     background: #ffeb9f;
-    box-shadow: 1.5px 1.5px 0 var(--mobile-ink);
+    box-shadow: 1.5px 1.5px 1px #6b6560;
     transform: translate(-1px, -1px);
 }
 
@@ -340,7 +351,7 @@ onMounted(() => {
 .mobile-nav-icon-active {
     border-color: var(--mobile-ink);
     background: #ffeb9f;
-    box-shadow: 1.5px 1.5px 0 var(--mobile-ink);
+    box-shadow: 1.5px 1.5px 1px #6b6560;
     transform: translate(-1px, -1px);
 }
 

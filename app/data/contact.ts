@@ -2,17 +2,17 @@ import { displayUrl } from "~/util/displayUrl";
 import { profile } from "~/data/site";
 export const contactHeader = {
   ja: {
-    title: "Get in Touch",
+    title: "お問い合わせ",
     location: "大阪、日本",
     description:
-      "フロントエンド職、Vue / Nuxt 関連の開発、または職務経歴書に関する詳細確認がありましたら、メールまたは各プロフィールからご連絡ください。",
+      "現在、日本国内でIT分野のポジションを探しています。これまでのWeb開発経験や技術領域についてのご質問・ご相談は、メールまたは各プロフィールからお気軽にご連絡ください。",
     relocation: "勤務地に応じて日本国内での転居を検討可能",
   },
   en: {
     title: "Get in Touch",
     location: "Osaka, Japan",
     description:
-      "I am currently exploring frontend opportunities in Japan. For Vue / Nuxt-related roles or further details about my experience, please contact me by email or through the profiles below.",
+      "I am currently exploring IT opportunities in Japan. If you would like to discuss a role, my web development experience, or related technical areas, please feel free to reach out by email or through the profiles below.",
     relocation: "Open to relocation within Japan",
   },
 };

@@ -1,82 +1,89 @@
 <template>
     <div
-        class="contact-page no-scrollbar flex min-h-full flex-col gap-5 p-3 lg:h-full lg:gap-4 lg:overflow-y-auto lg:pb-6 lg:pl-4 lg:pr-6 lg:pt-2">
+        class="contact-page no-scrollbar flex min-h-full flex-col gap-5 p-3 lg:h-full lg:gap-4 lg:overflow-hidden lg:pb-0 lg:pl-4 lg:pr-6 lg:pt-2">
         <header class="shrink-0">
             <h2
                 class="contact-section-title relative text-2xl font-extrabold leading-tight tracking-[0.05em] text-stone-950 lg:text-[2rem]">
                 {{ currentHeader.title }}
             </h2>
-            <p class="mt-3 max-w-5xl text-sm leading-6 text-stone-600 lg:text-[15px] lg:leading-6">
+            <p class="mt-3 max-w-5xl text-sm leading-6 text-stone-600 lg:text-[0.9375rem] lg:leading-6">
                 {{ currentHeader.description }}
             </p>
         </header>
 
-        <div class="grid gap-4 lg:grid-cols-12 lg:items-stretch lg:gap-5">
-            <section class="contact-location order-2 overflow-hidden lg:order-1 lg:col-span-7">
-                <div class="flex items-start gap-3 border-b border-dashed border-stone-400 p-4 lg:p-5">
-                    <span aria-hidden="true"
-                        class="contact-location-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
-                        <span
-                            class="material-symbols-outlined material-symbol-filled text-[19px]!">location_on</span>
-                    </span>
-                    <div class="min-w-0 flex-1">
-                        <p class="contact-kicker">{{ copy.locationLabel }}</p>
-                        <h3 class="mt-1 text-lg font-extrabold text-stone-950">{{ currentHeader.location }}</h3>
-                        <p class="mt-1 text-xs leading-5 text-stone-600">{{ currentHeader.relocation }}</p>
-                    </div>
-                    <span class="contact-place-code hidden shrink-0 rounded-full px-3 py-1 text-[10px] font-extrabold text-stone-950 sm:inline-flex">
-                        OSAKA · JP
-                    </span>
-                </div>
-
-                <div class="contact-map-wrap relative min-h-[270px] lg:min-h-[345px]">
-                    <iframe title="Osaka location map" :src="mapSrc" class="absolute inset-0 h-full w-full border-0"
-                        loading="lazy" referrerpolicy="no-referrer-when-downgrade" />
-                </div>
-            </section>
-
-            <section class="contact-directory order-1 flex flex-col p-4 lg:order-2 lg:col-span-5 lg:p-5">
-                <div class="flex items-center gap-3 border-b border-dashed border-stone-400 pb-4">
-                    <div class="min-w-0">
-                        <p class="contact-kicker">{{ copy.channelsEyebrow }}</p>
-                        <h3 class="mt-1 text-lg font-extrabold text-stone-950">{{ copy.channelsTitle }}</h3>
-                    </div>
-                    <span class="contact-count ml-auto shrink-0">03</span>
-                </div>
-
-                <div class="mt-4 flex flex-1 flex-col justify-center gap-3">
-                    <div class="contact-channel contact-channel-email flex min-w-0 items-center gap-3 rounded-xl p-4">
-                        <img :src="contactItems[0].icon" alt="" class="h-8 w-8 shrink-0 object-contain" loading="lazy">
-                        <a :href="contactItems[0].href"
-                            class="min-w-0 flex-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950">
-                            <span class="block text-sm font-extrabold text-stone-950">{{ contactItems[0].label }}</span>
-                            <span class="mt-0.5 block truncate text-xs text-stone-600">{{ contactItems[0].text }}</span>
-                        </a>
-                        <button type="button"
-                            class="contact-copy inline-flex h-10 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg px-3 text-xs font-extrabold text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950"
-                            :aria-label="copied ? copy.copied : copy.copy" :title="copied ? copy.copied : copy.copy"
-                            @click="copyEmail">
-                            <span aria-hidden="true" class="material-symbols-outlined text-[17px]!">
-                                {{ copied ? 'check' : 'content_copy' }}
+        <div class="scroll-affordance-frame contact-scroll-frame min-h-0 flex-1">
+            <div v-scroll-affordance
+                class="contact-scroll scroll-affordance no-scrollbar min-h-0 flex-1 overflow-x-hidden -mr-2 pr-2 lg:overflow-y-auto">
+                <div class="grid gap-4 lg:grid-cols-12 lg:items-stretch lg:gap-5">
+                    <section class="contact-location order-2 overflow-hidden lg:order-1 lg:col-span-7">
+                        <div class="flex items-start gap-3 border-b border-dashed border-stone-400 p-4 lg:p-5">
+                            <span aria-hidden="true"
+                                class="contact-location-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+                                <span
+                                    class="material-symbols-outlined material-symbol-filled text-[1.1875rem]!">location_on</span>
                             </span>
-                            <span class="hidden sm:inline">{{ copied ? copy.copied : copy.copy }}</span>
-                        </button>
-                    </div>
+                            <div class="min-w-0 flex-1">
+                                <p class="contact-kicker">{{ copy.locationLabel }}</p>
+                                <h3 class="mt-1 text-lg font-extrabold text-stone-950">{{ currentHeader.location }}</h3>
+                                <p class="mt-1 text-xs leading-5 text-stone-600">{{ currentHeader.relocation }}</p>
+                            </div>
+                            <span class="contact-place-code hidden shrink-0 rounded-full px-3 py-1 text-[0.625rem] font-extrabold text-stone-950 sm:inline-flex">
+                                OSAKA · JP
+                            </span>
+                        </div>
 
-                    <a v-for="item in contactItems.slice(1)" :key="item.label" :href="item.href" target="_blank"
-                        rel="noopener noreferrer"
-                        class="contact-channel group flex min-w-0 items-center gap-3 rounded-xl p-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950">
-                        <img :src="item.icon" alt="" class="h-8 w-8 shrink-0 object-contain" loading="lazy">
-                        <span class="min-w-0 flex-1">
-                            <span class="block text-sm font-extrabold text-stone-950">{{ item.label }}</span>
-                            <span class="mt-0.5 block truncate text-xs text-stone-600">{{ item.text }}</span>
-                        </span>
-                        <span aria-hidden="true"
-                            class="material-symbols-outlined shrink-0 text-[17px]! text-stone-500 transition-transform duration-200 group-hover:translate-x-0.5">north_east</span>
-                    </a>
+                        <div class="contact-map-wrap relative min-h-[270px] lg:min-h-[345px]">
+                            <iframe title="Osaka location map" :src="mapSrc" class="absolute inset-0 h-full w-full border-0"
+                                loading="lazy" referrerpolicy="no-referrer-when-downgrade" />
+                        </div>
+                    </section>
+
+                    <section class="contact-directory order-1 flex flex-col p-4 lg:order-2 lg:col-span-5 lg:p-5">
+                        <div class="flex items-center gap-3 border-b border-dashed border-stone-400 pb-4">
+                            <div class="min-w-0">
+                                <p class="contact-kicker">{{ copy.channelsEyebrow }}</p>
+                                <h3 class="mt-1 text-lg font-extrabold text-stone-950">{{ copy.channelsTitle }}</h3>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 flex flex-1 flex-col justify-center gap-3">
+                            <div class="contact-channel contact-channel-email flex min-w-0 items-center gap-3 rounded-xl p-4">
+                                <img :src="contactItems[0].icon" alt="" class="h-8 w-8 shrink-0 object-contain" loading="lazy">
+                                <a :href="contactItems[0].href"
+                                    class="min-w-0 flex-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950">
+                                    <span class="block text-sm font-extrabold text-stone-950">{{ contactItems[0].label }}</span>
+                                    <span class="mt-0.5 block truncate text-xs text-stone-600">{{ contactItems[0].text }}</span>
+                                </a>
+                                <button type="button"
+                                    class="contact-copy inline-flex h-10 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg px-3 text-xs font-extrabold text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950"
+                                    :aria-label="copied ? copy.copied : copy.copy" :title="copied ? copy.copied : copy.copy"
+                                    @click="copyEmail">
+                                    <span aria-hidden="true" class="material-symbols-outlined text-[1.0625rem]!">
+                                        {{ copied ? 'check' : 'content_copy' }}
+                                    </span>
+                                    <span class="hidden sm:inline">{{ copied ? copy.copied : copy.copy }}</span>
+                                </button>
+                            </div>
+
+                            <a v-for="item in contactItems.slice(1)" :key="item.label" :href="item.href" target="_blank"
+                                rel="noopener noreferrer"
+                                class="contact-channel group flex min-w-0 items-center gap-3 rounded-xl p-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950">
+                                <img :src="item.icon" alt="" class="h-8 w-8 shrink-0 object-contain" loading="lazy">
+                                <span class="min-w-0 flex-1">
+                                    <span class="block text-sm font-extrabold text-stone-950">{{ item.label }}</span>
+                                    <span class="mt-0.5 block truncate text-xs text-stone-600">{{ item.text }}</span>
+                                </span>
+                                <span aria-hidden="true"
+                                    class="material-symbols-outlined shrink-0 text-[1.0625rem]! text-stone-500 transition-transform duration-200 group-hover:translate-x-0.5">north_east</span>
+                            </a>
+                        </div>
+
+                    </section>
                 </div>
-
-            </section>
+            </div>
+            <div class="scroll-cue" aria-hidden="true">
+                <span class="material-symbols-outlined">expand_more</span>
+            </div>
         </div>
     </div>
 </template>
@@ -126,6 +133,8 @@ const mapSrc =
 
 <style scoped>
 .contact-page {
+    --scroll-affordance-surface: var(--contact-paper);
+    --scroll-affordance-color: #6d4a9e;
     --contact-paper: #fffdf7;
     --contact-ink: #26201a;
     --contact-yellow: #ffdc5d;
@@ -148,12 +157,12 @@ const mapSrc =
     border: 2px solid var(--contact-ink);
     border-radius: 14px;
     background: var(--contact-paper);
-    box-shadow: 4px 4px 0 var(--contact-ink);
+    box-shadow: 4px 4px 1px #6b6560;
 }
 
 .contact-kicker {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 9px;
+    font-size: 0.5625rem;
     font-weight: 800;
     letter-spacing: 0.17em;
     line-height: 1.3;
@@ -161,30 +170,16 @@ const mapSrc =
 }
 
 .contact-location-icon,
-.contact-place-code,
-.contact-count {
-    border: 1.5px solid var(--contact-ink);
-    box-shadow: 1.5px 1.5px 0 var(--contact-ink);
+.contact-place-code {
+    border: 1.5px solid #5a3d8a;
 }
 
 .contact-location-icon {
     background: var(--contact-blue);
 }
 
-.contact-place-code,
-.contact-count {
+.contact-place-code {
     background: var(--contact-purple);
-}
-
-.contact-count {
-    min-width: 2.25rem;
-    border-radius: 999px;
-    padding: 0.2rem 0.55rem;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 10px;
-    font-weight: 800;
-    line-height: 1;
-    text-align: center;
 }
 
 .contact-map-wrap {
@@ -203,19 +198,19 @@ const mapSrc =
 
 .contact-channel:hover {
     transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0 var(--contact-ink);
+    box-shadow: 3px 3px 1px #6b6560;
 }
 
 .contact-copy {
     border: 1.5px solid var(--contact-ink);
     background: var(--contact-yellow);
-    box-shadow: 1.5px 1.5px 0 var(--contact-ink);
+    box-shadow: 1.5px 1.5px 1px #6b6560;
     transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .contact-copy:hover {
     transform: translate(-1px, -1px);
-    box-shadow: 2.5px 2.5px 0 var(--contact-ink);
+    box-shadow: 2.5px 2.5px 1px #6b6560;
 }
 
 .contact-copy:active {
@@ -226,7 +221,7 @@ const mapSrc =
 @media (max-width: 767px) {
     .contact-location,
     .contact-directory {
-        box-shadow: 3px 3px 0 var(--contact-ink);
+        box-shadow: 3px 3px 1px #6b6560;
     }
 }
 </style>

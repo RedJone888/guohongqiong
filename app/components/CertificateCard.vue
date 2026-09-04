@@ -7,17 +7,19 @@
                 <span aria-hidden="true" class="certificate-logo-background h-11 min-w-0 w-[58%]"
                     :style="{ backgroundImage: `url(${certificate.logo})` }" />
 
-                <span class="certificate-date shrink-0 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-extrabold text-stone-950">
-                    <span aria-hidden="true" class="material-symbols-outlined text-[13px]!">calendar_today</span>
+                <span
+                    class="certificate-date shrink-0 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.6875rem] font-semibold text-stone-600">
+                    <span aria-hidden="true" class="material-symbols-outlined text-[0.8125rem]!">calendar_today</span>
                     <span>{{ acquiredDateLabel }}</span>
                 </span>
             </div>
 
             <div class="mt-4 min-w-0">
-                <h4 class="break-words text-[15px] font-extrabold leading-5 tracking-[-0.02em] text-stone-950 lg:text-base">
+                <h4
+                    class="break-words text-[0.9375rem] font-extrabold leading-5 tracking-[-0.02em] text-stone-950 lg:text-base">
                     {{ certificate.name }}
                 </h4>
-                <p class="mt-1.5 text-xs leading-5 text-stone-600 lg:text-[13px]">
+                <p class="mt-1.5 text-xs leading-5 text-stone-600 lg:text-[0.8125rem]">
                     {{ certificate.displayName }}
                 </p>
             </div>
@@ -25,13 +27,15 @@
             <div class="mt-auto flex items-end justify-between gap-3 border-t border-dashed border-stone-400 pt-3">
                 <div class="min-w-0">
                     <p class="certificate-card-kicker">{{ issuerLabel }}</p>
-                    <p class="mt-1 line-clamp-2 text-[10px] font-semibold leading-4 text-stone-600 lg:text-[11px]">
+                    <p
+                        class="mt-1 line-clamp-2 text-[0.625rem] font-semibold leading-4 text-stone-600 lg:text-[0.6875rem]">
                         {{ certificate.issuer }}
                     </p>
                 </div>
-                <span class="certificate-link shrink-0 inline-flex items-center gap-0.5 text-[10px] font-extrabold text-stone-950">
+                <span
+                    class="certificate-link shrink-0 inline-flex items-center gap-0.5 text-[0.625rem] font-extrabold text-stone-950">
                     {{ linkLabel }}
-                    <span aria-hidden="true" class="material-symbols-outlined text-[14px]!">north_east</span>
+                    <span aria-hidden="true" class="material-symbols-outlined text-[0.875rem]!">north_east</span>
                 </span>
             </div>
         </a>
@@ -81,13 +85,13 @@ const acquiredDateLabel = computed(() => {
     border: 2px solid var(--certificate-ink);
     border-radius: 14px;
     background: var(--certificate-paper);
-    box-shadow: 4px 4px 0 var(--certificate-ink);
+    box-shadow: 4px 4px 1px #6b6560;
     transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .certificate-card:hover {
     transform: translateY(-2px);
-    box-shadow: 5px 6px 0 var(--certificate-ink);
+    box-shadow: 5px 6px 1px #6b6560;
 }
 
 .certificate-logo-background {
@@ -98,14 +102,13 @@ const acquiredDateLabel = computed(() => {
 }
 
 .certificate-date {
-    border: 1.5px solid var(--certificate-ink);
+    /* border: 1.5px solid #5a3d8a; */
     background: var(--certificate-purple);
-    box-shadow: 1.5px 1.5px 0 var(--certificate-ink);
 }
 
 .certificate-card-kicker {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 8px;
+    font-size: 0.5rem;
     font-weight: 800;
     letter-spacing: 0.16em;
     line-height: 1;
@@ -117,8 +120,9 @@ const acquiredDateLabel = computed(() => {
 }
 
 @media (max-width: 639px) {
+
     .certificate-card,
-    .certificate-card > a {
+    .certificate-card>a {
         min-height: 168px;
     }
 }
