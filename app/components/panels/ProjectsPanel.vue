@@ -1139,7 +1139,7 @@ onBeforeUnmount(() => {
     --project-paper: #fffdf7;
     --project-ink: #26201a;
     border: 2px solid var(--project-ink);
-    border-radius: 14px;
+    border-radius: 0;
     background: var(--project-paper);
     box-shadow: 8px 8px 1px #6b6560;
 }
@@ -1454,6 +1454,63 @@ onBeforeUnmount(() => {
 @media (max-width: 1023px) {
     .projects-page {
         overflow: visible;
+    }
+
+    .petnido-head {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.7rem;
+    }
+
+    /* Let the title, tags, and actions become three deliberate mobile rows. */
+    .petnido-title-line {
+        display: contents;
+    }
+
+    .petnido-title-block {
+        order: 1;
+        width: 100%;
+        flex: 0 1 auto;
+        flex-wrap: nowrap;
+        gap: 0.55rem;
+    }
+
+    .petnido-title-block h3 {
+        flex: 0 0 auto;
+    }
+
+    .petnido-title-category {
+        min-width: 0;
+        flex: 1 1 0;
+        margin-left: 0;
+        padding-left: 0.7rem;
+    }
+
+    .petnido-tags {
+        order: 2;
+        margin-top: 0;
+    }
+
+    .petnido-title-actions {
+        order: 3;
+        width: 100%;
+        justify-content: stretch;
+        gap: 0.45rem;
+    }
+
+    .petnido-title-actions .petnido-action {
+        min-width: max-content;
+        flex: 1 1 auto;
+        justify-content: center;
+        padding-inline: 0.55rem;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .petnido-overview-scroll {
+        overflow-y: visible;
+        overscroll-behavior: auto;
     }
 }
 </style>

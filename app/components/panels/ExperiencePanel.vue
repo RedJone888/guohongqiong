@@ -27,13 +27,16 @@
 
                         <section class="flex flex-col items-start lg:pl-8">
                             <p class="experience-kicker">Role</p>
-                            <p class="mt-1 text-base font-extrabold leading-6 tracking-[-0.03em] text-stone-950 lg:text-lg">
-                                {{ experience.role }}
-                            </p>
-                            <div
-                                class="experience-date mt-2 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold text-stone-600 lg:text-sm">
-                                <span class="material-symbols-outlined text-[0.9375rem]!">calendar_today</span>
-                                <span>{{ experience.period }}</span>
+                            <div class="experience-role-line mt-1">
+                                <p
+                                    class="min-w-0 text-base font-extrabold leading-6 tracking-[-0.03em] text-stone-950 lg:text-lg">
+                                    {{ experience.role }}
+                                </p>
+                                <div
+                                    class="experience-date inline-flex shrink-0 items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold text-stone-600 lg:text-sm">
+                                    <span class="material-symbols-outlined text-[0.9375rem]!">calendar_today</span>
+                                    <span>{{ experience.period }}</span>
+                                </div>
                             </div>
                         </section>
                     </div>
@@ -455,6 +458,7 @@ onBeforeUnmount(() => {
     --experience-blue: #9fd0f3;
     --experience-purple: #e2d1f8;
     border: 2px solid var(--experience-ink);
+    border-radius: 0;
     background: var(--experience-paper);
     box-shadow: 8px 8px 1px #6b6560;
 }
@@ -591,10 +595,6 @@ onBeforeUnmount(() => {
 }
 
 @media (min-width: 1024px) {
-    .project-detail-dialog {
-        border-radius: 16px;
-    }
-
     .project-dialog-content {
         margin-inline: 1rem;
     }
@@ -621,9 +621,26 @@ onBeforeUnmount(() => {
     color: #655d53;
 }
 
+.experience-role-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 0.75rem;
+    row-gap: 0.35rem;
+    width: 100%;
+}
+
+.experience-role-line>p {
+    flex: 1 1 auto;
+}
+
 .experience-date {
     /* border: 2px solid #5a3d8a; */
     background: var(--experience-purple);
+}
+
+.experience-role-line .experience-date {
+    margin-left: auto;
 }
 
 .experience-stack-badge {

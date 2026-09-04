@@ -119,9 +119,9 @@
         </div>
 
         <div
-            class="portfolio-main-column relative flex min-h-0 w-full flex-1 flex-col px-3 lg:h-full lg:min-h-0 lg:px-0 lg:py-6">
+            class="portfolio-main-column relative flex min-h-0 w-full flex-1 flex-col lg:h-full lg:min-h-0 lg:px-0 lg:py-6">
             <div class="scroll-affordance-frame min-h-0 w-full flex-1">
-                <main v-scroll-affordance
+                <main ref="mainScrollRef" v-scroll-affordance
                     class="scroll-affordance-page min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden py-3 no-scrollbar lg:h-auto lg:min-h-0 lg:max-w-[88rem] lg:overflow-visible lg:pb-0">
                     <section :id="activeSection" class="min-h-full w-full lg:h-full lg:min-h-0">
                         <div class="min-h-full w-full lg:h-full lg:min-h-0">
@@ -168,7 +168,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import {
     portfolioSections,
     profile,
@@ -187,10 +187,11 @@ const { locale, setLocale } = useLocale()
 
 const activeSection = ref<PortfolioSectionKey>('profile')
 const lastCredentialSection = ref<PortfolioSectionKey>('certificates')
+const mainScrollRef = ref<HTMLElement | null>(null)
 
 type MobileSectionKey = PortfolioSectionKey | 'credentials'
 
-const credentialKeys: PortfolioSectionKey[] = ['certificates', 'skills', 'projects']
+const credentialKeys: PortfolioSectionKey[] = ['certificates', 'skills', 'education']
 
 const localizedProfile = computed(() => {
     return profile[locale.value]
@@ -219,11 +220,11 @@ const isCredentialSection = computed(() => {
 })
 
 const credentialNavItems = computed(() => {
-    const keys: PortfolioSectionKey[] = ['certificates', 'skills', 'projects']
+    const keys: PortfolioSectionKey[] = ['certificates', 'skills', 'education']
     const accentMap: Partial<Record<PortfolioSectionKey, 'yellow' | 'pink' | 'blue'>> = {
         certificates: 'yellow',
         skills: 'pink',
-        projects: 'blue'
+        education: 'blue'
     }
     return keys.map((key) => {
         const section = localizedSections.value.find((item) => item.key === key)!
@@ -241,7 +242,7 @@ const mobileNavItems = computed(() => {
     return [
         { key: 'profile' as const, icon: 'person', label: isJa ? 'プロフィール' : 'Profile' },
         { key: 'experience' as const, icon: 'work', label: isJa ? '実務経験' : 'Experience' },
-        { key: 'education' as const, icon: 'school', label: isJa ? '学歴' : 'Education' },
+        { key: 'projects' as const, icon: 'dashboard', label: isJa ? 'プロジェクト' : 'Projects' },
         { key: 'credentials' as const, icon: 'verified', label: isJa ? '実績・資格' : 'Portfolio' },
         { key: 'contact' as const, icon: 'mail', label: isJa ? '連絡先' : 'Contact' }
     ]
@@ -261,12 +262,17 @@ const activeComponent = computed(() => {
     return componentMap[activeSection.value]
 })
 
+const resetMainScroll = () => {
+    mainScrollRef.value?.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+}
+
 const setActiveSection = (section: PortfolioSectionKey) => {
     activeSection.value = section
     if (credentialKeys.includes(section)) {
         lastCredentialSection.value = section
     }
     window.history.replaceState(null, '', `#${section}`)
+    void nextTick(resetMainScroll)
 }
 
 const setMobileSection = (section: MobileSectionKey) => {
@@ -288,6 +294,36 @@ const initial = computed(() => {
         .slice(0, 2)
 })
 
+const isImageViewerTarget = (target: EventTarget | null) => {
+    return target instanceof Element && Boolean(target.closest('.screenshot-lightbox-body'))
+}
+
+const preventPagePinchZoom = (event: TouchEvent) => {
+    if (event.touches.length > 1 && !isImageViewerTarget(event.target)) {
+        event.preventDefault()
+    }
+}
+
+const preventPageGestureZoom = (event: Event) => {
+    if (!isImageViewerTarget(event.target)) {
+        event.preventDefault()
+    }
+}
+
+const preventPageWheelZoom = (event: WheelEvent) => {
+    if (event.ctrlKey || event.metaKey) {
+        event.preventDefault()
+    }
+}
+
+const preventPageKeyboardZoom = (event: KeyboardEvent) => {
+    if (!(event.ctrlKey || event.metaKey)) return
+
+    if (['+', '-', '=', '_', '0'].includes(event.key)) {
+        event.preventDefault()
+    }
+}
+
 onMounted(() => {
     const hash = window.location.hash.replace('#', '') as PortfolioSectionKey
 
@@ -297,6 +333,24 @@ onMounted(() => {
             lastCredentialSection.value = hash
         }
     }
+
+    document.addEventListener('touchstart', preventPagePinchZoom, { capture: true, passive: false })
+    document.addEventListener('touchmove', preventPagePinchZoom, { capture: true, passive: false })
+    document.addEventListener('gesturestart', preventPageGestureZoom, { capture: true, passive: false })
+    document.addEventListener('gesturechange', preventPageGestureZoom, { capture: true, passive: false })
+    document.addEventListener('gestureend', preventPageGestureZoom, { capture: true, passive: false })
+    document.addEventListener('wheel', preventPageWheelZoom, { capture: true, passive: false })
+    document.addEventListener('keydown', preventPageKeyboardZoom, true)
+})
+
+onBeforeUnmount(() => {
+    document.removeEventListener('touchstart', preventPagePinchZoom, true)
+    document.removeEventListener('touchmove', preventPagePinchZoom, true)
+    document.removeEventListener('gesturestart', preventPageGestureZoom, true)
+    document.removeEventListener('gesturechange', preventPageGestureZoom, true)
+    document.removeEventListener('gestureend', preventPageGestureZoom, true)
+    document.removeEventListener('wheel', preventPageWheelZoom, true)
+    document.removeEventListener('keydown', preventPageKeyboardZoom, true)
 })
 </script>
 

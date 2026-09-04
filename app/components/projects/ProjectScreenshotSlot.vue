@@ -26,19 +26,33 @@
         <Transition name="screenshot-lightbox">
             <div v-if="isLightboxOpen" class="screenshot-lightbox-backdrop" @click.self="closeLightbox">
                 <section ref="lightboxRef" class="screenshot-lightbox" role="dialog" aria-modal="true"
-                    :aria-labelledby="lightboxTitleId" tabindex="-1">
+                    :aria-labelledby="lightboxTitleId" tabindex="-1" @click="dismissMobileLightbox">
                     <header class="screenshot-lightbox-header">
                         <div class="min-w-0">
                             <p class="screenshot-lightbox-label">{{ shot.label }}</p>
                             <h2 :id="lightboxTitleId">{{ shot.title }}</h2>
                         </div>
-                        <button ref="lightboxCloseButtonRef" type="button" class="screenshot-lightbox-close"
-                            :aria-label="closeAriaLabel" @click="closeLightbox">
-                            <span class="material-symbols-outlined" aria-hidden="true">close</span>
-                        </button>
+                        <div class="screenshot-lightbox-actions">
+                            <button type="button" class="screenshot-lightbox-rotate-btn"
+                                :class="{ 'is-active': isLandscape }"
+                                :aria-label="landscapeAriaLabel"
+                                :title="landscapeAriaLabel"
+                                @click.stop="toggleLandscape">
+                                <span class="material-symbols-outlined" aria-hidden="true">screen_rotation</span>
+                                <span class="screenshot-lightbox-btn-text">{{ landscapeButtonText }}</span>
+                            </button>
+                            <button ref="lightboxCloseButtonRef" type="button" class="screenshot-lightbox-close"
+                                :aria-label="closeAriaLabel" :title="closeAriaLabel" @click.stop="closeLightbox">
+                                <span class="material-symbols-outlined" aria-hidden="true">close</span>
+                            </button>
+                        </div>
                     </header>
-                    <div class="screenshot-lightbox-body">
-                        <img :src="shot.src" :alt="shot.alt">
+                    <div ref="lightboxBodyRef" class="screenshot-lightbox-body">
+                        <img ref="lightboxImageRef" :src="shot.src" :alt="shot.alt"
+                            :class="{ 'is-landscape': isLandscape, 'is-touching': isTouching }"
+                            :style="mobileImageStyle"
+                            @touchstart="handleImageTouchStart" @touchmove="handleImageTouchMove"
+                            @touchend="handleImageTouchEnd" @touchcancel="handleImageTouchEnd">
                     </div>
                 </section>
             </div>
@@ -60,18 +74,193 @@ const props = withDefaults(defineProps<{
 
 const { locale } = useLocale()
 const isLightboxOpen = ref(false)
+const isLandscape = ref(false)
+const isTouching = ref(false)
 const lightboxRef = ref<HTMLElement | null>(null)
+const lightboxBodyRef = ref<HTMLElement | null>(null)
+const lightboxImageRef = ref<HTMLImageElement | null>(null)
 const lightboxCloseButtonRef = ref<HTMLButtonElement | null>(null)
 const lastFocusedElement = ref<HTMLElement | null>(null)
 const lightboxTitleId = useId()
+const mobileImageScale = ref(1)
+const mobileImageOffsetX = ref(0)
+const mobileImageOffsetY = ref(0)
+const pinchStartDistance = ref<number | null>(null)
+const pinchStartScale = ref(1)
+const panStartX = ref<number | null>(null)
+const panStartY = ref<number | null>(null)
+const panStartOffsetX = ref(0)
+const panStartOffsetY = ref(0)
+const lastMobileGestureAt = ref(0)
 
 const zoomAriaLabel = computed(() => locale.value === 'ja' ? '画像を拡大表示' : 'View screenshot full size')
 const closeAriaLabel = computed(() => locale.value === 'ja' ? '拡大画像を閉じる' : 'Close enlarged screenshot')
+const landscapeAriaLabel = computed(() => {
+    if (isLandscape.value) {
+        return locale.value === 'ja' ? '縦向きに戻す' : 'Switch to portrait orientation'
+    }
+    return locale.value === 'ja' ? '横向きに回転' : 'Switch to landscape orientation'
+})
+const landscapeButtonText = computed(() => {
+    if (isLandscape.value) {
+        return locale.value === 'ja' ? '縦向き' : 'Portrait'
+    }
+    return locale.value === 'ja' ? '横向き' : 'Landscape'
+})
+
+const isMobileViewport = () => {
+    return typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches
+}
+
+const mobileImageStyle = computed(() => {
+    if (!isMobileViewport()) return undefined
+
+    if (isLandscape.value) {
+        return {
+            transform: `translate3d(${mobileImageOffsetX.value}px, ${mobileImageOffsetY.value}px, 0) rotate(90deg) scale(${mobileImageScale.value})`,
+        }
+    }
+    return {
+        transform: `translate3d(${mobileImageOffsetX.value}px, ${mobileImageOffsetY.value}px, 0) scale(${mobileImageScale.value})`,
+    }
+})
+
+const toggleLandscape = () => {
+    isLandscape.value = !isLandscape.value
+    mobileImageScale.value = 1
+    mobileImageOffsetX.value = 0
+    mobileImageOffsetY.value = 0
+    pinchStartDistance.value = null
+    panStartX.value = null
+    panStartY.value = null
+    lastMobileGestureAt.value = Date.now()
+}
+
+const dismissMobileLightbox = () => {
+    if (isMobileViewport() && Date.now() - lastMobileGestureAt.value > 450) {
+        closeLightbox()
+    }
+}
+
+const touchDistance = (touches: TouchList) => {
+    const first = touches.item(0)
+    const second = touches.item(1)
+    if (!first || !second) return 0
+
+    return Math.hypot(second.clientX - first.clientX, second.clientY - first.clientY)
+}
+
+const clampImageOffset = (offset: number, axis: 'x' | 'y') => {
+    const body = lightboxBodyRef.value
+    const image = lightboxImageRef.value
+    if (!body || !image) return offset
+
+    const bodyStyles = window.getComputedStyle(body)
+    const paddingStart = Number.parseFloat(axis === 'x' ? bodyStyles.paddingLeft : bodyStyles.paddingTop) || 0
+    const paddingEnd = Number.parseFloat(axis === 'x' ? bodyStyles.paddingRight : bodyStyles.paddingBottom) || 0
+    const availableSize = (axis === 'x' ? body.clientWidth : body.clientHeight) - paddingStart - paddingEnd
+    const imageSize = axis === 'x' ? image.getBoundingClientRect().width : image.getBoundingClientRect().height
+    const maxOffset = Math.max(0, (imageSize - availableSize) / 2)
+
+    return Math.min(maxOffset, Math.max(-maxOffset, offset))
+}
+
+const setPanStart = (touch: Touch) => {
+    panStartX.value = touch.clientX
+    panStartY.value = touch.clientY
+    panStartOffsetX.value = mobileImageOffsetX.value
+    panStartOffsetY.value = mobileImageOffsetY.value
+}
+
+const handleImageTouchStart = (event: TouchEvent) => {
+    if (!isMobileViewport()) return
+    isTouching.value = true
+
+    if (event.touches.length === 1 && mobileImageScale.value > 1) {
+        const touch = event.touches.item(0)
+        if (touch) setPanStart(touch)
+        return
+    }
+
+    if (event.touches.length < 2) return
+
+    const distance = touchDistance(event.touches)
+    if (distance <= 0) return
+
+    pinchStartDistance.value = distance
+    pinchStartScale.value = mobileImageScale.value
+    panStartX.value = null
+    panStartY.value = null
+}
+
+const handleImageTouchMove = (event: TouchEvent) => {
+    if (!isMobileViewport()) return
+
+    if (event.touches.length === 1 && mobileImageScale.value > 1 && panStartX.value !== null && panStartY.value !== null) {
+        const touch = event.touches.item(0)
+        if (!touch) return
+
+        event.preventDefault()
+        mobileImageOffsetX.value = clampImageOffset(
+            panStartOffsetX.value + touch.clientX - panStartX.value,
+            'x',
+        )
+        mobileImageOffsetY.value = clampImageOffset(
+            panStartOffsetY.value + touch.clientY - panStartY.value,
+            'y',
+        )
+        lastMobileGestureAt.value = Date.now()
+        return
+    }
+
+    if (event.touches.length < 2 || !pinchStartDistance.value) return
+
+    const distance = touchDistance(event.touches)
+    if (distance <= 0) return
+
+    event.preventDefault()
+    const nextScale = Math.min(
+        4,
+        Math.max(1, pinchStartScale.value * (distance / pinchStartDistance.value)),
+    )
+    mobileImageScale.value = nextScale
+    if (nextScale <= 1) {
+        mobileImageOffsetX.value = 0
+        mobileImageOffsetY.value = 0
+    }
+    mobileImageOffsetX.value = clampImageOffset(mobileImageOffsetX.value, 'x')
+    mobileImageOffsetY.value = clampImageOffset(mobileImageOffsetY.value, 'y')
+    lastMobileGestureAt.value = Date.now()
+}
+
+const handleImageTouchEnd = (event: TouchEvent) => {
+    if (event.touches.length < 2) {
+        pinchStartDistance.value = null
+    }
+
+    if (event.touches.length === 1 && mobileImageScale.value > 1) {
+        const touch = event.touches.item(0)
+        if (touch) setPanStart(touch)
+    } else if (event.touches.length === 0) {
+        isTouching.value = false
+        panStartX.value = null
+        panStartY.value = null
+    }
+}
 
 const openLightbox = async () => {
     if (!props.shot.src) return
 
     lastFocusedElement.value = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    isLandscape.value = false
+    isTouching.value = false
+    mobileImageScale.value = 1
+    mobileImageOffsetX.value = 0
+    mobileImageOffsetY.value = 0
+    pinchStartDistance.value = null
+    panStartX.value = null
+    panStartY.value = null
+    lastMobileGestureAt.value = 0
     isLightboxOpen.value = true
 
     await nextTick()
@@ -82,6 +271,14 @@ const closeLightbox = async () => {
     if (!isLightboxOpen.value) return
 
     isLightboxOpen.value = false
+    isLandscape.value = false
+    isTouching.value = false
+    mobileImageScale.value = 1
+    mobileImageOffsetX.value = 0
+    mobileImageOffsetY.value = 0
+    pinchStartDistance.value = null
+    panStartX.value = null
+    panStartY.value = null
 
     await nextTick()
     lastFocusedElement.value?.focus()
@@ -322,6 +519,17 @@ figcaption span {
     white-space: nowrap;
 }
 
+.screenshot-lightbox-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+}
+
+.screenshot-lightbox-rotate-btn {
+    display: none;
+}
+
 .screenshot-lightbox-close {
     display: inline-flex;
     width: 2.75rem;
@@ -385,17 +593,144 @@ figcaption span {
     transform: scale(0.98);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1023px) {
     .screenshot-lightbox-backdrop {
-        padding: 0.75rem;
+        padding: 0;
     }
 
     .screenshot-lightbox {
-        max-height: 96dvh;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .screenshot-lightbox-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 30;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding: max(0.875rem, env(safe-area-inset-top, 0.875rem)) max(0.875rem, env(safe-area-inset-right, 0.875rem)) 0.875rem max(0.875rem, env(safe-area-inset-left, 0.875rem));
+        background: linear-gradient(180deg, rgba(20, 16, 13, 0.88) 0%, rgba(20, 16, 13, 0.45) 70%, transparent 100%);
+        border-bottom: 0;
+        pointer-events: none;
+    }
+
+    .screenshot-lightbox-header > * {
+        pointer-events: auto;
+    }
+
+    .screenshot-lightbox-label {
+        color: #d6cfc7;
+    }
+
+    .screenshot-lightbox-header h2 {
+        color: #fffdf7;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .screenshot-lightbox-actions {
+        gap: 0.5rem;
+    }
+
+    .screenshot-lightbox-rotate-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        height: 2.375rem;
+        padding: 0 0.75rem;
+        border: 2px solid #26201a;
+        border-radius: 999px;
+        background: #fff;
+        color: #26201a;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+        transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .screenshot-lightbox-rotate-btn:hover {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .screenshot-lightbox-rotate-btn.is-active {
+        background: #6d4a9e;
+        color: #fffdf7;
+        border-color: #26201a;
+        box-shadow: 2px 2px 0 #26201a;
+    }
+
+    .screenshot-lightbox-rotate-btn:focus-visible {
+        outline: 3px solid #6d4a9e;
+        outline-offset: 3px;
+    }
+
+    .screenshot-lightbox-rotate-btn .material-symbols-outlined {
+        font-size: 1.125rem;
+        transition: transform 0.25s ease;
+    }
+
+    .screenshot-lightbox-rotate-btn.is-active .material-symbols-outlined {
+        transform: rotate(90deg);
+    }
+
+    .screenshot-lightbox-close {
+        width: 2.375rem;
+        height: 2.375rem;
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .screenshot-lightbox-close .material-symbols-outlined {
+        font-size: 1.125rem;
+    }
+
+    .screenshot-lightbox-body {
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        padding: 0.75rem;
+        overscroll-behavior: contain;
+        touch-action: none;
+        cursor: zoom-out;
     }
 
     .screenshot-lightbox-body img {
-        max-height: calc(96dvh - 7.5rem);
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        touch-action: none;
+        user-select: none;
+        -webkit-user-drag: none;
+        will-change: transform;
+        transform-origin: center center;
+        transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .screenshot-lightbox-body img.is-touching {
+        transition: none !important;
+    }
+
+    .screenshot-lightbox-body img.is-landscape {
+        max-width: calc(100vh - 2rem);
+        max-width: calc(100dvh - 2rem);
+        max-height: calc(100vw - 2rem);
+        max-height: calc(100dvw - 2rem);
+        flex-shrink: 0;
     }
 }
 </style>

@@ -61,6 +61,7 @@ html,
 body,
 #__nuxt {
   height: 100%;
+  touch-action: pan-y;
 }
 
 .material-symbols-outlined {

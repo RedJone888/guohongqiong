@@ -18,7 +18,7 @@
                     <div class="profile-overview-information">
                         <dl class="profile-information-list">
                             <div v-for="(fact, factIndex) in copy.facts" :key="fact.label"
-                                class="profile-information-item profile-fact">
+                                class="profile-information-item profile-fact" :data-fact-index="factIndex">
                                 <dt>
                                     <span aria-hidden="true" class="material-symbols-outlined profile-fact-icon">
                                         {{ factIcons[factIndex] }}
@@ -46,7 +46,7 @@
                             </div>
 
                             <div v-for="(item, itemIndex) in copy.jobSearchItems" :key="item.label"
-                                class="profile-information-item profile-job-search-item">
+                                class="profile-information-item profile-job-search-item" :data-job-index="itemIndex">
                                 <dt>
                                     <span aria-hidden="true" class="material-symbols-outlined profile-fact-icon">
                                         {{ jobSearchIcons[itemIndex] }}
@@ -117,11 +117,6 @@
                                         <div class="profile-focus-title-row">
                                             <h3>{{ item.title }}</h3>
                                             <div class="profile-focus-actions">
-                                                <a v-if="'externalHref' in item" :href="item.externalHref" target="_blank"
-                                                    rel="noopener noreferrer" class="profile-focus-external">
-                                                    {{ item.externalLabel }}
-                                                    <span aria-hidden="true" class="material-symbols-outlined text-[0.9rem]!">north_east</span>
-                                                </a>
                                                 <button type="button" class="profile-focus-link" @click="navigate(item.section)">
                                                     <span class="profile-focus-link-content">
                                                         <span>{{ copy.focusDetailCta }}</span>
@@ -132,6 +127,11 @@
                                             </div>
                                         </div>
                                         <p>{{ item.description }}</p>
+                                        <a v-if="'externalHref' in item" :href="item.externalHref" target="_blank"
+                                            rel="noopener noreferrer" class="profile-focus-external">
+                                            {{ item.externalLabel }}
+                                            <span aria-hidden="true" class="material-symbols-outlined text-[0.82rem]!">north_east</span>
+                                        </a>
                                     </div>
                                 </li>
                             </ul>
@@ -460,13 +460,14 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 
 .profile-headline {
     margin-top: 0.65rem;
+    width: 100%;
     max-width: none;
     color: var(--profile-ink);
     font-size: clamp(1.85rem, 2.35vw, 2.45rem);
     font-weight: 800;
     letter-spacing: -0.045em;
     line-height: 1.08;
-    text-wrap: balance;
+    text-wrap: wrap;
 }
 
 .profile-introduction {
@@ -539,11 +540,18 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 .profile-fact dt,
 .profile-job-search-item dt {
     display: flex;
+    min-width: 0;
     align-items: center;
     gap: 0.32rem;
     color: #655d53;
     font-size: 0.6875rem;
     font-weight: 800;
+}
+
+.profile-fact dt > span:last-child,
+.profile-job-search-item dt > span:last-child {
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .profile-fact-icon {
@@ -559,7 +567,7 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     font-weight: 800;
     line-height: 1.45;
     overflow-wrap: anywhere;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .profile-secondary {
@@ -568,21 +576,24 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     font-size: 0.7rem;
     font-weight: 650;
     line-height: 1.35;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
+    white-space: normal;
 }
 
 .profile-language-value {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.16rem;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .profile-language-group {
     display: inline-flex;
+    min-width: 0;
     align-items: center;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
+    white-space: normal;
 }
 
 .profile-language-separator {
@@ -609,7 +620,7 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     font-weight: 800;
     line-height: 1.4;
     overflow-wrap: anywhere;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .profile-lower-grid {
@@ -782,6 +793,12 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     font-weight: 800;
     letter-spacing: 0.02em;
     transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.profile-focus-copy > .profile-focus-external {
+    margin-top: 0.55rem;
+    font-size: 0.625rem;
+    padding: 0.24rem 0.48rem;
 }
 
 .profile-focus-external:hover {
@@ -1051,33 +1068,65 @@ const onDialogKeydown = (event: KeyboardEvent) => {
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .profile-information-item {
+    .profile-information-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 1rem;
+    }
+
+    .profile-fact[data-fact-index="2"],
+    .profile-fact[data-fact-index="3"] {
         grid-column: 1 / -1;
     }
 
-    .profile-information-item:nth-child(n) {
+    .profile-fact[data-fact-index="0"] {
+        grid-column: 1;
+        grid-row: 1;
+        order: 0;
+    }
+
+    .profile-fact[data-fact-index="1"] {
+        grid-column: 2;
+        grid-row: 1;
+        order: 0;
+    }
+
+    .profile-fact[data-fact-index="2"] {
+        grid-row: 2;
+        order: 0;
+    }
+
+    .profile-job-search-item[data-job-index="0"] {
+        grid-column: 1;
+        grid-row: 3;
+        order: 0;
+    }
+
+    .profile-job-search-item[data-job-index="1"] {
+        grid-column: 2;
+        grid-row: 3;
+        order: 0;
+    }
+
+    .profile-fact[data-fact-index="3"] {
+        grid-row: 4;
+        order: 0;
+    }
+
+    .profile-job-search-item[data-job-index="2"] {
         grid-column: 1 / -1;
-        grid-row: auto;
+        grid-row: 5;
+        order: 0;
     }
 
-    .profile-language-value {
-        flex-wrap: wrap;
-        white-space: normal;
-    }
-
-    .profile-focus-actions {
-        width: 100%;
-    }
+.profile-language-value {
+    flex-wrap: wrap;
+    white-space: normal;
+}
 
     .profile-focus-title-row {
-        align-items: stretch;
-        flex-direction: column;
-        gap: 0.55rem;
-    }
-
-    .profile-focus-link,
-    .profile-focus-external {
-        flex: 1;
+        align-items: flex-start;
+        flex-direction: row;
+        gap: 0.75rem;
     }
 
     .profile-notes-action {
@@ -1090,7 +1139,7 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     }
 
     .profile-notes-overlay {
-        align-items: flex-start;
+        align-items: center;
         padding: 0.5rem;
     }
 
@@ -1099,15 +1148,16 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     }
 
     .profile-note-media {
-        justify-content: flex-start;
+        justify-content: center;
+        overflow-x: hidden;
     }
 
-    .profile-note-image {
-        height: clamp(2.5rem, 9vw, 3.5rem);
-    }
-
+    .profile-note-image,
     .profile-note-card:first-child .profile-note-image {
-        height: clamp(12.5rem, 45vw, 17.5rem);
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: none;
     }
 }
 

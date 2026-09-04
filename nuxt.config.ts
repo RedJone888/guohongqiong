@@ -30,7 +30,10 @@ export default defineNuxtConfig({
       ],
       titleTemplate: "%s · Career Portfolio",
       meta: [
-        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+        },
         {
           name: "description",
           content: "Career portfolio website for job applications.",

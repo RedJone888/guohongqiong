@@ -24,8 +24,14 @@
                             </span>
                             <div class="min-w-0 flex-1">
                                 <p class="contact-kicker">{{ copy.locationLabel }}</p>
-                                <h3 class="mt-1 text-lg font-extrabold text-stone-950">{{ currentHeader.location }}</h3>
-                                <p class="mt-1 text-xs leading-5 text-stone-600">{{ currentHeader.relocation }}</p>
+                                <div class="contact-location-line">
+                                    <h3 class="contact-location-name text-lg font-extrabold text-stone-950">
+                                        {{ currentHeader.location }}
+                                    </h3>
+                                    <p class="contact-location-relocation text-xs leading-5 text-stone-600">
+                                        {{ currentHeader.relocation }}
+                                    </p>
+                                </div>
                             </div>
                             <span class="contact-place-code hidden shrink-0 rounded-full px-3 py-1 text-[0.625rem] font-extrabold text-stone-950 sm:inline-flex">
                                 OSAKA · JP
@@ -167,6 +173,28 @@ const mapSrc =
     letter-spacing: 0.17em;
     line-height: 1.3;
     color: #655d53;
+}
+
+.contact-location-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 0.65rem;
+    row-gap: 0.2rem;
+    margin-top: 0.25rem;
+}
+
+.contact-location-name,
+.contact-location-relocation {
+    min-width: 0;
+}
+
+.contact-location-name {
+    flex: 0 1 auto;
+}
+
+.contact-location-relocation {
+    flex: 1 1 auto;
 }
 
 .contact-location-icon,
