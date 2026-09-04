@@ -31,7 +31,9 @@
                     <span v-else class="text-sm font-bold text-stone-900">{{ initial }}</span>
                 </span>
                 <span class="min-w-0">
-                    <span class="block truncate text-sm font-bold text-stone-950">{{ profile.nameKanji }}</span>
+                    <span class="block truncate text-sm font-bold text-stone-950">
+                        {{ profile.nameKanji }}<span class="text-xs font-normal text-stone-600">{{ mobileSubName }}</span>
+                    </span>
                     <span class="block truncate text-[0.6875rem] font-semibold text-stone-600">{{ profile.role }}</span>
                 </span>
             </button>
@@ -195,6 +197,10 @@ const credentialKeys: PortfolioSectionKey[] = ['certificates', 'skills', 'educat
 
 const localizedProfile = computed(() => {
     return profile[locale.value]
+})
+
+const mobileSubName = computed(() => {
+    return locale.value === 'ja' ? '（グオ ホンチョン）' : '（guohongqiong）'
 })
 
 const navIconMap: Record<PortfolioSectionKey, string> = {

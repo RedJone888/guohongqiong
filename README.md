@@ -1,59 +1,70 @@
-# Nuxt Career Portfolio MVP
+# Career Portfolio · Hongqiong Guo
 
-A static personal career website MVP built with Nuxt. The content is placeholder data and is meant to be replaced with your real profile, experience, projects, education, certificates, and contact information.
+> A personal career portfolio web application crafted with Nuxt 4, Vue 3, and TypeScript.
 
-## Stack
+[🌐 Live Site: guohongqiong.vercel.app](https://guohongqiong.vercel.app/)
 
-- Nuxt 4
-- Vue 3
-- TypeScript
-- Plain CSS
-- Static generation via `nuxt generate`
+---
 
-## Getting started
+## 🌟 Highlights & Engineering Features
+
+- 🎨 **Neo-Brutalist / Paper Design System**: Cohesive aesthetic featuring high-contrast borders, tactile drop shadows, and subtle paper textures with retro accents.
+- 📱 **Mobile-First Touch & Gestures**:
+  - Custom lightbox viewer supporting pan, pinch-to-zoom, and safe-area adaptation.
+  - **Landscape Orientation Toggle**: 90° rotation mode optimized for 16:7 widescreen screenshots on portrait mobile screens, utilizing `100dvh` for maximum detail without requiring device rotation.
+  - Selective gesture isolation to prevent accidental browser viewport scaling while allowing fluid image interaction.
+- 🌐 **Bilingual Support (JA / EN)**: Reactive locale state management enabling seamless switching between Japanese and English without full-page reloads.
+- ⚡ **Performance & Static Generation**: Full static site generation (SSG) powered by Nuxt Nitro for instant page loads and zero runtime server overhead.
+- 🧩 **Data-Driven Architecture**: Clean separation between presentation components and structured portfolio content (`app/data/`).
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Nuxt 4](https://nuxt.com/) (Vue 3, Composition API)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS & Modern CSS
+- **Iconography**: Google Material Symbols
+- **Build Tool**: Vite & Nitro Engine
+- **Deployment**: [Vercel](https://vercel.com/)
+
+---
+
+## 💻 Local Development
+
+For reviewers and interviewers who wish to run or inspect the project locally:
 
 ```bash
+# Install dependencies
 npm install
+
+# Start local development server
 npm run dev
+
+# Build static production bundle
+npm run build
 ```
 
-Open the local URL printed by Nuxt.
+---
 
-## Generate a static site
-
-```bash
-npm run generate
-```
-
-Nuxt will prerender the routes and create static output for deployment.
-
-## Main files to edit
+## 📁 Architecture Overview
 
 ```text
-app/data/site.ts              # Replace all placeholder career content here
-app/assets/css/main.css       # Visual theme and responsive layout
-app/pages/index.vue           # Home page structure
-app/pages/projects/[slug].vue # Project case study template
-nuxt.config.ts                # Static prerender routes and global metadata
+app/
+├── assets/css/        # Theme variables, typography, and base CSS
+├── components/        # Reusable UI components & section panels
+│   ├── panels/        # Profile, Experience, Projects, Skills, Contact panels
+│   └── projects/      # Project card & interactive screenshot lightbox
+├── composables/       # Application states (locale, responsive handlers)
+├── data/              # Structured TypeScript portfolio content
+└── pages/             # File-based routing
 ```
 
-## Deployment notes
+---
 
-For static hosting, start with:
+## 📬 Contact & Author
 
-```text
-Build command: npm run generate
-Output directory: .output/public
-```
-
-If you create a Cloudflare Pages project through Cloudflare's C3 Nuxt template, follow the generated project settings instead. The official Cloudflare guide may use a different build command and output directory depending on that template.
-
-## Replacement checklist
-
-- Replace name, title, location, email, GitHub, LinkedIn
-- Replace skill groups with job-relevant skills
-- Replace all project cards with actual projects
-- Add real project screenshots or links if available
-- Replace education and certificates
-- Add a real PDF resume to `public/` and update `resumeUrl`
-- Adjust metadata in `nuxt.config.ts`
+- **Author**: Hongqiong Guo (郭红琼)
+- **GitHub**: [@RedJone888](https://github.com/RedJone888)
+- **LinkedIn**: [Hongqiong Guo](https://www.linkedin.com/in/hongqiongguo)
+- **Email**: [redjoan.guo@gmail.com](mailto:redjoan.guo@gmail.com)
