@@ -100,16 +100,33 @@ body,
     transform 0.1s ease,
     box-shadow 0.1s ease;
 }
-.download {
+.download,
+.contact-cta {
   background: var(--bg-heavy);
   color: #fffdf7;
   border: 2px solid #5a3d8a;
+  cursor: pointer;
 }
-.download:hover {
+.download:hover,
+.contact-cta:hover {
   background: #5f3f8c;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 1px #6b6560;
 }
-.download:hover .download-icon {
-  animation: bounce 1s infinite cubic-bezier(0.36, 0, 0.66, -0.56);
+.download:hover .download-icon,
+.contact-cta:hover .contact-cta-icon {
+  transform: scale(1.1);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.contact-cta:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #6b6560;
+}
+.contact-cta-active {
+  background: #54347f !important;
+  box-shadow: 1.5px 1.5px 0px #6b6560 !important;
+  transform: translate(1.5px, 1.5px) !important;
+  border-color: #3b235c !important;
 }
 .glass-panel {
   /* background: rgba(255, 255, 255, 0.78); */

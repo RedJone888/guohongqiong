@@ -83,7 +83,7 @@
                 <div class="scroll-affordance-frame min-h-0 flex-1">
                     <div v-scroll-affordance class="min-h-0 flex-1 overflow-y-auto no-scrollbar p-2">
                         <ul class="flex flex-col gap-2">
-                            <li v-for="section in localizedSections" :key="section.key">
+                            <li v-for="section in desktopNavSections" :key="section.key">
                                 <button type="button"
                                     class="group flex w-full items-center gap-4 rounded-xl px-4 py-3 text-left text-sm font-semibold transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950"
                                     :class="activeSection === section.key
@@ -110,12 +110,16 @@
                     </div>
                 </div>
 
-                <div class="mt-auto border-t border-stone-200 pt-5 px-2">
-                    <a :href="profile.resumeUrl"
-                        class="subscript-action download flex w-full items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-semibold">
-                        <span class="material-symbols-outlined text-sm download-icon">download</span>
-                        {{ localizedProfile.resumeLabel }}
-                    </a>
+                <div class="mt-auto border-t border-stone-200/80 pt-4 px-1">
+                    <button type="button"
+                        class="subscript-action contact-cta flex w-full items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-bold transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950"
+                        :class="activeSection === 'contact' ? 'contact-cta-active' : ''"
+                        :aria-current="activeSection === 'contact' ? 'page' : undefined"
+                        @click="setActiveSection('contact')">
+                        <span class="material-symbols-outlined text-base contact-cta-icon"
+                            :class="activeSection === 'contact' ? 'material-symbol-filled' : ''">mail</span>
+                        <span>{{ localizedContactCta }}</span>
+                    </button>
                 </div>
             </nav>
         </div>
@@ -219,6 +223,14 @@ const localizedSections = computed(() => {
         icon: navIconMap[section.key],
         ...section[locale.value]
     }))
+})
+
+const desktopNavSections = computed(() => {
+    return localizedSections.value.filter((section) => section.key !== 'contact')
+})
+
+const localizedContactCta = computed(() => {
+    return profile[locale.value].contactCtaLabel || (locale.value === 'ja' ? 'お問い合わせ' : 'Get in Touch')
 })
 
 const isCredentialSection = computed(() => {

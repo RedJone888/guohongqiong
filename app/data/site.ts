@@ -86,7 +86,7 @@ export const profile = {
       "中国出身、大阪在住のWebエンジニアです。修士卒業後、Vueを中心に、鉄道物流を支えるWebシステムのフロントエンド開発に約3年間携わってきました。現在はNuxtで本サイトを開発し、フロントエンドを軸にWeb・IT関連の仕事を幅広く検討しています。",
 
     contactTitle: "連絡先",
-    resumeLabel: "CVをダウンロード",
+    contactCtaLabel: "お問い合わせ",
     languageTitle: "語学力",
     photoCaption: "Open to Work",
     locationLabel: "Osaka, Japan",
@@ -112,7 +112,7 @@ export const profile = {
     summary:
       "I am a web engineer from China, currently based in Osaka, Japan. After completing a master’s degree, I spent about three years on frontend development for rail-logistics web systems, working primarily with Vue. I am currently building this site with Nuxt and exploring a broad range of web and IT roles from a frontend foundation.",
     contactTitle: "Contact",
-    resumeLabel: "Download resume",
+    contactCtaLabel: "Get in Touch",
     languageTitle: "Languages",
     photoCaption: "Open to Work",
     locationLabel: "Osaka, Japan",
@@ -264,14 +264,14 @@ export const portfolioSections = [
       eyebrow: "Contact",
       title: "Contact",
       description:
-        "メール、GitHub、LinkedIn から連絡できます。職務経歴書もこちらから確認できます。",
+        "メール、GitHub、LinkedIn からお気軽にご連絡ください。詳細な職務経歴書のご希望もこちらから承ります。",
     },
     en: {
       label: "Contact",
       eyebrow: "Contact",
       title: "Contact",
       description:
-        "Reach me by email, GitHub, or LinkedIn. Resume download is also available here.",
+        "Reach me by email, GitHub, or LinkedIn. Detailed resume is available upon request.",
     },
   },
 ] as const;
