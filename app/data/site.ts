@@ -1,14 +1,13 @@
-export type SkillGroup = {
-  title: string;
-  items: string[];
-};
-
-export type Experience = {
-  company: string;
-  role: string;
+export type Certificate = {
+  name: string;
+  displayName: string;
+  issuer: string;
+  category: "Language" | "IT" | "Security";
   period: string;
-  location: string;
-  bullets: string[];
+  officialSite: string;
+  logo: string;
+  logoAlt: string;
+  verification?: string;
 };
 
 export type Project = {
@@ -20,38 +19,7 @@ export type Project = {
   stack: string[];
   highlights: string[];
   outcome: string;
-  links: {
-    label: string;
-    href: string;
-  }[];
-};
-
-export type Education = {
-  school: string;
-  degree: string;
-  period: string;
-  location: string;
-  website: string;
-  logo: string;
-  details: string;
-  relatedCourses?: string[];
-  activities?: {
-    title: string;
-    description: string;
-  }[];
-  bullets: string[];
-};
-
-export type Certificate = {
-  name: string;
-  displayName: string;
-  issuer: string;
-  category: "Language" | "IT" | "Security";
-  period: string;
-  officialSite: string;
-  logo: string;
-  logoAlt: string;
-  verification?: string;
+  links: { label: string; href: string }[];
 };
 
 export const profile = {
@@ -68,7 +36,6 @@ export const profile = {
   github: "https://github.com/RedJone888",
   linkedin: "https://www.linkedin.com/in/hongqiongguo",
 
-  resumeUrl: "/resume-placeholder.txt",
 
   photoUrl: "/images/profile/profile-headshot.png",
 
@@ -80,13 +47,13 @@ export const profile = {
       "中日英対応",
       "大阪在住",
       "求職中",
-      "勤務地に応じて転居可能",
+      "大阪勤務を優先・他地域への転居も相談可",
     ],
     summary:
-      "中国出身、大阪在住のWebエンジニアです。修士卒業後、Vueを中心に、鉄道物流を支えるWebシステムのフロントエンド開発に約3年間携わってきました。現在はNuxtで本サイトを開発し、フロントエンドを軸にWeb・IT関連の仕事を幅広く検討しています。",
+      "中国出身、大阪在住のWebエンジニアです。修士卒業後、Vueを中心に、鉄道物流を支えるWebシステムのフロントエンド開発に約3年間携わってきました。現在はNuxtで本サイトを開発し、Vue・TypeScriptを軸に、React / Next.jsの個人開発経験も活かせる仕事を探しています。",
 
     contactTitle: "連絡先",
-    contactCtaLabel: "お問い合わせ",
+    contactCtaLabel: "連絡先",
     languageTitle: "語学力",
     photoCaption: "Open to Work",
     locationLabel: "Osaka, Japan",
@@ -107,12 +74,12 @@ export const profile = {
       "Chinese / Japanese / English",
       "Based in Osaka",
       "Open to work",
-      "Open to relocation",
+      "Osaka preferred; relocation negotiable",
     ],
     summary:
-      "I am a web engineer from China, currently based in Osaka, Japan. After completing a master’s degree, I spent about three years on frontend development for rail-logistics web systems, working primarily with Vue. I am currently building this site with Nuxt and exploring a broad range of web and IT roles from a frontend foundation.",
+      "I am a web engineer from China, currently based in Osaka, Japan. After completing a master’s degree, I spent about three years on frontend development for rail-logistics web systems, working primarily with Vue and TypeScript. I am currently building this site with Nuxt, with independent React / Next.js development experience through PetNido.",
     contactTitle: "Contact",
-    contactCtaLabel: "Get in Touch",
+    contactCtaLabel: "Contact",
     languageTitle: "Languages",
     photoCaption: "Open to Work",
     locationLabel: "Osaka, Japan",
@@ -287,7 +254,7 @@ export const quickFacts = {
     },
     {
       label: "転居",
-      value: "勤務地に応じて日本国内での転居を検討可能",
+      value: "大阪勤務を第一希望。仕事内容・条件に応じて他地域も検討し、入社に伴う転居が可能",
     },
     {
       label: "技術領域",
@@ -305,7 +272,7 @@ export const quickFacts = {
     },
     {
       label: "Relocation",
-      value: "Open to relocating within Japan depending on workplace location",
+      value: "Osaka preferred; open to other locations in Japan depending on the role and conditions, with relocation possible",
     },
     {
       label: "Focus areas",
@@ -325,7 +292,7 @@ export const profileHighlights = {
     },
     {
       label: "Job search",
-      value: "大阪在住、勤務地に応じて転居可能",
+      value: "大阪在住・大阪勤務を優先。他地域への転居も相談可",
     },
   ],
   en: [
@@ -340,39 +307,46 @@ export const profileHighlights = {
     },
     {
       label: "Job search",
-      value: "Based in Osaka, open to relocation within Japan",
+      value: "Based in Osaka; Osaka roles preferred, relocation within Japan negotiable",
     },
   ],
 };
 
 export const profilePageCopy = {
   ja: {
-    availability: "WEB開発を軸に、IT領域の幅広い仕事を検討しています",
+    availability: "フロントエンド / Web エンジニアとして働く機会を探しています",
     headline: "複雑な業務を、使いやすいWeb体験へ",
     introduction:
-      "Vueを中心に、鉄道物流を支えるWebシステムで約3年間、予約・業務管理・BI画面の設計と実装に携わってきました。フロントエンドの実務経験を土台に、現在はNuxtで本サイト、React・Next.js・PostgreSQLでPetNidoを開発し、Web開発・業務システム・データ活用など幅広いIT領域を検討しています。",
+      "Vueを中心とした約3年のフロントエンド実務経験があり、鉄道物流を支えるWebシステムで業務画面やBI画面の設計・実装に携わってきました。TypeScriptはその実務で使用し、現在はNuxtで本サイトを作っています。React・Next.jsは個人開発のPetNidoで使い、生成AIも補助に活用しながら、出力したコードと画面の挙動を自分で確認・検証しています。",
     emailLabel: "メールアドレス",
     githubLabel: "GitHub",
     contactLabel: "連絡先",
     atAGlance: "QUICK FACTS",
     facts: [
-      { label: "実務経験", value: "Vue中心 約3年" },
-      { label: "学歴", value: "農業工程・情報技術 修士" },
+      { key: "experience", icon: "work_history", label: "実務経験", value: "Vue中心 約3年" },
+      { key: "independent", icon: "code", label: "個人開発", value: "React / Next.js · PetNido" },
+      { key: "education", icon: "school", label: "学歴", value: "農業工程・情報技術 修士" },
       {
+        key: "languages",
+        icon: "translate",
         label: "語学",
         value: "中国語（母語）・日本語（JLPT N1）・英語",
       },
       {
+        key: "location",
+        icon: "location_on",
         label: "現在地",
         value: "大阪・日本",
-        secondary: "勤務地に応じて転居可能",
+        secondary: "大阪勤務を優先・他地域への転居も相談可",
       },
     ],
     jobSearchLabel: "JOB SEARCH",
     jobSearchItems: [
-      { label: "希望条件", value: "正社員" },
-      { label: "在留資格", value: "就労ビザへの変更が必要" },
+      { key: "preferences", icon: "badge", label: "希望条件", value: "正社員" },
+      { key: "status", icon: "work", label: "在留資格", value: "就労ビザへの変更が必要" },
       {
+        key: "start",
+        icon: "event_available",
         label: "入社時期",
         value: "内定後すぐ変更申請",
         secondary: "手続き期間中の勤務開始は応相談",
@@ -438,32 +412,39 @@ export const profilePageCopy = {
     ],
   },
   en: {
-    availability: "OPEN TO A BROAD RANGE OF WEB & IT OPPORTUNITIES",
+    availability: "LOOKING FOR FRONTEND / WEB ENGINEERING OPPORTUNITIES",
     headline: "Turning complex workflows into usable web experiences.",
     introduction:
-      "I have about three years of experience with Vue, building booking, operations-management, and BI interfaces for rail-logistics systems. Building on that frontend foundation, I now develop this site with Nuxt and PetNido with React, Next.js, and PostgreSQL, while exploring a broad range of roles across web development, business systems, and data-oriented IT work.",
+      "I have about three years of professional frontend experience centered on Vue, building operations and BI interfaces for rail-logistics systems. I used TypeScript in that work and am now building this site with Nuxt. I use React and Next.js for my independent PetNido project, and use generative AI as a development aid while verifying the resulting code and behavior myself.",
     emailLabel: "Email",
     githubLabel: "GitHub",
     contactLabel: "Contact",
     atAGlance: "QUICK FACTS",
     facts: [
-      { label: "Experience", value: "About 3 years with Vue" },
-      { label: "Education", value: "Master's in Agricultural Engineering & IT" },
+      { key: "experience", icon: "work_history", label: "Experience", value: "About 3 years with Vue" },
+      { key: "independent", icon: "code", label: "Independent work", value: "React / Next.js · PetNido" },
+      { key: "education", icon: "school", label: "Education", value: "Master's in Agricultural Engineering & IT" },
       {
+        key: "languages",
+        icon: "translate",
         label: "Languages",
         value: "Chinese (native) · Japanese (JLPT N1 / business) · English",
       },
       {
+        key: "location",
+        icon: "location_on",
         label: "Based in",
         value: "Osaka, Japan",
-        secondary: "Open to relocation based on work location",
+        secondary: "Osaka preferred; relocation negotiable",
       },
     ],
     jobSearchLabel: "JOB SEARCH",
     jobSearchItems: [
-      { label: "Preferences", value: "Full-time permanent role" },
-      { label: "Work status", value: "A change to a work visa is required" },
+      { key: "preferences", icon: "badge", label: "Preferences", value: "Full-time permanent role" },
+      { key: "status", icon: "work", label: "Work status", value: "A change to a work visa is required" },
       {
+        key: "start",
+        icon: "event_available",
         label: "Start timing",
         value: "Can apply immediately after an offer",
         secondary: "An earlier part-time start can be discussed during processing",
@@ -567,214 +548,4 @@ export const languageSkills = [
       credential: "CET-6",
     },
   },
-];
-export const skills: SkillGroup[] = [
-  {
-    title: "Frontend",
-    items: [
-      "Vue 2 / Vue 3",
-      "Nuxt",
-      "TypeScript",
-      "HTML",
-      "CSS",
-      "Responsive UI",
-    ],
-  },
-  {
-    title: "Mobile",
-    items: ["SwiftUI", "iOS", "URLSession", "Codable", "App Store workflow"],
-  },
-  {
-    title: "Backend & API",
-    items: [
-      "REST API",
-      "Node.js",
-      "Hono",
-      "Cloudflare Workers",
-      "OpenAPI",
-      "Zod",
-    ],
-  },
-  {
-    title: "Data & Tools",
-    items: ["PostgreSQL", "SQLite", "D1", "GitHub", "GitHub Actions", "Figma"],
-  },
-];
-
-export const experiences: Experience[] = [
-  {
-    company: "Sample Tech Studio",
-    role: "Frontend Engineer",
-    period: "2023 — Present",
-    location: "Osaka / Remote",
-    bullets: [
-      "Developed customer-facing web applications with Vue and TypeScript.",
-      "Improved component structure, form validation, and API error handling.",
-      "Collaborated with designers and backend engineers to ship small product iterations.",
-    ],
-  },
-  {
-    company: "Personal Product Lab",
-    role: "Independent Developer",
-    period: "2025 — Present",
-    location: "Japan",
-    bullets: [
-      "Designed and implemented MVPs from product requirements to deployment.",
-      "Built prototypes for household finance, receipt capture, and shared ledger workflows.",
-      "Used AI-assisted development carefully for code review, documentation, and UI exploration.",
-    ],
-  },
-  {
-    company: "Example Web Agency",
-    role: "Web Developer",
-    period: "2020 — 2023",
-    location: "Remote",
-    bullets: [
-      "Maintained Vue 2 projects and implemented reusable UI modules.",
-      "Worked on landing pages, dashboards, and CMS-driven websites.",
-      "Handled basic SEO, performance tuning, and responsive design fixes.",
-    ],
-  },
-];
-
-export const education: Education[] = [
-  {
-    school: "中国石油大学（華東）",
-    degree: "地理情報科学 学士",
-    period: "2015.09 — 2019.06",
-    location: "中国・青島",
-    website: "https://www.upc.edu.cn/",
-    logo: "/images/education/upc-logo.jpg",
-    details:
-      "地理情報科学を専攻し、空間情報、データ処理、プログラミング、データベースの基礎を体系的に学びました。WebGIS の講義を通じて、地理空間データを Web 上で可視化し、ユーザーに分かりやすく届ける技術に強い関心を持つようになり、フロントエンドエンジニアとしてのキャリア形成を志すきっかけになりました。",
-    relatedCourses: [
-      "C 言語",
-      "C++",
-      "C#",
-      "Java",
-      "データ構造",
-      "空間データベース",
-      "GIS",
-      "WebGIS",
-    ],
-    activities: [
-      {
-        title: "大学生创新创业项目",
-        description:
-          "学生プロジェクトとして WeChat ミニプログラムの開発に参加し、モバイル向け UI、画面遷移、データ表示など、実際のユーザーに触れるアプリケーション開発を経験しました。",
-      },
-    ],
-    bullets: [
-      "プログラミング、データ構造、空間データベースなどを通じて計算科学の基礎を習得",
-      "WebGIS を通じて、地理空間データを Web 上で扱う技術に関心を持つ",
-      "学生プロジェクトで WeChat ミニプログラム開発に参加し、フロントエンド開発への関心を深める",
-    ],
-  },
-  {
-    school: "北京林業大学",
-    degree: "農業工程・情報技術 修士",
-    period: "2019.09 — 2022.06",
-    location: "中国・北京",
-    website: "https://www.bjfu.edu.cn/",
-    logo: "/images/education/bjfu-logo.png",
-    details:
-      "大学院では、生態ネットワーク最適化、リモートセンシングデータ分析、空間データの活用を中心に研究しました。研究活動に加えて「生態環境一張図」関連の実習に参加し、環境データを構造化して地図サービスや Web システム上で表現する実務に触れたことで、フロントエンド開発を本格的に自学し、卒業後に Web 開発のキャリアへ進みました。",
-    relatedCourses: [
-      "リモートセンシング",
-      "空間データ分析",
-      "生態ネットワーク最適化",
-      "データベース",
-      "GIS",
-      "地図サービス",
-    ],
-    activities: [
-      {
-        title: "修士論文",
-        description:
-          "生態ネットワーク最適化と空間データ分析に関する研究を行い、リモートセンシングデータや地理空間データを用いた分析・評価に取り組みました。",
-      },
-      {
-        title: "生態環境一張図 関連実習",
-        description:
-          "データベースビュー作成、データテーブル構造作成、タイル地図サービス公開などの技術支援を担当。環境関連データを Web 上で視覚的に伝える実務に関わりました。",
-      },
-    ],
-    bullets: [
-      "生態ネットワーク最適化、リモートセンシングデータ分析、空間データ活用を中心に研究",
-      "「生態環境一張図」関連の実習で、データベースビュー作成、テーブル構造作成、タイル地図サービス公開を経験",
-      "環境関連データの Web 可視化に強い関心を持ち、卒業後のフロントエンド開発キャリアにつなげる",
-    ],
-  },
-];
-
-export const projects: Project[] = [
-  {
-    slug: "kakeineko",
-    title: "KakeiNeko",
-    subtitle: "Family bookkeeping app concept for the Japanese market",
-    summary:
-      "A household bookkeeping product focused on shared ledgers, simple expense input, category management, and calm mobile UI.",
-    role: "Product planning, UI direction, iOS architecture, API and database design",
-    stack: [
-      "SwiftUI",
-      "Nuxt",
-      "TypeScript",
-      "Cloudflare Workers",
-      "D1",
-      "Figma",
-    ],
-    highlights: [
-      "Designed ledger, member, category, tag, and invitation models for family collaboration.",
-      "Defined a lightweight API-first architecture for mobile clients.",
-      "Created a calm visual direction suitable for Japanese household finance use cases.",
-    ],
-    outcome:
-      "MVP design and technical architecture completed. Implementation is ongoing with iterative UI tests.",
-    links: [
-      { label: "Case Study", href: "/projects/kakeineko" },
-      { label: "GitHub", href: "https://github.com/example/kakeineko" },
-    ],
-  },
-  {
-    slug: "receipt-ai",
-    title: "Receipt AI Parser",
-    subtitle: "Prototype for extracting expense data from receipts",
-    summary:
-      "A prototype that turns receipt images into structured expense records for personal finance workflows.",
-    role: "Frontend prototype, validation flow, UX design",
-    stack: ["Vue 3", "Nuxt", "TypeScript", "REST API"],
-    highlights: [
-      "Built a correction-first UX so users can quickly verify extracted fields.",
-      "Separated raw OCR data, normalized records, and user-confirmed records.",
-      "Designed empty, loading, error, and success states for the capture flow.",
-    ],
-    outcome:
-      "Clickable prototype and static demo prepared for portfolio review.",
-    links: [{ label: "Case Study", href: "/projects/receipt-ai" }],
-  },
-  {
-    slug: "team-dashboard",
-    title: "Team Operations Dashboard",
-    subtitle: "Internal dashboard for small-team task visibility",
-    summary:
-      "A dashboard MVP for tracking tasks, ownership, deadlines, and lightweight operational metrics.",
-    role: "Frontend implementation and component design",
-    stack: ["Vue 2", "Nuxt", "JavaScript", "Chart.js"],
-    highlights: [
-      "Refactored repeated UI patterns into reusable card and table components.",
-      "Improved mobile layout for managers checking status from phones.",
-      "Added clear empty and error states to reduce ambiguous UI behavior.",
-    ],
-    outcome:
-      "Used as an internal demo for workflow review and stakeholder discussion.",
-    links: [{ label: "Case Study", href: "/projects/team-dashboard" }],
-  },
-];
-
-export const interests = [
-  "Product design for daily-life tools",
-  "Japanese local services and consumer apps",
-  "Personal finance and long-term investing",
-  "AI-assisted software development",
-  "Clean UI systems and maintainable components",
 ];

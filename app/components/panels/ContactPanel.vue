@@ -54,11 +54,11 @@
 
                         <div class="mt-4 flex flex-1 flex-col justify-center gap-3">
                             <div class="contact-channel contact-channel-email flex min-w-0 items-center gap-3 rounded-xl p-4">
-                                <img :src="contactItems[0].icon" alt="" class="h-8 w-8 shrink-0 object-contain" loading="lazy">
-                                <a :href="contactItems[0].href"
+                                <img :src="primaryContact.icon" alt="" class="h-8 w-8 shrink-0 object-contain" loading="lazy">
+                                <a :href="primaryContact.href"
                                     class="min-w-0 flex-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950">
-                                    <span class="block text-sm font-extrabold text-stone-950">{{ contactItems[0].label }}</span>
-                                    <span class="mt-0.5 block truncate text-xs text-stone-600">{{ contactItems[0].text }}</span>
+                                    <span class="block text-sm font-extrabold text-stone-950">{{ primaryContact.label }}</span>
+                                    <span class="mt-0.5 block truncate text-xs text-stone-600">{{ primaryContact.text }}</span>
                                 </a>
                                 <button type="button"
                                     class="contact-copy inline-flex h-10 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg px-3 text-xs font-extrabold text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950"
@@ -99,6 +99,7 @@ import { computed, ref } from 'vue'
 import { contactHeader, contactItems } from '~/data/contact'
 
 const { locale } = useLocale()
+const primaryContact = contactItems[0]!
 const copied = ref(false)
 let copiedTimer: ReturnType<typeof setTimeout> | undefined
 
@@ -122,7 +123,7 @@ const copy = computed(() => locale.value === 'ja'
 
 const copyEmail = async () => {
     try {
-        await navigator.clipboard.writeText(contactItems[0].text)
+        await navigator.clipboard.writeText(primaryContact.text)
         copied.value = true
         if (copiedTimer) clearTimeout(copiedTimer)
         copiedTimer = setTimeout(() => {

@@ -12,9 +12,9 @@
 - 📱 **Mobile-First Touch & Gestures**:
   - Custom lightbox viewer supporting pan, pinch-to-zoom, and safe-area adaptation.
   - **Landscape Orientation Toggle**: 90° rotation mode optimized for 16:7 widescreen screenshots on portrait mobile screens, utilizing `100dvh` for maximum detail without requiring device rotation.
-  - Selective gesture isolation to prevent accidental browser viewport scaling while allowing fluid image interaction.
+  - Lightbox-local gesture handling for pan and pinch-to-zoom while the rest of the page remains normally zoomable.
 - 🌐 **Bilingual Support (JA / EN)**: Reactive locale state management enabling seamless switching between Japanese and English without full-page reloads.
-- ⚡ **Performance & Static Generation**: Full static site generation (SSG) powered by Nuxt Nitro for instant page loads and zero runtime server overhead.
+- ⚡ **Nuxt deployment modes**: `nuxt build` creates a Nitro Node server output; `nuxt generate` creates a fully static site in `.output/public` when static hosting is needed.
 - 🧩 **Data-Driven Architecture**: Clean separation between presentation components and structured portfolio content (`app/data/`).
 
 ---
@@ -30,7 +30,7 @@
 
 ---
 
-## 💻 Local Development
+## 💻 Local Development and Deployment
 
 For reviewers and interviewers who wish to run or inspect the project locally:
 
@@ -38,12 +38,22 @@ For reviewers and interviewers who wish to run or inspect the project locally:
 # Install dependencies
 npm install
 
+# Validate types, lint, and interaction tests
+npm run typecheck
+npm run lint
+npm test -- --run
+
 # Start local development server
 npm run dev
 
-# Build static production bundle
+# Build the local Nitro Node server output
 npm run build
+
+# Optional: generate a static site for a static host
+npm run generate
 ```
+
+`npm run build` produces the Nuxt/Nitro Node server output in `.output/server` (including `.output/server/index.mjs`). `npm run generate` produces static files in `.output/public`. A Vercel project may use its own preset and output configuration, which is not defined by this repository; its remote settings are therefore not inferred here.
 
 ---
 

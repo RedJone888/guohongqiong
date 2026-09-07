@@ -443,7 +443,7 @@ const detailCards = computed(() => {
 
 const selectedDetail = ref<PetnidoDetailKey | null>(null)
 const selectedCard = computed(() => {
-    return detailCards.value.find((card) => card.key === selectedDetail.value) ?? detailCards.value[0]
+    return detailCards.value.find((card) => card.key === selectedDetail.value) ?? detailCards.value[0]!
 })
 
 const dialogRef = ref<HTMLElement | null>(null)
@@ -514,6 +514,7 @@ const handleKeydown = (event: KeyboardEvent) => {
 
     const firstElement = focusableElements[0]
     const lastElement = focusableElements[focusableElements.length - 1]
+    if (!firstElement || !lastElement) return
 
     if (event.shiftKey && document.activeElement === firstElement) {
         event.preventDefault()

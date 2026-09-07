@@ -3,3 +3,15 @@ node_modules
 .output
 .env
 .DS_Store
+
+# Local builds, caches, and review artifacts
+/dist
+/.npm/
+/.audit*/
+/.layout-comparison/
+/.responsive-qa/
+/.shadow-audit/
+/.shadow-preview/
+/design-qa.md
+/question.md
+/docs/petnido-project-section-*.md

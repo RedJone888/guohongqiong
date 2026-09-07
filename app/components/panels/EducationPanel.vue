@@ -86,7 +86,7 @@
                                         </span>
                                         <button type="button"
                                             class="education-project-action group/education flex shrink-0 items-center gap-1 rounded-lg border-2 px-2.5 py-1 text-[0.625rem] font-extrabold text-stone-950 shadow-[2px_2px_1px_#6b6560] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950"
-                                            :data-accent="degreeAccent(degreeIndex)" :aria-haspopup="dialog"
+                                            :data-accent="degreeAccent(degreeIndex)" aria-haspopup="dialog"
                                             :aria-expanded="selectedDegreeKey === degree.key"
                                             @click="openProject(degree.key)">
                                             {{ currentHeader.expand }}
@@ -203,7 +203,7 @@
                                 <article v-for="(detail, detailIndex) in selectedProject.details" :key="detail.title"
                                     class="education-dialog-row">
                                     <h5 class="education-item-title text-sm font-extrabold leading-5 text-stone-950"
-                                        :data-step="String(detailIndex + 1).padStart(2, '0')">
+                                        :data-step="String(Number(detailIndex) + 1).padStart(2, '0')">
                                         {{ detail.title }}
                                     </h5>
                                     <p class="mt-1 text-sm leading-6 text-stone-600">
@@ -229,9 +229,31 @@ import { education, educationHeader } from '~/data/education'
 const { locale } = useLocale()
 
 type DegreeKey = 'bachelor' | 'master'
+type EducationDegree = {
+    key: DegreeKey
+    logo: string
+    website: string
+    period: string
+    level: string
+    school: string
+    degree: string
+    major: string
+    location: string
+    curriculum?: { icon: string; sectionTitle: string; items: string[] }
+    project: {
+        icon: string
+        sectionTitle: string
+        title: string
+        summary: string
+        details: Array<{ title: string; description: string }>
+        tags: string[]
+        reference?: { url: string; label: string; note?: string; githubUrl?: string; githubLabel?: string }
+    }
+    publish?: { icon: string; sectionTitle: string; authorRole: string; title: string; url: string; cover: string }
+}
 
 const currentHeader = computed(() => educationHeader[locale.value])
-const degrees = computed(() => education[locale.value])
+const degrees = computed(() => education[locale.value] as readonly EducationDegree[])
 
 const degreeAccent = (index: number) => index === 0 ? 'yellow' : 'blue'
 
@@ -318,6 +340,7 @@ const handleKeydown = (event: KeyboardEvent) => {
 
     const firstElement = focusableElements[0]
     const lastElement = focusableElements[focusableElements.length - 1]
+    if (!firstElement || !lastElement) return
 
     if (event.shiftKey && document.activeElement === firstElement) {
         event.preventDefault()

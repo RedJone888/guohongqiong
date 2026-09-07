@@ -5,9 +5,11 @@
             class="profile-scroll no-scrollbar -mr-2 flex min-h-0 flex-1 flex-col overflow-x-hidden pr-2 lg:overflow-visible lg:pb-0">
             <div class="profile-stack flex flex-col gap-4">
                 <header class="profile-header">
-                    <div class="profile-availability">
-                        <span aria-hidden="true" class="profile-availability-dot" />
-                        <p>{{ copy.availability }}</p>
+                    <div class="profile-header-meta">
+                        <div class="profile-availability">
+                            <span aria-hidden="true" class="profile-availability-dot" />
+                            <p>{{ copy.availability }}</p>
+                        </div>
                     </div>
 
                     <h2 class="profile-headline">{{ copy.headline }}</h2>
@@ -17,15 +19,19 @@
                 <section class="profile-overview">
                     <div class="profile-overview-information">
                         <dl class="profile-information-list">
-                            <div v-for="(fact, factIndex) in copy.facts" :key="fact.label"
-                                class="profile-information-item profile-fact" :data-fact-index="factIndex">
+                            <div v-for="fact in copy.facts" :key="fact.key"
+                                class="profile-information-item profile-fact" :data-fact-key="fact.key">
                                 <dt>
+                                    <a class="profile-fact-link" :href="`#${factSections[fact.key]}`"
+                                        @click.prevent="navigate(factSections[fact.key])" :aria-label="`${fact.label}: ${fact.value}`">
+                                        <span class="profile-fact-link-icon material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                                    </a>
                                     <span aria-hidden="true" class="material-symbols-outlined profile-fact-icon">
-                                        {{ factIcons[factIndex] }}
+                                        {{ fact.icon }}
                                     </span>
                                     <span>{{ fact.label }}</span>
                                 </dt>
-                                <dd v-if="fact.label === '語学' || fact.label === 'Languages'"
+                                <dd v-if="fact.key === 'languages'"
                                     class="profile-language-value">
                                     <template v-for="(group, groupIndex) in splitLanguageGroups(fact.value)"
                                         :key="`${group.text}-${groupIndex}`">
@@ -45,11 +51,11 @@
                                 </dd>
                             </div>
 
-                            <div v-for="(item, itemIndex) in copy.jobSearchItems" :key="item.label"
-                                class="profile-information-item profile-job-search-item" :data-job-index="itemIndex">
+                            <div v-for="item in copy.jobSearchItems" :key="item.key"
+                                class="profile-information-item profile-job-search-item" :data-job-key="item.key">
                                 <dt>
                                     <span aria-hidden="true" class="material-symbols-outlined profile-fact-icon">
-                                        {{ jobSearchIcons[itemIndex] }}
+                                        {{ item.icon }}
                                     </span>
                                     <span>{{ item.label }}</span>
                                 </dt>
@@ -225,20 +231,40 @@
 <script setup lang="ts">
 import { computed, nextTick, ref } from 'vue'
 import { contactItems } from '~/data/contact'
-import { profile, profilePageCopy, type PortfolioSectionKey } from '~/data/site'
+import { profilePageCopy, type PortfolioSectionKey } from '~/data/site'
 
 const emit = defineEmits<{
     navigate: [section: PortfolioSectionKey]
 }>()
 
 const { locale } = useLocale()
-const copy = computed(() => profilePageCopy[locale.value])
-const emailContact = contactItems[0]
-const linkedinContact = contactItems[1]
-const githubContact = contactItems[2]
-const factIcons = ['work_history', 'school', 'translate', 'location_on']
-const jobSearchIcons = ['badge', 'work', 'event_available']
-
+const copy = computed(() => {
+    const localized = profilePageCopy[locale.value]
+    return {
+        ...localized,
+        facts: localized.facts.map((fact) => ({
+            key: fact.key,
+            icon: fact.icon,
+            label: fact.label,
+            value: fact.value,
+            secondary: 'secondary' in fact ? fact.secondary : undefined,
+        })),
+        jobSearchItems: localized.jobSearchItems.map((item) => ({
+            key: item.key,
+            icon: item.icon,
+            label: item.label,
+            value: item.value,
+            secondary: 'secondary' in item ? item.secondary : undefined,
+        })),
+    }
+})
+const emailContact = contactItems[0]!
+const linkedinContact = contactItems[1]!
+const githubContact = contactItems[2]!
+const factSections: Record<typeof profilePageCopy.ja.facts[number]['key'], PortfolioSectionKey> = {
+    experience: 'experience', independent: 'projects', education: 'education',
+    languages: 'certificates', location: 'contact',
+}
 const notesOpen = ref(false)
 const dialog = ref<HTMLElement | null>(null)
 const closeButton = ref<HTMLButtonElement | null>(null)
@@ -299,6 +325,7 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 
     const first = focusable[0]
     const last = focusable[focusable.length - 1]
+    if (!first || !last) return
 
     if (event.shiftKey && document.activeElement === first) {
         event.preventDefault()
@@ -338,6 +365,13 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 
 .profile-header {
     flex: 0 0 auto;
+}
+
+.profile-header-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
 .profile-overview {
@@ -478,6 +512,15 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     line-height: 1.6;
 }
 
+/* The entire fact is a native link, including its label and value. */
+.profile-fact { position: relative; }
+.profile-fact-link { position: absolute; inset: -0.35rem; border-radius: 0.45rem; z-index: 1; }
+.profile-fact-link:hover { background: rgb(111 76 160 / 0.06); }
+.profile-fact-link:focus-visible { outline: 2px solid #6f4ca0; outline-offset: 2px; }
+.profile-fact-link-icon { position: absolute; top: 0.25rem; right: 0.3rem; color: #6f4ca0; font-size: 0.85rem; opacity: 0; }
+.profile-fact-link:hover .profile-fact-link-icon,
+.profile-fact-link:focus-visible .profile-fact-link-icon { opacity: 1; }
+
 .profile-notes-button {
     display: inline-flex;
     min-height: 2.75rem;
@@ -508,7 +551,7 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 
 .profile-information-list {
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 4fr) minmax(0, 4fr);
+    grid-template-columns: minmax(0, 2.5fr) minmax(0, 4fr) minmax(0, 3.5fr);
     align-items: start;
     gap: 1.15rem 1.5rem;
 }
@@ -519,23 +562,14 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     max-width: 100%;
 }
 
-.profile-information-item:nth-child(4) {
-    order: 3;
-}
-
-.profile-information-item:nth-child(5) {
-    order: 1;
-}
-
-.profile-information-item:nth-child(6) {
-    order: 2;
-}
-
-.profile-information-item:nth-child(7) {
-    order: 4;
-    grid-column: 1 / -1;
-    grid-row: 3;
-}
+.profile-fact[data-fact-key="experience"] { grid-area: 1 / 1; }
+.profile-fact[data-fact-key="independent"] { grid-area: 1 / 2; }
+.profile-fact[data-fact-key="education"] { grid-area: 1 / 3; }
+.profile-job-search-item[data-job-key="preferences"] { grid-area: 2 / 1; }
+.profile-job-search-item[data-job-key="start"] { grid-area: 3 / 2 / 4 / 4; }
+.profile-fact[data-fact-key="languages"] { grid-area: 2 / 3; }
+.profile-job-search-item[data-job-key="status"] { grid-area: 3 / 1; }
+.profile-fact[data-fact-key="location"] { grid-area: 2 / 2; }
 
 .profile-fact dt,
 .profile-job-search-item dt {
@@ -625,7 +659,7 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 
 .profile-lower-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
     align-items: start;
     gap: 1rem;
 }
@@ -992,36 +1026,17 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 }
 
 @media (min-width: 1024px) {
-    .profile-stack {
-        height: 100%;
-        min-height: 0;
-    }
-
-    .profile-lower-grid {
-        min-height: 0;
-        max-height: 100%;
-        flex: 1;
-        align-items: stretch;
-    }
-
-    .profile-lower-grid .profile-panel {
-        height: 100%;
-        min-height: 0;
-        max-height: 100%;
-        overflow: hidden;
-    }
-
+    .profile-page { min-height: 0; height: 100%; overflow: hidden; }
+    .profile-page .profile-scroll { min-height: 0; overflow: hidden; }
+    .profile-stack { height: 100%; min-height: 0; }
+    .profile-lower-grid { min-height: 0; flex: 1 1 0; align-items: stretch; }
+    .profile-lower-grid .profile-panel { height: 100%; min-height: 0; overflow: hidden; }
     .profile-lower-grid .profile-panel-scroll {
-        min-height: 0;
-        flex: 1;
-        overflow-y: auto;
-        overscroll-behavior: contain;
-        scrollbar-width: none;
+        flex: 1 1 0; min-height: 0; overflow-y: auto;
+        overscroll-behavior: contain; scrollbar-width: none;
     }
-
-    .profile-lower-grid .profile-panel-scroll::-webkit-scrollbar {
-        display: none;
-    }
+    .profile-job-search-item[data-job-key="start"] dd { white-space: nowrap; }
+    .profile-job-search-item[data-job-key="start"] .profile-secondary { white-space: nowrap; }
 }
 
 @media (max-width: 1279px) {
@@ -1050,6 +1065,12 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 }
 
 @media (max-width: 639px) {
+    .profile-header-meta {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+
     .profile-overview-information,
     .profile-overview-actions,
     .profile-panel-scroll {
@@ -1069,53 +1090,12 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     }
 
     .profile-information-list {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        column-gap: 1rem;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
     }
 
-    .profile-fact[data-fact-index="2"],
-    .profile-fact[data-fact-index="3"] {
-        grid-column: 1 / -1;
-    }
-
-    .profile-fact[data-fact-index="0"] {
-        grid-column: 1;
-        grid-row: 1;
-        order: 0;
-    }
-
-    .profile-fact[data-fact-index="1"] {
-        grid-column: 2;
-        grid-row: 1;
-        order: 0;
-    }
-
-    .profile-fact[data-fact-index="2"] {
-        grid-row: 2;
-        order: 0;
-    }
-
-    .profile-job-search-item[data-job-index="0"] {
-        grid-column: 1;
-        grid-row: 3;
-        order: 0;
-    }
-
-    .profile-job-search-item[data-job-index="1"] {
-        grid-column: 2;
-        grid-row: 3;
-        order: 0;
-    }
-
-    .profile-fact[data-fact-index="3"] {
-        grid-row: 4;
-        order: 0;
-    }
-
-    .profile-job-search-item[data-job-index="2"] {
-        grid-column: 1 / -1;
-        grid-row: 5;
-        order: 0;
+    .profile-information-item {
+        grid-area: auto !important;
     }
 
 .profile-language-value {

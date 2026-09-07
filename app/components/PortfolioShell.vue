@@ -174,7 +174,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, ref } from 'vue'
 import {
     portfolioSections,
     profile,
@@ -198,10 +198,6 @@ const mainScrollRef = ref<HTMLElement | null>(null)
 type MobileSectionKey = PortfolioSectionKey | 'credentials'
 
 const credentialKeys: PortfolioSectionKey[] = ['certificates', 'skills', 'education']
-
-const localizedProfile = computed(() => {
-    return profile[locale.value]
-})
 
 const mobileSubName = computed(() => {
     return locale.value === 'ja' ? '（グオ ホンチョン）' : '（guohongqiong）'
@@ -230,7 +226,7 @@ const desktopNavSections = computed(() => {
 })
 
 const localizedContactCta = computed(() => {
-    return profile[locale.value].contactCtaLabel || (locale.value === 'ja' ? 'お問い合わせ' : 'Get in Touch')
+    return profile[locale.value].contactCtaLabel || (locale.value === 'ja' ? '連絡先' : 'Contact')
 })
 
 const isCredentialSection = computed(() => {
@@ -312,36 +308,6 @@ const initial = computed(() => {
         .slice(0, 2)
 })
 
-const isImageViewerTarget = (target: EventTarget | null) => {
-    return target instanceof Element && Boolean(target.closest('.screenshot-lightbox-body'))
-}
-
-const preventPagePinchZoom = (event: TouchEvent) => {
-    if (event.touches.length > 1 && !isImageViewerTarget(event.target)) {
-        event.preventDefault()
-    }
-}
-
-const preventPageGestureZoom = (event: Event) => {
-    if (!isImageViewerTarget(event.target)) {
-        event.preventDefault()
-    }
-}
-
-const preventPageWheelZoom = (event: WheelEvent) => {
-    if (event.ctrlKey || event.metaKey) {
-        event.preventDefault()
-    }
-}
-
-const preventPageKeyboardZoom = (event: KeyboardEvent) => {
-    if (!(event.ctrlKey || event.metaKey)) return
-
-    if (['+', '-', '=', '_', '0'].includes(event.key)) {
-        event.preventDefault()
-    }
-}
-
 onMounted(() => {
     const hash = window.location.hash.replace('#', '') as PortfolioSectionKey
 
@@ -352,24 +318,8 @@ onMounted(() => {
         }
     }
 
-    document.addEventListener('touchstart', preventPagePinchZoom, { capture: true, passive: false })
-    document.addEventListener('touchmove', preventPagePinchZoom, { capture: true, passive: false })
-    document.addEventListener('gesturestart', preventPageGestureZoom, { capture: true, passive: false })
-    document.addEventListener('gesturechange', preventPageGestureZoom, { capture: true, passive: false })
-    document.addEventListener('gestureend', preventPageGestureZoom, { capture: true, passive: false })
-    document.addEventListener('wheel', preventPageWheelZoom, { capture: true, passive: false })
-    document.addEventListener('keydown', preventPageKeyboardZoom, true)
 })
 
-onBeforeUnmount(() => {
-    document.removeEventListener('touchstart', preventPagePinchZoom, true)
-    document.removeEventListener('touchmove', preventPagePinchZoom, true)
-    document.removeEventListener('gesturestart', preventPageGestureZoom, true)
-    document.removeEventListener('gesturechange', preventPageGestureZoom, true)
-    document.removeEventListener('gestureend', preventPageGestureZoom, true)
-    document.removeEventListener('wheel', preventPageWheelZoom, true)
-    document.removeEventListener('keydown', preventPageKeyboardZoom, true)
-})
 </script>
 
 <style scoped>

@@ -221,7 +221,7 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { experiences } from '~/data/experience'
 const { locale } = useLocale()
 import { experienceHeader } from '~/data/experience'
-import { ProjectKey } from '~/data/type'
+import type { ProjectKey } from '~/data/type'
 
 const currentHeader = computed(() => {
     return experienceHeader[locale.value]
@@ -416,6 +416,7 @@ const handleKeydown = (event: KeyboardEvent) => {
 
     const firstElement = focusableElements[0]
     const lastElement = focusableElements[focusableElements.length - 1]
+    if (!firstElement || !lastElement) return
 
     if (event.shiftKey && document.activeElement === firstElement) {
         event.preventDefault()
