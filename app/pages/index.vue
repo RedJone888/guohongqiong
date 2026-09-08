@@ -60,7 +60,6 @@
                                 </dt>
                                 <dd class="profile-job-search-value">
                                     <span>{{ item.value }}</span>
-                                    <span v-if="item.secondary" class="profile-secondary">{{ item.secondary }}</span>
                                 </dd>
                             </div>
                         </dl>
@@ -1029,8 +1028,6 @@ const onDialogKeydown = (event: KeyboardEvent) => {
         flex: 1 1 0; min-height: 0; overflow-y: auto;
         overscroll-behavior: contain; scrollbar-width: none;
     }
-    .profile-job-search-item[data-job-key="start"] dd { white-space: nowrap; }
-    .profile-job-search-item[data-job-key="start"] .profile-secondary { white-space: nowrap; }
 }
 
 @media (max-width: 1279px) {
