@@ -1,4 +1,5 @@
 import tailwindcss from "@tailwindcss/vite";
+import { portfolioPaths } from "./app/data/navigation";
 export default defineNuxtConfig({
   compatibilityDate: "2026-07-01",
   css: ["~/assets/css/main.css"],
@@ -46,7 +47,8 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ["/"],
+      routes: Object.values(portfolioPaths),
+      failOnError: true,
     },
   },
 });

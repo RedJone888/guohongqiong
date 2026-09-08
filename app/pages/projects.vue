@@ -395,6 +395,8 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import ProjectScreenshotSlot from '~/components/projects/ProjectScreenshotSlot.vue'
 import { petnidoProjectHeader, petnidoProjects, type PetnidoDetailKey } from '~/data/projects'
 
+usePortfolioPage('projects')
+
 const { locale } = useLocale()
 
 const currentHeader = computed(() => petnidoProjectHeader[locale.value])

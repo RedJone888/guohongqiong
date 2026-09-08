@@ -98,6 +98,8 @@
 import { computed, ref } from 'vue'
 import { contactHeader, contactItems } from '~/data/contact'
 
+usePortfolioPage('contact')
+
 const { locale } = useLocale()
 const primaryContact = contactItems[0]!
 const copied = ref(false)

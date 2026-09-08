@@ -59,11 +59,11 @@ export const profile = {
     locationLabel: "Osaka, Japan",
     navLabel: "詳しく見る",
     navLinks: [
-      { label: "実務経験", href: "#experience" },
-      { label: "プロジェクト", href: "#projects" },
-      { label: "学歴", href: "#education" },
-      { label: "資格", href: "#certificates" },
-      { label: "技術スタック", href: "#skills" },
+      { label: "実務経験", href: "/experience" },
+      { label: "プロジェクト", href: "/projects" },
+      { label: "学歴", href: "/education" },
+      { label: "資格", href: "/certificates" },
+      { label: "技術スタック", href: "/skills" },
     ],
   },
   en: {
@@ -85,32 +85,32 @@ export const profile = {
     locationLabel: "Osaka, Japan",
     navLabel: "Explore",
     navLinks: [
-      { label: "Experience", href: "#experience" },
-      { label: "Projects", href: "#projects" },
-      { label: "Education", href: "#education" },
-      { label: "Certificates", href: "#certificates" },
-      { label: "Skills", href: "#skills" },
+      { label: "Experience", href: "/experience" },
+      { label: "Projects", href: "/projects" },
+      { label: "Education", href: "/education" },
+      { label: "Certificates", href: "/certificates" },
+      { label: "Skills", href: "/skills" },
     ],
   },
 };
 export const navLinks = [
   {
-    href: "#experience",
+    href: "/experience",
     ja: { label: "実務経験" },
     en: { label: "Experience" },
   },
   {
-    href: "#projects",
+    href: "/projects",
     ja: { label: "プロジェクト" },
     en: { label: "Projects" },
   },
-  { href: "#education", ja: { label: "学歴" }, en: { label: "Education" } },
+  { href: "/education", ja: { label: "学歴" }, en: { label: "Education" } },
   {
-    href: "#certificates",
+    href: "/certificates",
     ja: { label: "資格" },
     en: { label: "Certificates" },
   },
-  { href: "#skills", ja: { label: "技術スタック" }, en: { label: "Skills" } },
+  { href: "/skills", ja: { label: "技術スタック" }, en: { label: "Skills" } },
 ];
 export type PortfolioSectionKey =
   | "profile"

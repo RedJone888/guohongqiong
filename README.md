@@ -1,80 +1,73 @@
 # Career Portfolio · Hongqiong Guo
 
-> A personal career portfolio web application crafted with Nuxt 4, Vue 3, and TypeScript.
+A Japanese/English career portfolio for job applications, built with Nuxt 4, Vue 3, and TypeScript. The UI uses Tailwind CSS and scoped CSS.
 
-[🌐 Live Site: guohongqiong.vercel.app](https://guohongqiong.vercel.app/)
+[Live site: guohongqiong.vercel.app](https://guohongqiong.vercel.app/)
 
----
+## Features
 
-## 🌟 Highlights & Engineering Features
+- **Shareable pages:** Independent routes support direct visits, refreshes, and browser history.
+- **Japanese and English:** Japanese is prerendered by default. A shared locale state switches content, metadata, and document language in the browser while keeping the current route.
+- **Responsive navigation:** Desktop sidebar and mobile bottom navigation, with a mobile submenu for education, certificates, and skills.
+- **Screenshot viewer:** Enlarged project images with pinch zoom, panning, and rotation on mobile. Keyboard support includes focus management, Escape to close, and restoring focus to the opening button.
 
-- 🎨 **Neo-Brutalist / Paper Design System**: Cohesive aesthetic featuring high-contrast borders, tactile drop shadows, and subtle paper textures with retro accents.
-- 📱 **Mobile-First Touch & Gestures**:
-  - Custom lightbox viewer supporting pan, pinch-to-zoom, and safe-area adaptation.
-  - **Landscape Orientation Toggle**: 90° rotation mode optimized for 16:7 widescreen screenshots on portrait mobile screens, utilizing `100dvh` for maximum detail without requiring device rotation.
-  - Lightbox-local gesture handling for pan and pinch-to-zoom while the rest of the page remains normally zoomable.
-- 🌐 **Bilingual Support (JA / EN)**: Reactive locale state management enabling seamless switching between Japanese and English without full-page reloads.
-- ⚡ **Nuxt deployment modes**: `nuxt build` creates a Nitro Node server output; `nuxt generate` creates a fully static site in `.output/public` when static hosting is needed.
-- 🧩 **Data-Driven Architecture**: Clean separation between presentation components and structured portfolio content (`app/data/`).
-
----
-
-## 🛠️ Tech Stack
-
-- **Framework**: [Nuxt 4](https://nuxt.com/) (Vue 3, Composition API)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS & Modern CSS
-- **Iconography**: Google Material Symbols
-- **Build Tool**: Vite & Nitro Engine
-- **Deployment**: [Vercel](https://vercel.com/)
-
----
-
-## 💻 Local Development and Deployment
-
-For reviewers and interviewers who wish to run or inspect the project locally:
-
-```bash
-# Install dependencies
-npm install
-
-# Validate types, lint, and interaction tests
-npm run typecheck
-npm run lint
-npm test -- --run
-
-# Start local development server
-npm run dev
-
-# Build the local Nitro Node server output
-npm run build
-
-# Optional: generate a static site for a static host
-npm run generate
-```
-
-`npm run build` produces the Nuxt/Nitro Node server output in `.output/server` (including `.output/server/index.mjs`). `npm run generate` produces static files in `.output/public`. A Vercel project may use its own preset and output configuration, which is not defined by this repository; its remote settings are therefore not inferred here.
-
----
-
-## 📁 Architecture Overview
+## Project structure
 
 ```text
 app/
-├── assets/css/        # Theme variables, typography, and base CSS
-├── components/        # Reusable UI components & section panels
-│   ├── panels/        # Profile, Experience, Projects, Skills, Contact panels
-│   └── projects/      # Project card & interactive screenshot lightbox
-├── composables/       # Application states (locale, responsive handlers)
-├── data/              # Structured TypeScript portfolio content
-└── pages/             # File-based routing
+├── assets/css/    # Shared styles and theme variables
+├── components/    # Shared layout, certificate cards, and screenshot viewer
+├── composables/   # Locale state and page metadata
+├── data/          # Portfolio content and navigation paths
+└── pages/         # Route-specific templates, logic, and styles
 ```
 
----
+## Local development
 
-## 📬 Contact & Author
+Use Node.js 22 (the version used in CI) and npm. From the repository root:
 
-- **Author**: Hongqiong Guo (郭红琼)
+```bash
+npm ci
+npm run dev
+```
+
+## Validation
+
+Run the checks configured in [GitHub Actions](.github/workflows/ci.yml):
+
+```bash
+npm run typecheck
+npm run lint
+npm test -- --run
+npm run build
+npm run test:prerender
+```
+
+[Vitest interaction tests](tests/portfolio.test.ts) cover navigation, language switching, profile links, and screenshot-viewer focus behavior. The [prerender check](scripts/check-prerender.mjs) reads the generated HTML without executing client JavaScript and verifies each page's content and metadata.
+
+After building, run `npm run preview` to preview the production output locally.
+
+## Static generation (SSG) and deployment
+
+`npm run build` executes `nuxt build`. The `nitro.prerender` configuration in [nuxt.config.ts](nuxt.config.ts) uses [the navigation paths](app/data/navigation.ts) to generate these seven pages at build time, each with its own HTML, title, description, and canonical URL:
+
+| Page | URL |
+| --- | --- |
+| Profile | `/` |
+| Experience | `/experience` |
+| Projects | `/projects` |
+| Education | `/education` |
+| Certificates | `/certificates` |
+| Skills | `/skills` |
+| Contact | `/contact` |
+
+Local builds write static HTML to `.output/public/index.html` and `.output/public/<route>/index.html`, alongside Nitro's server output in `.output/server`.
+
+On Vercel, select the **Nuxt** framework preset and leave the **Build Command / Output Directory** overrides off. Nitro uses the Vercel preset to produce the deployment output.
+
+## Contact
+
+- **Developer**: Hongqiong Guo (郭红琼)
 - **GitHub**: [@RedJone888](https://github.com/RedJone888)
 - **LinkedIn**: [Hongqiong Guo](https://www.linkedin.com/in/hongqiongguo)
 - **Email**: [redjoan.guo@gmail.com](mailto:redjoan.guo@gmail.com)

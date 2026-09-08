@@ -94,6 +94,8 @@ import { computed } from 'vue'
 import { languageSkills } from '~/data/site'
 import { skillGroups, skillHeader, type SkillSource } from '~/data/skills'
 
+usePortfolioPage('skills')
+
 const { locale } = useLocale()
 
 const currentHeader = computed(() => skillHeader[locale.value])

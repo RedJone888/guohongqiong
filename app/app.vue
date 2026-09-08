@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <PortfolioShell>
     <NuxtPage />
-  </div>
+  </PortfolioShell>
 </template>

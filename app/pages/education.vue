@@ -226,6 +226,8 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { education, educationHeader } from '~/data/education'
 
+usePortfolioPage('education')
+
 const { locale } = useLocale()
 
 type DegreeKey = 'bachelor' | 'master'

@@ -219,6 +219,8 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { experiences } from '~/data/experience'
+usePortfolioPage('experience')
+
 const { locale } = useLocale()
 import { experienceHeader } from '~/data/experience'
 import type { ProjectKey } from '~/data/type'

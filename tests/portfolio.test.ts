@@ -1,29 +1,50 @@
-import { mount } from '@vue/test-utils'
-import { nextTick, ref } from 'vue'
-import { describe, expect, it, vi } from 'vitest'
+import { flushPromises, mount } from '@vue/test-utils'
+import { nextTick, reactive, ref } from 'vue'
+import { createMemoryHistory, createRouter, RouterLink } from 'vue-router'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import ProjectScreenshotSlot from '../app/components/projects/ProjectScreenshotSlot.vue'
 import PortfolioShell from '../app/components/PortfolioShell.vue'
-import ProfilePanel from '../app/components/panels/ProfilePanel.vue'
+import ProfilePage from '../app/pages/index.vue'
+import { portfolioPaths } from '../app/data/navigation'
+
+const setupRouter = async (path = '/') => {
+  const router = createRouter({
+    history: createMemoryHistory(),
+    routes: Object.values(portfolioPaths).map(path => ({ path, component: { template: '<div />' } })),
+  })
+  await router.push(path)
+  await router.isReady()
+  vi.stubGlobal('useRoute', () => reactive({ get path() { return router.currentRoute.value.path } }))
+  return router
+}
+
+const mountShell = async (path = '/') => {
+  const router = await setupRouter(path)
+  const locale = ref<'ja' | 'en'>('ja')
+  const useHead = vi.fn()
+  vi.stubGlobal('useLocale', () => ({ locale, setLocale: (value: 'ja' | 'en') => { locale.value = value } }))
+  vi.stubGlobal('useState', () => locale)
+  vi.stubGlobal('useHead', useHead)
+  const wrapper = mount(PortfolioShell, {
+    global: { plugins: [router], components: { NuxtLink: RouterLink }, directives: { 'scroll-affordance': {} } },
+  })
+  return { wrapper, router, locale, useHead }
+}
+
+afterEach(() => { vi.unstubAllGlobals() })
 
 describe('portfolio navigation and locale', () => {
-  it('switches the mounted shell between Japanese and English', async () => {
-    const locale = ref<'ja' | 'en'>('ja')
-    const useHead = vi.fn()
-    const setLocale = (value: 'ja' | 'en') => { locale.value = value }
-    vi.stubGlobal('useLocale', () => ({ locale, setLocale }))
-    vi.stubGlobal('useState', () => locale)
-    vi.stubGlobal('useHead', useHead)
-    const wrapper = mount(PortfolioShell, { global: { stubs: { NuxtLink: true }, directives: { 'scroll-affordance': {} } } })
+  it('switches languages without changing the current route', async () => {
+    const { wrapper, router, locale, useHead } = await mountShell('/education')
     await wrapper.get('.desktop-language-switch button:nth-of-type(2)').trigger('click')
-    await nextTick()
     expect(locale.value).toBe('en')
     expect(wrapper.get('.desktop-language-switch button:nth-of-type(2)').attributes('aria-pressed')).toBe('true')
-    expect(wrapper.get('button[aria-label="Projects"]').exists()).toBe(true)
+    expect(wrapper.get('a[aria-label="Projects"]').attributes('href')).toBe('/projects')
+    expect(router.currentRoute.value.path).toBe('/education')
     await wrapper.get('.desktop-language-switch button:nth-of-type(1)').trigger('click')
-    await nextTick()
     expect(locale.value).toBe('ja')
     expect(wrapper.get('.desktop-language-switch button:nth-of-type(1)').attributes('aria-pressed')).toBe('true')
-    expect(wrapper.get('button[aria-label="プロジェクト"]').exists()).toBe(true)
+    expect(wrapper.get('a[aria-label="プロジェクト"]').attributes('href')).toBe('/projects')
     wrapper.unmount()
 
     const { useLocale } = await import('../app/composables/useLocale')
@@ -35,6 +56,49 @@ describe('portfolio navigation and locale', () => {
     state.setLocale('ja')
     await nextTick()
     expect(headFactory().htmlAttrs.lang).toBe('ja')
+  })
+
+  it('selects education immediately when opened by its path', async () => {
+    const { wrapper } = await mountShell('/education')
+    expect(wrapper.get('main > section').attributes('id')).toBe('education')
+    expect(wrapper.get('a[aria-label="学歴"]').attributes('aria-current')).toBe('page')
+    expect(wrapper.get('.credential-mobile-nav a[href="/education"]').attributes('aria-current')).toBe('page')
+    expect(wrapper.get('.mobile-bottom-nav a[href="/education"]').attributes('aria-current')).toBe('page')
+    wrapper.unmount()
+  })
+
+  it('keeps the selected section in sync with navigation, back, and forward', async () => {
+    const { wrapper, router } = await mountShell()
+    await wrapper.get('a[aria-label="プロジェクト"]').trigger('click')
+    await flushPromises()
+    expect(router.currentRoute.value.fullPath).toBe('/projects')
+    expect(wrapper.get('main > section').attributes('id')).toBe('projects')
+    expect(wrapper.get('a[aria-label="プロジェクト"]').attributes('aria-current')).toBe('page')
+    await wrapper.get('a[aria-label="学歴"]').trigger('click')
+    await flushPromises()
+    expect(router.currentRoute.value.fullPath).toBe('/education')
+    router.back()
+    await flushPromises()
+    expect(wrapper.get('main > section').attributes('id')).toBe('projects')
+    router.forward()
+    await flushPromises()
+    expect(wrapper.get('main > section').attributes('id')).toBe('education')
+    wrapper.unmount()
+  })
+
+  it('returns to the last credential route from mobile navigation', async () => {
+    const { wrapper, router } = await mountShell('/education')
+    await wrapper.get('.mobile-bottom-nav a[href="/projects"]').trigger('click')
+    await flushPromises()
+    expect(wrapper.find('.credential-mobile-nav').exists()).toBe(false)
+    await wrapper.get('.mobile-bottom-nav a[href="/education"]').trigger('click')
+    await flushPromises()
+    expect(router.currentRoute.value.path).toBe('/education')
+    await wrapper.get('.credential-mobile-nav a[href="/skills"]').trigger('click')
+    await flushPromises()
+    expect(router.currentRoute.value.path).toBe('/skills')
+    expect(wrapper.get('.mobile-bottom-nav a[href="/skills"]').attributes('aria-current')).toBe('page')
+    wrapper.unmount()
   })
 })
 
@@ -77,36 +141,27 @@ describe('screenshot lightbox', () => {
     expect(document.activeElement).toBe(trigger)
     wrapper.unmount()
   })
-
-  it('moves the shell navigation to the selected section and URL hash', async () => {
-    const locale = ref<'ja' | 'en'>('ja')
-    vi.stubGlobal('useLocale', () => ({ locale, setLocale: (value: 'ja' | 'en') => { locale.value = value } }))
-    vi.stubGlobal('useState', () => locale)
-    vi.stubGlobal('useHead', vi.fn())
-    vi.stubGlobal('useId', () => 'shell-title')
-    const wrapper = mount(PortfolioShell, { global: { stubs: { 'NuxtLink': true }, directives: { 'scroll-affordance': {} } } })
-    await wrapper.get('button[aria-label="プロジェクト"]').trigger('click')
-    expect(window.location.hash).toBe('#projects')
-    expect(wrapper.get('button[aria-label="プロジェクト"]').attributes('aria-current')).toBe('page')
-    wrapper.unmount()
-  })
 })
 
-
 describe('profile information links', () => {
-  it('opens the corresponding section from each information item', async () => {
+  it('navigates to the corresponding route from each information item', async () => {
+    const router = await setupRouter()
     vi.stubGlobal('useLocale', () => ({ locale: ref<'ja' | 'en'>('ja') }))
-    const wrapper = mount(ProfilePanel, { global: { directives: { 'scroll-affordance': {} } } })
+    vi.stubGlobal('usePortfolioPage', vi.fn())
+    const wrapper = mount(ProfilePage, {
+      global: { plugins: [router], components: { NuxtLink: RouterLink }, directives: { 'scroll-affordance': {} } },
+    })
     const destinations = {
-      experience: 'experience', independent: 'projects', education: 'education',
-      languages: 'certificates', location: 'contact',
+      experience: '/experience', independent: '/projects', education: '/education',
+      languages: '/certificates', location: '/contact',
     }
-    for (const [key, section] of Object.entries(destinations)) {
+    for (const [key, path] of Object.entries(destinations)) {
       const link = wrapper.get(`[data-fact-key="${key}"] a`)
-      expect(link.attributes('href')).toBe(`#${section}`)
+      expect(link.attributes('href')).toBe(path)
       expect(link.attributes('aria-label')).toBeTruthy()
       await link.trigger('click')
-      expect(wrapper.emitted('navigate')?.at(-1)).toEqual([section])
+      await flushPromises()
+      expect(router.currentRoute.value.fullPath).toBe(path)
     }
     wrapper.unmount()
   })

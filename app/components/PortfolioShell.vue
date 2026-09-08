@@ -22,8 +22,7 @@
         <!-- 移动端顶部 -->
         <header
             class="mobile-topbar relative z-40 flex h-[calc(4rem+env(safe-area-inset-top))] shrink-0 items-center justify-between px-4 pt-[env(safe-area-inset-top)] lg:hidden">
-            <button type="button" class="flex min-w-0 items-center gap-3 text-left" aria-label="Profile"
-                @click="setActiveSection('profile')">
+            <NuxtLink :to="portfolioPaths.profile" class="flex min-w-0 items-center gap-3 text-left" aria-label="Profile">
                 <span
                     class="mobile-avatar flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
                     <img v-if="profile.photoUrl" :src="profile.photoUrl" :alt="profile.nameRomaji"
@@ -36,7 +35,7 @@
                     </span>
                     <span class="block truncate text-[0.6875rem] font-semibold text-stone-600">{{ profile.role }}</span>
                 </span>
-            </button>
+            </NuxtLink>
 
             <div class="mobile-language-switch flex items-center rounded-full p-1 text-xs">
                 <button type="button" class="mobile-language-option flex h-8 min-w-9 items-center justify-center rounded-full font-extrabold"
@@ -84,14 +83,13 @@
                     <div v-scroll-affordance class="min-h-0 flex-1 overflow-y-auto no-scrollbar p-2">
                         <ul class="flex flex-col gap-2">
                             <li v-for="section in desktopNavSections" :key="section.key">
-                                <button type="button"
+                                <NuxtLink :to="portfolioPaths[section.key]"
                                     class="group flex w-full items-center gap-4 rounded-xl px-4 py-3 text-left text-sm font-semibold transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950"
                                     :class="activeSection === section.key
                                         ? 'nav-depth-active font-bold text-stone-950'
                                         : 'text-stone-500 opacity-75 hover:bg-[#ebe3f6]/40 hover:text-stone-950 hover:opacity-100'
                                         " :aria-label="section.label"
-                                    :aria-current="activeSection === section.key ? 'page' : undefined"
-                                    @click="setActiveSection(section.key)">
+                                    :aria-current="activeSection === section.key ? 'page' : undefined">
                                     <span aria-hidden="true"
                                         class="nav-depth-icon relative material-symbols-outlined text-xl transition-colors"
                                         :class="activeSection === section.key ? 'material-symbol-filled' : ''">
@@ -100,7 +98,7 @@
                                     <span class="nav-depth-label relative tracking-[0.05em]">
                                         {{ section.label }}
                                     </span>
-                                </button>
+                                </NuxtLink>
 
                             </li>
                         </ul>
@@ -111,15 +109,14 @@
                 </div>
 
                 <div class="mt-auto border-t border-stone-200/80 pt-4 px-1">
-                    <button type="button"
+                    <NuxtLink :to="portfolioPaths.contact"
                         class="subscript-action contact-cta flex w-full items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-bold transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950"
                         :class="activeSection === 'contact' ? 'contact-cta-active' : ''"
-                        :aria-current="activeSection === 'contact' ? 'page' : undefined"
-                        @click="setActiveSection('contact')">
+                        :aria-current="activeSection === 'contact' ? 'page' : undefined">
                         <span class="material-symbols-outlined text-base contact-cta-icon"
                             :class="activeSection === 'contact' ? 'material-symbol-filled' : ''">mail</span>
                         <span>{{ localizedContactCta }}</span>
-                    </button>
+                    </NuxtLink>
                 </div>
             </nav>
         </div>
@@ -131,8 +128,7 @@
                     class="scroll-affordance-page min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden py-3 no-scrollbar lg:h-auto lg:min-h-0 lg:max-w-[88rem] lg:overflow-visible lg:pb-0">
                     <section :id="activeSection" class="min-h-full w-full lg:h-full lg:min-h-0">
                         <div class="min-h-full w-full lg:h-full lg:min-h-0">
-                            <ProfilePanel v-if="activeSection === 'profile'" @navigate="setActiveSection" />
-                            <component :is="activeComponent" v-else />
+                            <slot />
                         </div>
                     </section>
                 </main>
@@ -145,53 +141,48 @@
         <!-- 移动端合并菜单的子菜单 -->
         <nav v-if="isCredentialSection" aria-label="Portfolio and credentials sections"
             class="credential-mobile-nav relative z-50 grid h-14 shrink-0 grid-cols-3 gap-1 px-3 py-2 lg:hidden">
-            <button v-for="item in credentialNavItems" :key="item.key" type="button"
+            <NuxtLink v-for="item in credentialNavItems" :key="item.key" :to="portfolioPaths[item.key]"
                 class="credential-mobile-tab relative flex min-w-0 items-center justify-center gap-1 rounded-xl px-1 text-[0.6875rem] font-bold transition"
                 :class="activeSection === item.key ? 'credential-mobile-tab-active text-stone-950' : 'text-stone-500'"
                 :data-accent="item.accent"
-                :aria-current="activeSection === item.key ? 'page' : undefined" @click="setActiveSection(item.key)">
+                :aria-current="activeSection === item.key ? 'page' : undefined">
                 <span class="credential-mobile-tab-icon material-symbols-outlined text-[1.0625rem]!"
                     :class="activeSection === item.key ? 'material-symbol-filled' : ''">{{ item.icon }}</span>
                 <span class="truncate">{{ item.label }}</span>
-            </button>
+            </NuxtLink>
         </nav>
 
         <!-- 移动端底部 -->
         <nav aria-label="Primary navigation"
             class="mobile-bottom-nav relative z-40 grid h-[calc(4.25rem+env(safe-area-inset-bottom))] shrink-0 grid-cols-5 px-1 pb-[env(safe-area-inset-bottom)] lg:hidden">
-            <button v-for="item in mobileNavItems" :key="item.key" type="button"
+            <NuxtLink v-for="item in mobileNavItems" :key="item.key" :to="mobilePath(item.key)"
                 class="mobile-nav-item flex min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1 text-[0.625rem] font-semibold transition"
                 :class="isMobileNavActive(item.key) ? 'font-extrabold text-stone-950' : 'text-stone-500'"
-                :aria-current="isMobileNavActive(item.key) ? 'page' : undefined" @click="setMobileSection(item.key)">
+                :aria-current="isMobileNavActive(item.key) ? 'page' : undefined">
                 <span class="mobile-nav-icon material-symbols-outlined text-[1.1875rem]!"
                     :class="isMobileNavActive(item.key) ? 'mobile-nav-icon-active material-symbol-filled' : ''">
                     {{ item.icon }}
                 </span>
                 <span class="max-w-full truncate">{{ item.label }}</span>
-            </button>
+            </NuxtLink>
         </nav>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import {
     portfolioSections,
     profile,
     type PortfolioSectionKey
 } from '~/data/site'
 
-import ProfilePanel from '~/components/panels/ProfilePanel.vue'
-import ExperiencePanel from '~/components/panels/ExperiencePanel.vue'
-import ProjectsPanel from '~/components/panels/ProjectsPanel.vue'
-import EducationPanel from '~/components/panels/EducationPanel.vue'
-import CertificatesPanel from '~/components/panels/CertificatesPanel.vue'
-import SkillsPanel from '~/components/panels/SkillsPanel.vue'
-import ContactPanel from '~/components/panels/ContactPanel.vue'
+import { portfolioPaths, portfolioSectionForPath } from '~/data/navigation'
 
 const { locale, setLocale } = useLocale()
 
-const activeSection = ref<PortfolioSectionKey>('profile')
+const route = useRoute()
+const activeSection = computed(() => portfolioSectionForPath(route.path))
 const lastCredentialSection = ref<PortfolioSectionKey>('certificates')
 const mainScrollRef = ref<HTMLElement | null>(null)
 
@@ -262,35 +253,22 @@ const mobileNavItems = computed(() => {
     ]
 })
 
-const componentMap = {
-    profile: ProfilePanel,
-    experience: ExperiencePanel,
-    projects: ProjectsPanel,
-    education: EducationPanel,
-    certificates: CertificatesPanel,
-    skills: SkillsPanel,
-    contact: ContactPanel
-}
-
-const activeComponent = computed(() => {
-    return componentMap[activeSection.value]
-})
-
 const resetMainScroll = () => {
     mainScrollRef.value?.scrollTo({ top: 0, left: 0, behavior: 'auto' })
 }
 
-const setActiveSection = (section: PortfolioSectionKey) => {
-    activeSection.value = section
+watch(activeSection, (section) => {
     if (credentialKeys.includes(section)) {
         lastCredentialSection.value = section
     }
-    window.history.replaceState(null, '', `#${section}`)
-    void nextTick(resetMainScroll)
-}
+}, { immediate: true })
 
-const setMobileSection = (section: MobileSectionKey) => {
-    setActiveSection(section === 'credentials' ? lastCredentialSection.value : section)
+watch(() => route.path, () => {
+    void nextTick(resetMainScroll)
+})
+
+const mobilePath = (section: MobileSectionKey) => {
+    return portfolioPaths[section === 'credentials' ? lastCredentialSection.value : section]
 }
 
 const isMobileNavActive = (section: MobileSectionKey) => {
@@ -306,18 +284,6 @@ const initial = computed(() => {
         .map((part) => part[0])
         .join('')
         .slice(0, 2)
-})
-
-onMounted(() => {
-    const hash = window.location.hash.replace('#', '') as PortfolioSectionKey
-
-    if (portfolioSections.some((section) => section.key === hash)) {
-        activeSection.value = hash
-        if (credentialKeys.includes(hash)) {
-            lastCredentialSection.value = hash
-        }
-    }
-
 })
 
 </script>

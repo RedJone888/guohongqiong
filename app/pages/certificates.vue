@@ -51,6 +51,8 @@ import { computed } from 'vue'
 import { certificates, certificateHeader } from '~/data/certificates'
 import CertificateCard from '~/components/CertificateCard.vue'
 
+usePortfolioPage('certificates')
+
 const { locale } = useLocale()
 
 const currentHeader = computed(() => certificateHeader[locale.value])
