@@ -544,7 +544,7 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 
 .profile-information-list {
     display: grid;
-    grid-template-columns: minmax(0, 2.5fr) minmax(0, 4fr) minmax(0, 3.5fr);
+    grid-template-columns: minmax(0, 2.5fr) minmax(0, 4.5fr) minmax(0, 4fr);
     align-items: start;
     gap: 1.15rem 1.5rem;
 }
@@ -559,10 +559,10 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 .profile-fact[data-fact-key="independent"] { grid-area: 1 / 2; }
 .profile-fact[data-fact-key="education"] { grid-area: 1 / 3; }
 .profile-job-search-item[data-job-key="preferences"] { grid-area: 2 / 1; }
-.profile-job-search-item[data-job-key="start"] { grid-area: 3 / 2 / 4 / 4; }
+.profile-job-search-item[data-job-key="start"] { grid-area: 2 / 2; }
 .profile-fact[data-fact-key="languages"] { grid-area: 2 / 3; }
 .profile-job-search-item[data-job-key="status"] { grid-area: 3 / 1; }
-.profile-fact[data-fact-key="location"] { grid-area: 2 / 2; }
+.profile-fact[data-fact-key="location"] { grid-area: 3 / 2 / 4 / 4; }
 
 .profile-fact dt,
 .profile-job-search-item dt {
@@ -1081,18 +1081,23 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     }
 
     .profile-information-list {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1rem;
     }
 
-    .profile-information-item {
-        grid-area: auto !important;
-    }
+    .profile-fact[data-fact-key="experience"] { grid-area: 1 / 1; }
+    .profile-fact[data-fact-key="independent"] { grid-area: 1 / 2; }
+    .profile-fact[data-fact-key="education"] { grid-area: 2 / 1 / 3 / 3; }
+    .profile-fact[data-fact-key="languages"] { grid-area: 3 / 1 / 4 / 3; }
+    .profile-job-search-item[data-job-key="preferences"] { grid-area: 4 / 1; }
+    .profile-job-search-item[data-job-key="status"] { grid-area: 4 / 2; }
+    .profile-job-search-item[data-job-key="start"] { grid-area: 5 / 1 / 6 / 3; }
+    .profile-fact[data-fact-key="location"] { grid-area: 6 / 1 / 7 / 3; }
 
-.profile-language-value {
-    flex-wrap: wrap;
-    white-space: normal;
-}
+    .profile-language-value {
+        flex-wrap: wrap;
+        white-space: normal;
+    }
 
     .profile-focus-title-row {
         align-items: flex-start;
