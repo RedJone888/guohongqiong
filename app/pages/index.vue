@@ -60,6 +60,7 @@
                                 </dt>
                                 <dd class="profile-job-search-value">
                                     <span>{{ item.value }}</span>
+                                    <span v-if="item.secondary" class="profile-secondary">{{ item.secondary }}</span>
                                 </dd>
                             </div>
                         </dl>
@@ -544,7 +545,7 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 
 .profile-information-list {
     display: grid;
-    grid-template-columns: minmax(0, 2.5fr) minmax(0, 4.5fr) minmax(0, 4fr);
+    grid-template-columns: minmax(0, 4.5fr) minmax(0, 5.5fr);
     align-items: start;
     gap: 1.15rem 1.5rem;
 }
@@ -557,12 +558,12 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 
 .profile-fact[data-fact-key="experience"] { grid-area: 1 / 1; }
 .profile-fact[data-fact-key="independent"] { grid-area: 1 / 2; }
-.profile-fact[data-fact-key="education"] { grid-area: 1 / 3; }
-.profile-job-search-item[data-job-key="preferences"] { grid-area: 2 / 1; }
-.profile-job-search-item[data-job-key="start"] { grid-area: 2 / 2; }
-.profile-fact[data-fact-key="languages"] { grid-area: 2 / 3; }
-.profile-job-search-item[data-job-key="status"] { grid-area: 3 / 1; }
-.profile-fact[data-fact-key="location"] { grid-area: 3 / 2 / 4 / 4; }
+.profile-fact[data-fact-key="education"] { grid-area: 2 / 1; }
+.profile-fact[data-fact-key="languages"] { grid-area: 2 / 2; }
+.profile-job-search-item[data-job-key="preferences"] { grid-area: 4 / 1; }
+.profile-fact[data-fact-key="location"] { grid-area: 3 / 1; }
+.profile-job-search-item[data-job-key="status"] { grid-area: 3 / 2; }
+.profile-job-search-item[data-job-key="start"] { grid-area: 4 / 2; }
 
 .profile-fact dt,
 .profile-job-search-item dt {
@@ -598,7 +599,8 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 }
 
 .profile-secondary {
-    margin-left: 0.45rem;
+    display: block;
+    margin-top: 0.2rem;
     color: #8b8176;
     font-size: 0.7rem;
     font-weight: 650;
@@ -1019,6 +1021,28 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 }
 
 @media (min-width: 1024px) {
+    .profile-overview {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) 18rem;
+        gap: 1.15rem 1.5rem;
+        padding: 1.25rem 1.35rem 1.1rem;
+        align-items: start;
+    }
+
+    .profile-overview-information,
+    .profile-information-list {
+        display: contents;
+    }
+
+    .profile-overview-actions {
+        grid-area: 1 / 3 / 4 / 4;
+        align-self: stretch;
+        padding: 0 0 0 1.25rem;
+    }
+
+    .profile-job-search-item[data-job-key="start"] {
+        grid-area: 4 / 2 / 5 / 4;
+    }
+
     .profile-page { min-height: 0; height: 100%; overflow: hidden; }
     .profile-page .profile-scroll { min-height: 0; overflow: hidden; }
     .profile-stack { height: 100%; min-height: 0; }
@@ -1030,7 +1054,7 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     }
 }
 
-@media (max-width: 1279px) {
+@media (max-width: 1023px) {
     .profile-overview {
         grid-template-columns: minmax(0, 1fr);
     }
@@ -1089,10 +1113,10 @@ const onDialogKeydown = (event: KeyboardEvent) => {
     .profile-fact[data-fact-key="independent"] { grid-area: 1 / 2; }
     .profile-fact[data-fact-key="education"] { grid-area: 2 / 1 / 3 / 3; }
     .profile-fact[data-fact-key="languages"] { grid-area: 3 / 1 / 4 / 3; }
-    .profile-job-search-item[data-job-key="preferences"] { grid-area: 4 / 1; }
-    .profile-job-search-item[data-job-key="status"] { grid-area: 4 / 2; }
-    .profile-job-search-item[data-job-key="start"] { grid-area: 5 / 1 / 6 / 3; }
-    .profile-fact[data-fact-key="location"] { grid-area: 6 / 1 / 7 / 3; }
+    .profile-job-search-item[data-job-key="preferences"] { grid-area: 4 / 1 / 5 / 3; }
+    .profile-fact[data-fact-key="location"] { grid-area: 5 / 1 / 6 / 3; }
+    .profile-job-search-item[data-job-key="status"] { grid-area: 6 / 1 / 7 / 3; }
+    .profile-job-search-item[data-job-key="start"] { grid-area: 7 / 1 / 8 / 3; }
 
     .profile-language-value {
         flex-wrap: wrap;
