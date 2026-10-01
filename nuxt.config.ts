@@ -1,7 +1,22 @@
 import tailwindcss from "@tailwindcss/vite";
 import { portfolioPaths } from "./app/data/navigation";
+
 export default defineNuxtConfig({
   compatibilityDate: "2026-07-01",
+  // Use Vercel's standalone tracker until its SDK supports Vue Router 5.
+  $production: {
+    app: {
+      head: {
+        script: [
+          {
+            key: "vercel-analytics",
+            src: "/_vercel/insights/script.js",
+            defer: true,
+          },
+        ],
+      },
+    },
+  },
   css: ["~/assets/css/main.css"],
   vite: {
     plugins: [tailwindcss()],
