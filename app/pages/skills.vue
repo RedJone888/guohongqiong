@@ -11,78 +11,73 @@
             </p>
             <div class="skill-legend mt-3 flex flex-wrap gap-x-4 gap-y-2 text-[0.625rem] font-bold text-stone-600"
                 aria-label="Skill source legend">
-                <span class="inline-flex items-center gap-1.5">
-                    <span class="skill-legend-dot skill-legend-core" aria-hidden="true" />
-                    <span>{{ currentHeader.coreLabel }}</span>
-                    <span class="font-medium text-stone-500">— {{ currentHeader.coreLegend }}</span>
-                </span>
-                <span class="inline-flex items-center gap-1.5">
-                    <span class="skill-legend-dot skill-legend-petnido" aria-hidden="true" />
-                    <span>{{ currentHeader.projectLabel }}</span>
-                    <span class="font-medium text-stone-500">— {{ currentHeader.projectLegend }}</span>
-                </span>
-                <span class="inline-flex items-center gap-1.5">
-                    <span class="skill-legend-dot skill-legend-portfolio" aria-hidden="true" />
-                    <span>{{ currentHeader.portfolioLabel }}</span>
-                    <span class="font-medium text-stone-500">— {{ currentHeader.portfolioLegend }}</span>
-                </span>
-                <span class="inline-flex items-center gap-1.5">
-                    <span class="skill-legend-dot skill-legend-supporting" aria-hidden="true" />
-                    <span>{{ currentHeader.supportingLabel }}</span>
-                    <span class="font-medium text-stone-500">— {{ currentHeader.supportingLegend }}</span>
+                <span v-for="entry in legendEntries" :key="entry.source" class="inline-flex items-center gap-1.5">
+                    <span class="skill-legend-dot" :class="`skill-legend-${entry.source}`" aria-hidden="true" />
+                    <span>{{ entry.label }}</span>
+                    <span class="font-medium text-stone-500">— {{ entry.legend }}</span>
                 </span>
             </div>
         </header>
 
-        <div class="skills-scroll no-scrollbar -mr-2 flex min-h-0 flex-col overflow-x-hidden pr-2 lg:flex-1 lg:overflow-visible lg:pb-1">
+        <div
+            class="skills-scroll no-scrollbar -mr-2 flex min-h-0 flex-col overflow-x-hidden pr-2 lg:flex-1 lg:overflow-visible lg:pb-1">
             <article class="skill-map">
-                <div v-for="(group, index) in currentGroups" :key="group.key"
-                    class="skill-map-row" :data-accent="skillAccent(index)">
-                    <div class="skill-map-meta">
-                        <span class="skill-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-stone-950">
-                            <span aria-hidden="true" class="material-symbols-outlined text-[1.125rem]!">{{ group.icon }}</span>
-                        </span>
-                        <div class="min-w-0">
-                            <h3 class="skill-map-title">{{ group.title }}</h3>
-                            <p class="skill-map-description">{{ group.description }}</p>
+                <div v-scroll-affordance class="skill-map-scroll scroll-affordance no-scrollbar" tabindex="0"
+                    :aria-label="currentHeader.title">
+                    <div v-for="(group, index) in currentGroups" :key="group.key" class="skill-map-row"
+                        :data-accent="skillAccent(index)">
+                        <div class="skill-map-meta">
+                            <span
+                                class="skill-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-stone-950">
+                                <span aria-hidden="true" class="material-symbols-outlined text-[1.125rem]!">{{ group.icon
+                                }}</span>
+                            </span>
+                            <h3 class="skill-map-title min-w-0">{{ group.title }}</h3>
                         </div>
+
+                        <ul class="skill-map-list" :aria-label="group.title">
+                            <li v-for="item in group.items" :key="item.name"
+                                class="skill-item inline-flex w-fit max-w-full items-center gap-1.5 text-xs font-semibold text-stone-800"
+                                :class="skillItemClass(item.source)">
+                                <span class="skill-dot h-2 w-2 shrink-0 rounded-full" aria-hidden="true" />
+                                <span class="min-w-0 leading-4">{{ item.name }}</span>
+                                <span
+                                    class="skill-source-label ml-auto shrink-0 rounded-[3px] px-1 py-0.5 text-[0.5rem] font-bold">
+                                    {{ sourceLabel(item.source) }}
+                                </span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <ul class="skill-map-list" :aria-label="group.title">
-                        <li v-for="item in group.items" :key="item.name"
-                            class="skill-item inline-flex w-fit max-w-full items-center gap-1.5 text-xs font-semibold text-stone-800"
-                            :class="skillItemClass(item.source)">
-                            <span class="skill-dot h-2 w-2 shrink-0 rounded-full" aria-hidden="true" />
-                            <span class="min-w-0 leading-4">{{ item.name }}</span>
-                            <span class="skill-source-label ml-auto shrink-0 rounded-[3px] px-1 py-0.5 text-[0.5rem] font-bold">
-                                {{ sourceLabel(item.source) }}
+                    <div class="skill-map-row skill-map-language-row" data-accent="green">
+                        <div class="skill-map-meta">
+                            <span
+                                class="skill-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-stone-950">
+                                <span aria-hidden="true" class="material-symbols-outlined text-[1.125rem]!">translate</span>
                             </span>
-                        </li>
-                    </ul>
+                            <h3 class="skill-map-title min-w-0">{{ currentHeader.languagesTitle }}</h3>
+                        </div>
+
+                        <ul class="skill-map-list" :aria-label="currentHeader.languagesTitle">
+                            <li v-for="language in currentLanguages" :key="language.key"
+                                class="skill-language-item inline-flex w-fit max-w-full items-center gap-1.5">
+                                <span class="skill-language-dot h-2 w-2 shrink-0 rounded-full" aria-hidden="true" />
+                                <span class="skill-language-name text-xs font-extrabold text-stone-950">
+                                    {{ language.name }}
+                                </span>
+                                <span
+                                    class="skill-language-credential rounded-full px-1.5 py-0.5 text-[0.5rem] font-extrabold">
+                                    {{ language.credential }}
+                                </span>
+                                <span v-if="language.note" class="skill-language-note text-[0.625rem] font-semibold text-stone-600">
+                                    {{ language.note }}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
-                <div class="skill-map-row skill-map-language-row" data-accent="green">
-                    <div class="skill-map-meta">
-                        <span class="skill-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-stone-950">
-                            <span aria-hidden="true" class="material-symbols-outlined text-[1.125rem]!">translate</span>
-                        </span>
-                        <div class="min-w-0">
-                            <h3 class="skill-map-title">{{ currentHeader.languagesTitle }}</h3>
-                        </div>
-                    </div>
-
-                    <ul class="skill-map-list" :aria-label="currentHeader.languagesTitle">
-                        <li v-for="language in currentLanguages" :key="language.key"
-                            class="skill-language-item inline-flex w-fit max-w-full items-center gap-1.5">
-                            <span class="skill-language-dot h-2 w-2 shrink-0 rounded-full" aria-hidden="true" />
-                            <span class="skill-language-name text-xs font-extrabold text-stone-950">
-                                {{ language.name }}
-                            </span>
-                            <span class="skill-language-credential rounded-full px-1.5 py-0.5 text-[0.5rem] font-extrabold">
-                                {{ language.credential }}
-                            </span>
-                        </li>
-                    </ul>
+                <div class="scroll-cue" aria-hidden="true">
+                    <span class="material-symbols-outlined">expand_more</span>
                 </div>
             </article>
         </div>
@@ -107,18 +102,21 @@ const currentLanguages = computed(() => {
     }))
 })
 
+const legendEntries = computed(() => {
+    const header = currentHeader.value
+    return [
+        { source: 'core', label: header.coreLabel, legend: header.coreLegend },
+        { source: 'personal', label: header.personalLabel, legend: header.personalLegend },
+        { source: 'supporting', label: header.supportingLabel, legend: header.supportingLegend },
+    ] satisfies { source: SkillSource, label: string, legend: string }[]
+})
+
 const sourceLabel = (source: SkillSource) => {
-    const labels: Record<SkillSource, string> = {
-        core: currentHeader.value.coreLabel,
-        petnido: currentHeader.value.projectLabel,
-        portfolio: currentHeader.value.portfolioLabel,
-        supporting: currentHeader.value.supportingLabel,
-    }
-    return labels[source]
+    return legendEntries.value.find(entry => entry.source === source)?.label ?? ''
 }
 
 const skillItemClass = (source: SkillSource) => `skill-item-${source}`
-const skillAccent = (index: number) => ['yellow', 'pink', 'blue', 'purple', 'green'][index] ?? 'yellow'
+const skillAccent = (index: number) => ['yellow', 'pink', 'blue', 'purple', 'orange'][index] ?? 'yellow'
 </script>
 
 <style scoped>
@@ -130,6 +128,7 @@ const skillAccent = (index: number) => ['yellow', 'pink', 'blue', 'purple', 'gre
     --skill-blue: #9fd0f3;
     --skill-purple: #e2d1f8;
     --skill-green: #c8e5d0;
+    --skill-orange: #ffd0a8;
 }
 
 .skills-section-title::after {
@@ -153,14 +152,9 @@ const skillAccent = (index: number) => ['yellow', 'pink', 'blue', 'purple', 'gre
     background: var(--skill-yellow);
 }
 
-.skill-legend-petnido {
+.skill-legend-personal {
     border-color: #65428c;
     background: #8460b9;
-}
-
-.skill-legend-portfolio {
-    border-color: #8561b0;
-    background: #bba1e3;
 }
 
 .skill-legend-supporting {
@@ -173,6 +167,8 @@ const skillAccent = (index: number) => ['yellow', 'pink', 'blue', 'purple', 'gre
 }
 
 .skill-map {
+    --scroll-affordance-surface: var(--skill-paper);
+    --scroll-affordance-color: #6d4a9e;
     display: flex;
     min-height: 0;
     flex: 1;
@@ -184,10 +180,24 @@ const skillAccent = (index: number) => ['yellow', 'pink', 'blue', 'purple', 'gre
     box-shadow: 4px 4px 1px #6b6560;
 }
 
+.skill-map-scroll {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.skill-map-scroll:focus-visible {
+    border-radius: 14px;
+    outline: 2px solid #6d4a9e;
+    outline-offset: -4px;
+}
+
 .skill-map-row {
     display: grid;
-    min-height: 0;
-    flex: 1 1 0;
+    flex: 1 0 auto;
     grid-template-columns: minmax(13rem, 17.5rem) minmax(0, 1fr);
     align-items: center;
     column-gap: 1.25rem;
@@ -202,32 +212,16 @@ const skillAccent = (index: number) => ['yellow', 'pink', 'blue', 'purple', 'gre
 .skill-map-meta {
     display: flex;
     min-width: 0;
-    align-items: flex-start;
+    align-items: center;
     gap: 0.75rem;
 }
 
-.skill-map-language-row .skill-map-meta {
-    align-items: center;
-}
-
-.skill-map-language-row .skill-map-title {
-    margin-top: 0;
-}
-
 .skill-map-title {
-    margin-top: 0.15rem;
     color: #1f1a16;
     font-size: 0.95rem;
     font-weight: 800;
     letter-spacing: 0.01em;
     line-height: 1.35;
-}
-
-.skill-map-description {
-    margin-top: 0.35rem;
-    color: #655d53;
-    font-size: 0.6875rem;
-    line-height: 1.5;
 }
 
 .skill-map-list {
@@ -257,6 +251,10 @@ const skillAccent = (index: number) => ['yellow', 'pink', 'blue', 'purple', 'gre
 
 .skill-map-row[data-accent="green"] .skill-icon {
     background: var(--skill-green);
+}
+
+.skill-map-row[data-accent="orange"] .skill-icon {
+    background: var(--skill-orange);
 }
 
 .skill-kicker {
@@ -295,14 +293,9 @@ const skillAccent = (index: number) => ['yellow', 'pink', 'blue', 'purple', 'gre
     background: #e7b900;
 }
 
-.skill-item-petnido .skill-dot {
+.skill-item-personal .skill-dot {
     border-color: #65428c;
     background: #8460b9;
-}
-
-.skill-item-portfolio .skill-dot {
-    border-color: #8561b0;
-    background: #bba1e3;
 }
 
 .skill-item-supporting .skill-dot {
@@ -319,13 +312,8 @@ const skillAccent = (index: number) => ['yellow', 'pink', 'blue', 'purple', 'gre
     background: #f2eee8;
 }
 
-.skill-item-petnido .skill-source-label {
+.skill-item-personal .skill-source-label {
     color: #5a3d8a;
-    background: #f1ebf8;
-}
-
-.skill-item-portfolio .skill-source-label {
-    color: #6d4a9e;
     background: #f1ebf8;
 }
 
@@ -365,10 +353,6 @@ const skillAccent = (index: number) => ['yellow', 'pink', 'blue', 'purple', 'gre
         align-items: stretch;
         gap: 0.75rem;
         padding: 0.9rem;
-    }
-
-    .skill-map-description {
-        max-width: 42rem;
     }
 }
 </style>

@@ -10,108 +10,33 @@ export type Certificate = {
   verification?: string;
 };
 
-export type Project = {
-  slug: string;
-  title: string;
-  subtitle: string;
-  summary: string;
-  role: string;
-  stack: string[];
-  highlights: string[];
-  outcome: string;
-  links: { label: string; href: string }[];
-};
-
 export const profile = {
-  name: "郭红琼",
+  name: "郭紅瓊",
   nameKanji: "郭紅瓊",
   nameRomaji: "Guo Hongqiong",
   nameKana: "グオ ホンチョン",
 
   title: "Web Engineer",
   role: "Web Engineer",
-  stack: "Vue / Nuxt / TypeScript",
 
   email: "redjoan.guo@gmail.com",
   github: "https://github.com/RedJone888",
   linkedin: "https://www.linkedin.com/in/hongqiongguo",
 
-
   photoUrl: "/images/profile/profile-headshot.png",
 
   ja: {
-    statusLine: [
-      "中国出身",
-      "修士卒業",
-      "フロントエンド開発 約3年",
-      "中日英対応",
-      "大阪在住",
-      "求職中",
-      "大阪勤務を優先・他地域への転居も相談可",
-    ],
     summary:
-      "中国出身、大阪在住のWebエンジニアです。修士卒業後、Vueを中心に、鉄道物流を支えるWebシステムのフロントエンド開発に約3年間携わってきました。現在はNuxtで本サイトを開発し、Vue・TypeScriptを軸に、React / Next.jsの個人開発経験も活かせる仕事を探しています。",
+      "大阪在住のWebエンジニアです。Vueを中心に、鉄道物流Webシステムのフロントエンド開発に約3年間携わってきました。本サイトはNuxtで構築し、個人開発のPetNidoではReact / Next.jsを使用しています。",
 
-    contactTitle: "連絡先",
     contactCtaLabel: "連絡先",
-    languageTitle: "語学力",
-    photoCaption: "Open to Work",
-    locationLabel: "Osaka, Japan",
-    navLabel: "詳しく見る",
-    navLinks: [
-      { label: "実務経験", href: "/experience" },
-      { label: "プロジェクト", href: "/projects" },
-      { label: "学歴", href: "/education" },
-      { label: "資格", href: "/certificates" },
-      { label: "技術スタック", href: "/skills" },
-    ],
   },
   en: {
-    statusLine: [
-      "From China",
-      "Master’s Degree",
-      "3 Years Frontend",
-      "Chinese / Japanese / English",
-      "Based in Osaka",
-      "Open to work",
-      "Osaka preferred; relocation negotiable",
-    ],
     summary:
-      "I am a web engineer from China, currently based in Osaka, Japan. After completing a master’s degree, I spent about three years on frontend development for rail-logistics web systems, working primarily with Vue and TypeScript. I am currently building this site with Nuxt, with independent React / Next.js development experience through PetNido.",
-    contactTitle: "Contact",
+      "I am a web engineer based in Osaka, Japan, with about three years of Vue-centered frontend development for rail-logistics web systems. I built this site with Nuxt and develop my independent project PetNido with React / Next.js.",
     contactCtaLabel: "Contact",
-    languageTitle: "Languages",
-    photoCaption: "Open to Work",
-    locationLabel: "Osaka, Japan",
-    navLabel: "Explore",
-    navLinks: [
-      { label: "Experience", href: "/experience" },
-      { label: "Projects", href: "/projects" },
-      { label: "Education", href: "/education" },
-      { label: "Certificates", href: "/certificates" },
-      { label: "Skills", href: "/skills" },
-    ],
   },
 };
-export const navLinks = [
-  {
-    href: "/experience",
-    ja: { label: "実務経験" },
-    en: { label: "Experience" },
-  },
-  {
-    href: "/projects",
-    ja: { label: "プロジェクト" },
-    en: { label: "Projects" },
-  },
-  { href: "/education", ja: { label: "学歴" }, en: { label: "Education" } },
-  {
-    href: "/certificates",
-    ja: { label: "資格" },
-    en: { label: "Certificates" },
-  },
-  { href: "/skills", ja: { label: "技術スタック" }, en: { label: "Skills" } },
-];
 export type PortfolioSectionKey =
   | "profile"
   | "experience"
@@ -146,14 +71,14 @@ export const portfolioSections = [
       eyebrow: "Experience",
       title: "Frontend Experience",
       description:
-        "Vue / Nuxt / TypeScript を中心とした Web フロントエンド開発経験。",
+        "Vueを中心とした鉄道物流Webシステムのフロントエンド開発経験（約3年）",
     },
     en: {
       label: "Experience",
       eyebrow: "Experience",
       title: "Frontend Experience",
       description:
-        "Frontend development experience mainly with Vue / Nuxt / TypeScript.",
+        "About three years of Vue-centered frontend development for rail-logistics web systems.",
     },
   },
   {
@@ -242,79 +167,11 @@ export const portfolioSections = [
     },
   },
 ] as const;
-export const quickFacts = {
-  ja: [
-    {
-      label: "希望職種",
-      value: "Webエンジニア",
-    },
-    {
-      label: "現在地",
-      value: "大阪府大阪市",
-    },
-    {
-      label: "転居",
-      value: "大阪勤務を第一希望。仕事内容・条件に応じて他地域も検討し、入社に伴う転居が可能",
-    },
-    {
-      label: "技術領域",
-      value: "Vue, Nuxt, TypeScript, Web UI, API Integration",
-    },
-  ],
-  en: [
-    {
-      label: "Target roles",
-      value: "Web Engineer",
-    },
-    {
-      label: "Current location",
-      value: "Osaka, Japan",
-    },
-    {
-      label: "Relocation",
-      value: "Osaka preferred; open to other locations in Japan depending on the role and conditions, with relocation possible",
-    },
-    {
-      label: "Focus areas",
-      value: "Vue, Nuxt, TypeScript, Web UI, API Integration",
-    },
-  ],
-};
-export const profileHighlights = {
-  ja: [
-    {
-      label: "Frontend",
-      value: "Vue / Nuxt / TypeScript を中心に学習・開発",
-    },
-    {
-      label: "Data background",
-      value: "GIS・空間データ・環境データ分析の学術背景",
-    },
-    {
-      label: "Job search",
-      value: "大阪在住・大阪勤務を優先。他地域への転居も相談可",
-    },
-  ],
-  en: [
-    {
-      label: "Frontend",
-      value: "Focused on Vue / Nuxt / TypeScript",
-    },
-    {
-      label: "Data background",
-      value:
-        "Academic background in GIS, spatial data, and environmental analysis",
-    },
-    {
-      label: "Job search",
-      value: "Based in Osaka; Osaka roles preferred, relocation within Japan negotiable",
-    },
-  ],
-};
 
 export const profilePageCopy = {
   ja: {
-    availability: "フロントエンド / Web エンジニアとして働く機会を探しています",
+    availability:
+      "Webエンジニア（フロントエンド中心・サーバーサイドにも挑戦）として働く機会を探しています",
     headline: "複雑な業務を、使いやすいWeb体験へ",
     introduction:
       "Vueを中心とした約3年のフロントエンド実務経験があり、鉄道物流を支えるWebシステムで業務画面やBI画面の設計・実装に携わってきました。TypeScriptはその実務で使用し、現在はNuxtで本サイトを作っています。React・Next.jsは個人開発のPetNidoで使い、生成AIも補助に活用しながら、出力したコードと画面の挙動を自分で確認・検証しています。",
@@ -323,9 +180,24 @@ export const profilePageCopy = {
     contactLabel: "連絡先",
     atAGlance: "QUICK FACTS",
     facts: [
-      { key: "experience", icon: "work_history", label: "実務経験", value: "Vue中心 約3年" },
-      { key: "independent", icon: "code", label: "個人開発", value: "React / Next.js · PetNido" },
-      { key: "education", icon: "school", label: "学歴", value: "農業工程・情報技術 修士" },
+      {
+        key: "experience",
+        icon: "work_history",
+        label: "実務経験",
+        value: "Vue中心 約3年",
+      },
+      {
+        key: "independent",
+        icon: "code",
+        label: "個人開発",
+        value: "React / Next.js · PetNido",
+      },
+      {
+        key: "education",
+        icon: "school",
+        label: "学歴",
+        value: "農業工程・情報技術 修士",
+      },
       {
         key: "languages",
         icon: "translate",
@@ -337,7 +209,7 @@ export const profilePageCopy = {
         icon: "location_on",
         label: "現在地",
         value: "大阪・日本",
-        secondary: "勤務地は求人に応じて相談可能で、転居にも対応できます。",
+        secondary: "勤務地は求人に応じて柔軟に対応でき、入社に伴う転居も可能。",
       },
     ],
     jobSearchLabel: "JOB SEARCH",
@@ -346,16 +218,17 @@ export const profilePageCopy = {
       {
         key: "status",
         icon: "work",
-        label: "現在の在留資格",
-        value: "家族滞在（資格外活動許可取得済み）",
-        secondary: "フルタイムでの就労には、在留資格変更が必要です。",
+        label: "在留資格",
+        value: "家族滞在（資格外活動許可あり）",
+        secondary:
+          "「技術・人文知識・国際業務」へ変更予定。要件を満たす見込みで、手続きは自分で進めます。",
       },
       {
         key: "start",
         icon: "event_available",
         label: "入社時期",
-        value: "正社員としての勤務は、在留資格変更許可後に開始可能です。",
-        secondary: "内定後、変更許可までの間は、資格外活動許可の範囲内（週28時間以内）でのアルバイト勤務もご相談可能です。",
+        value: "内定後すぐ在留資格変更を申請、許可後に入社",
+        secondary: "許可までは週28時間以内のアルバイト勤務も可能です。",
       },
     ],
     focusEyebrow: "WHAT I BRING",
@@ -418,7 +291,8 @@ export const profilePageCopy = {
     ],
   },
   en: {
-    availability: "LOOKING FOR FRONTEND / WEB ENGINEERING OPPORTUNITIES",
+    availability:
+      "LOOKING FOR WEB ENGINEERING ROLES — FRONTEND-FOCUSED, EXPANDING INTO SERVER-SIDE",
     headline: "Turning complex workflows into usable web experiences.",
     introduction:
       "I have about three years of professional frontend experience centered on Vue, building operations and BI interfaces for rail-logistics systems. I used TypeScript in that work and am now building this site with Nuxt. I use React and Next.js for my independent PetNido project, and use generative AI as a development aid while verifying the resulting code and behavior myself.",
@@ -427,9 +301,24 @@ export const profilePageCopy = {
     contactLabel: "Contact",
     atAGlance: "QUICK FACTS",
     facts: [
-      { key: "experience", icon: "work_history", label: "Experience", value: "About 3 years with Vue" },
-      { key: "independent", icon: "code", label: "Independent work", value: "React / Next.js · PetNido" },
-      { key: "education", icon: "school", label: "Education", value: "Master's in Agricultural Engineering & IT" },
+      {
+        key: "experience",
+        icon: "work_history",
+        label: "Experience",
+        value: "About 3 years with Vue",
+      },
+      {
+        key: "independent",
+        icon: "code",
+        label: "Independent work",
+        value: "React / Next.js · PetNido",
+      },
+      {
+        key: "education",
+        icon: "school",
+        label: "Education",
+        value: "Master's in Agricultural Engineering & IT",
+      },
       {
         key: "languages",
         icon: "translate",
@@ -441,25 +330,33 @@ export const profilePageCopy = {
         icon: "location_on",
         label: "Based in",
         value: "Osaka, Japan",
-        secondary: "Work location is negotiable depending on the role, and I am open to relocation.",
+        secondary:
+          "Flexible on work location; can relocate depending on where the role is based.",
       },
     ],
     jobSearchLabel: "JOB SEARCH",
     jobSearchItems: [
-      { key: "preferences", icon: "badge", label: "Preferences", value: "Full-time permanent role" },
+      {
+        key: "preferences",
+        icon: "badge",
+        label: "Preferences",
+        value: "Full-time permanent role",
+      },
       {
         key: "status",
         icon: "work",
-        label: "Current residence status",
-        value: "Dependent (permission to engage in activities outside my residence status granted)",
-        secondary: "A change of residence status is required for full-time employment.",
+        label: "Residence status",
+        value: "Dependent (outside-work permission granted)",
+        secondary:
+          "Changing to Engineer/Specialist status; I expect to qualify and will handle the application myself.",
       },
       {
         key: "start",
         icon: "event_available",
         label: "Start timing",
-        value: "I can start full-time permanent employment once my change of residence status is approved.",
-        secondary: "After receiving a job offer and while awaiting approval, I am also open to discussing part-time work within the scope of my existing permission (up to 28 hours per week).",
+        value: "Visa change filed upon offer; join once approved",
+        secondary:
+          "Part-time work (up to 28 hrs/week) is possible while awaiting approval.",
       },
     ],
     focusEyebrow: "WHAT I BRING",
@@ -542,10 +439,12 @@ export const languageSkills = [
     ja: {
       name: "日本語",
       credential: "JLPT N1",
+      note: "ビジネスレベル",
     },
     en: {
       name: "Japanese",
       credential: "JLPT N1",
+      note: "Business level",
     },
   },
   {
@@ -554,10 +453,12 @@ export const languageSkills = [
     ja: {
       name: "英語",
       credential: "CET-6",
+      note: "技術文書の読解",
     },
     en: {
       name: "English",
       credential: "CET-6",
+      note: "Reading technical documentation",
     },
   },
 ];

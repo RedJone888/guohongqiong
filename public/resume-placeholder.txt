@@ -1,1 +1,0 @@
-Placeholder resume file. Replace this with your real PDF resume and update resumeUrl in app/data/site.ts.

@@ -22,7 +22,8 @@
         <!-- 移动端顶部 -->
         <header
             class="mobile-topbar relative z-40 flex h-[calc(4rem+env(safe-area-inset-top))] shrink-0 items-center justify-between px-4 pt-[env(safe-area-inset-top)] lg:hidden">
-            <NuxtLink :to="portfolioPaths.profile" class="flex min-w-0 items-center gap-3 text-left" aria-label="Profile">
+            <NuxtLink :to="portfolioPaths.profile" class="flex min-w-0 items-center gap-3 text-left"
+                aria-label="Profile">
                 <span
                     class="mobile-avatar flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
                     <img v-if="profile.photoUrl" :src="profile.photoUrl" :alt="profile.nameRomaji"
@@ -31,19 +32,22 @@
                 </span>
                 <span class="min-w-0">
                     <span class="block truncate text-sm font-bold text-stone-950">
-                        {{ profile.nameKanji }}<span class="text-xs font-normal text-stone-600">{{ mobileSubName }}</span>
+                        {{ profile.nameKanji }}<span class="text-xs font-normal text-stone-600">{{ mobileSubName
+                            }}</span>
                     </span>
                     <span class="block truncate text-[0.6875rem] font-semibold text-stone-600">{{ profile.role }}</span>
                 </span>
             </NuxtLink>
 
             <div class="mobile-language-switch flex items-center rounded-full p-1 text-xs">
-                <button type="button" class="mobile-language-option flex h-8 min-w-9 items-center justify-center rounded-full font-extrabold"
+                <button type="button"
+                    class="mobile-language-option flex h-8 min-w-9 items-center justify-center rounded-full font-extrabold"
                     :class="locale === 'ja' ? 'mobile-language-active text-stone-950' : 'text-stone-500'"
                     :aria-pressed="locale === 'ja'" @click="setLocale('ja')">
                     JA
                 </button>
-                <button type="button" class="mobile-language-option flex h-8 min-w-9 items-center justify-center rounded-full font-extrabold"
+                <button type="button"
+                    class="mobile-language-option flex h-8 min-w-9 items-center justify-center rounded-full font-extrabold"
                     :class="locale === 'en' ? 'mobile-language-active text-stone-950' : 'text-stone-500'"
                     :aria-pressed="locale === 'en'" @click="setLocale('en')">
                     EN
@@ -125,7 +129,7 @@
             class="portfolio-main-column relative flex min-h-0 w-full flex-1 flex-col lg:h-full lg:min-h-0 lg:px-0 lg:py-6">
             <div class="scroll-affordance-frame min-h-0 w-full flex-1">
                 <main ref="mainScrollRef" v-scroll-affordance
-                    class="scroll-affordance-page min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden py-3 no-scrollbar lg:h-auto lg:min-h-0 lg:max-w-[88rem] lg:overflow-visible lg:pb-0">
+                    class="scroll-affordance-page min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden no-scrollbar lg:h-auto lg:min-h-0 lg:max-w-[88rem] lg:overflow-visible lg:pb-0">
                     <section :id="activeSection" class="min-h-full w-full lg:h-full lg:min-h-0">
                         <div class="min-h-full w-full lg:h-full lg:min-h-0">
                             <slot />
@@ -144,8 +148,7 @@
             <NuxtLink v-for="item in credentialNavItems" :key="item.key" :to="portfolioPaths[item.key]"
                 class="credential-mobile-tab relative flex min-w-0 items-center justify-center gap-1 rounded-xl px-1 text-[0.6875rem] font-bold transition"
                 :class="activeSection === item.key ? 'credential-mobile-tab-active text-stone-950' : 'text-stone-500'"
-                :data-accent="item.accent"
-                :aria-current="activeSection === item.key ? 'page' : undefined">
+                :data-accent="item.accent" :aria-current="activeSection === item.key ? 'page' : undefined">
                 <span class="credential-mobile-tab-icon material-symbols-outlined text-[1.0625rem]!"
                     :class="activeSection === item.key ? 'material-symbol-filled' : ''">{{ item.icon }}</span>
                 <span class="truncate">{{ item.label }}</span>

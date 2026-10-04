@@ -1,8 +1,9 @@
 <template>
     <div
         class="profile-page no-scrollbar flex min-h-full flex-col gap-4 p-3 lg:h-full lg:gap-4 lg:overflow-visible lg:pb-0 lg:pl-4 lg:pr-6 lg:pt-2">
-        <div
-            class="profile-scroll no-scrollbar -mr-2 flex min-h-0 flex-1 flex-col overflow-x-hidden pr-2 lg:overflow-visible lg:pb-0">
+        <div class="scroll-affordance-frame profile-scroll-frame min-h-0 flex-1">
+        <div v-scroll-affordance
+            class="profile-scroll scroll-affordance no-scrollbar -mr-2 flex min-h-0 flex-1 flex-col overflow-x-hidden pr-2 lg:overflow-visible lg:pb-0">
             <div class="profile-stack flex flex-col gap-4">
                 <header class="profile-header">
                     <div class="profile-header-meta">
@@ -187,6 +188,10 @@
                 </div>
             </div>
         </div>
+        <div class="scroll-cue" aria-hidden="true">
+            <span class="material-symbols-outlined">expand_more</span>
+        </div>
+        </div>
     </div>
 
     <Teleport to="body">
@@ -333,6 +338,8 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 
 <style scoped>
 .profile-page {
+    --scroll-affordance-surface: var(--profile-paper);
+    --scroll-affordance-color: #6d4a9e;
     --profile-paper: #fffdf7;
     --profile-ink: #26201a;
     --profile-yellow: #ffdc5d;
@@ -643,11 +650,11 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 .profile-job-search-item dd {
     min-width: 0;
     display: block;
-    margin-top: 0.08rem;
+    margin-top: 0.2rem;
     color: var(--profile-ink);
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     font-weight: 800;
-    line-height: 1.4;
+    line-height: 1.45;
     overflow-wrap: anywhere;
     white-space: normal;
 }
@@ -1039,12 +1046,18 @@ const onDialogKeydown = (event: KeyboardEvent) => {
         padding: 0 0 0 1.25rem;
     }
 
+    /* The residence-status note is the longest item, so it takes the full-width bottom row. */
     .profile-job-search-item[data-job-key="start"] {
+        grid-area: 3 / 2;
+    }
+
+    .profile-job-search-item[data-job-key="status"] {
         grid-area: 4 / 2 / 5 / 4;
     }
 
     .profile-page { min-height: 0; height: 100%; overflow: hidden; }
-    .profile-page .profile-scroll { min-height: 0; overflow: hidden; }
+    /* Bottom padding keeps the lower panels' offset shadow inside the clipping box. */
+    .profile-page .profile-scroll { min-height: 0; overflow: hidden; padding-bottom: 0.375rem; }
     .profile-stack { height: 100%; min-height: 0; }
     .profile-lower-grid { min-height: 0; flex: 1 1 0; align-items: stretch; }
     .profile-lower-grid .profile-panel { height: 100%; min-height: 0; overflow: hidden; }
@@ -1052,6 +1065,22 @@ const onDialogKeydown = (event: KeyboardEvent) => {
         flex: 1 1 0; min-height: 0; overflow-y: auto;
         overscroll-behavior: contain; scrollbar-width: none;
     }
+}
+
+/*
+ * Short desktop viewports cannot fit the overview and the lower panels at once.
+ * Let the whole profile scroll instead of clipping the overview, and show the
+ * lower panels at their natural height so there is only one scroll area.
+ */
+@media (min-width: 1024px) and (max-height: 860px) {
+    .profile-page .profile-scroll { overflow-y: auto; overscroll-behavior: contain; padding-bottom: 0; }
+    /* Bottom padding is not counted as scrollable space here, so use a spacer for the panels' shadow. */
+    .profile-page .profile-scroll::after { content: ""; display: block; flex: none; height: 0.375rem; }
+    .profile-stack { height: auto; flex-shrink: 0; }
+    .profile-lower-grid { flex: none; }
+    .profile-lower-grid .profile-panel { height: auto; }
+    .profile-lower-grid .profile-panel-scroll { flex: none; overflow: visible; }
+    .profile-lower-grid .profile-panel .scroll-cue { display: none; }
 }
 
 @media (max-width: 1023px) {

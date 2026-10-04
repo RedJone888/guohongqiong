@@ -13,7 +13,7 @@
 
         <div class="scroll-affordance-frame experience-scroll-frame min-h-0 flex-1">
             <div v-scroll-affordance
-                class="experience-scroll scroll-affordance no-scrollbar flex min-h-0 flex-1 flex-col gap-5 overflow-x-hidden -mr-2 pr-2 lg:gap-3 lg:overflow-y-auto">
+                class="experience-scroll scroll-affordance scroll-shadow-room no-scrollbar flex min-h-0 flex-1 flex-col gap-5 overflow-x-hidden -mr-2 pr-2 lg:gap-3 lg:overflow-y-auto">
                 <article class="experience-employer paper-panel relative shrink-0 p-5 lg:px-7 lg:py-4">
                     <div class="grid gap-4 lg:grid-cols-[1.25fr_1fr] lg:gap-0">
                         <section class="lg:border-r lg:border-dashed lg:border-stone-400 lg:pr-8">

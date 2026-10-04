@@ -55,7 +55,7 @@ export default defineNuxtConfig({
           content: "Career portfolio website for job applications.",
         },
         { property: "og:type", content: "website" },
-        { property: "og:site_name", content: "Career Portfolio" },
+        { property: "og:site_name", content: "郭紅瓊 Portfolio" },
       ],
     },
   },

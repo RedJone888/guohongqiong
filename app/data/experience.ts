@@ -84,9 +84,9 @@ export const experiences = {
                 "運賃照会や貨物追跡などのAPI通信に対して、読込中、該当データなし、通信エラーの状態を分けて表示し、必要に応じて再試行できる画面制御を実装しました。",
             },
             {
-              title: "大量入力画面の構成見直しと性能改善",
+              title: "車両回送申請画面の構成見直しと性能改善",
               description:
-                "多数の運送状を一括登録する編集テーブルで、入力件数の増加に伴い画面操作が重くなる問題を改善しました。実際の入力パターンを整理し、発着駅や顧客情報を共通入力エリアへ、車番や車種を明細テーブルへ分離する構成を提案・実装。編集対象となるセルとDOM要素を減らし、操作時のカクつきを解消しました。",
+                "車両回送申請画面の編集テーブルで、入力件数の増加に伴い画面操作が重くなる問題を改善しました。実際の入力パターンを整理し、発着駅や顧客情報を共通入力エリアへ、車番や車種を明細テーブルへ分離する構成を提案・実装。編集対象となるセルとDOM要素を減らし、操作時のカクつきを解消しました。",
             },
           ],
         },
@@ -250,9 +250,9 @@ export const experiences = {
                 "Implemented distinct loading, no-results, and error states for API-based features such as freight rate inquiries and shipment tracking, including retry flows when needed.",
             },
             {
-              title: "Bulk-Entry Redesign & Performance Optimization",
+              title: "Wagon Repositioning Request: Redesign & Performance Optimization",
               description:
-                "Improved an editable table used to register many waybills at once, which became sluggish as the number of rows increased. Proposed and implemented separating shared fields, such as stations and customer information, from wagon-specific fields such as wagon number and type. This reduced the number of editable cells and DOM elements and eliminated visible UI lag.",
+                "Improved the editable table on the wagon repositioning request screen, which became sluggish as the number of rows increased. Proposed and implemented separating shared fields, such as stations and customer information, from wagon-specific fields such as wagon number and type. This reduced the number of editable cells and DOM elements and eliminated visible UI lag.",
             },
           ],
         },

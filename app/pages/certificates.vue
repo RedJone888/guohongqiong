@@ -13,7 +13,7 @@
 
         <div class="scroll-affordance-frame certificates-scroll-frame min-h-0 flex-1">
             <div v-scroll-affordance
-                class="certificates-scroll scroll-affordance no-scrollbar min-h-0 flex flex-1 flex-col gap-5 overflow-x-hidden -mr-2 pr-2 lg:gap-4 lg:overflow-y-auto">
+                class="certificates-scroll scroll-affordance scroll-shadow-room no-scrollbar min-h-0 flex flex-1 flex-col gap-5 overflow-x-hidden -mr-2 pr-2 lg:gap-4 lg:overflow-y-auto">
                 <div class="grid gap-5">
                     <section v-for="group in certificateGroups" :key="group.key" class="certificate-group">
                         <div class="mb-2 flex items-center gap-3 px-1 lg:px-2">

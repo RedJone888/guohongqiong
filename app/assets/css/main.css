@@ -220,6 +220,14 @@ h2 {
   --scroll-affordance-surface: var(--bg);
 }
 
+/* Page-level scroll areas: leave room after the last card so its offset shadow is not clipped. */
+.scroll-shadow-room::after {
+  content: "";
+  display: block;
+  flex: none;
+  height: 0.375rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .scroll-cue {
     transition-duration: 1ms;

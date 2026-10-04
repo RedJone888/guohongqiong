@@ -13,9 +13,9 @@
 
         <div class="scroll-affordance-frame contact-scroll-frame min-h-0 flex-1">
             <div v-scroll-affordance
-                class="contact-scroll scroll-affordance no-scrollbar min-h-0 flex-1 overflow-x-hidden -mr-2 pr-2 lg:overflow-y-auto">
+                class="contact-scroll scroll-affordance scroll-shadow-room no-scrollbar min-h-0 flex-1 overflow-x-hidden -mr-2 pr-2 lg:overflow-y-auto">
                 <div class="grid gap-4 lg:grid-cols-12 lg:items-stretch lg:gap-5">
-                    <section class="contact-location order-2 overflow-hidden lg:order-1 lg:col-span-7">
+                    <section class="contact-location order-2 overflow-hidden lg:order-1 lg:col-span-7 lg:flex lg:flex-col">
                         <div class="flex items-start gap-3 border-b border-dashed border-stone-400 p-4 lg:p-5">
                             <span aria-hidden="true"
                                 class="contact-location-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
@@ -38,7 +38,7 @@
                             </span>
                         </div>
 
-                        <div class="contact-map-wrap relative min-h-[270px] lg:min-h-[345px]">
+                        <div class="contact-map-wrap relative min-h-[270px] lg:min-h-[240px] lg:flex-1">
                             <iframe title="Osaka location map" :src="mapSrc" class="absolute inset-0 h-full w-full border-0"
                                 loading="lazy" referrerpolicy="no-referrer-when-downgrade" />
                         </div>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-4 flex flex-1 flex-col justify-center gap-3">
+                        <div class="mt-4 flex flex-col gap-3">
                             <div class="contact-channel contact-channel-email flex min-w-0 items-center gap-3 rounded-xl p-4">
                                 <img :src="primaryContact.icon" alt="" class="h-8 w-8 shrink-0 object-contain" loading="lazy">
                                 <a :href="primaryContact.href"
